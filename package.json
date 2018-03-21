@@ -1,0 +1,18 @@
+{
+    "name": "gestion-novedades",
+    "version": "1.0.0",
+    "description": "Proyecto de gestión de novedades para el departamento de criminalística del centro de investigaciones científicas, penales y criminalísticas (CICPC)",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "gestión",
+        "novedades",
+        "criminalística",
+        "node",
+        "javascript"
+    ],
+    "author": "José Rodríguez",
+    "license": "ISC"
+}
