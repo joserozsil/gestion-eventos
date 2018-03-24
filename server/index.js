@@ -3,7 +3,7 @@
 const app = require('./app')
 const chalk = require('chalk')
 const config = require('./config')
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize')
 
 const sequelize = new Sequelize(config.SETTINGS.DB_NAME, config.SETTINGS.DB_USER, config.SETTINGS.DB_PASSWORD, {
     host: config.SETTINGS.DB_HOST,
@@ -14,7 +14,6 @@ const sequelize = new Sequelize(config.SETTINGS.DB_NAME, config.SETTINGS.DB_USER
         acquire: 30000,
         idle: 10000
     },
-
     operatorsAliases: false
 });
 
