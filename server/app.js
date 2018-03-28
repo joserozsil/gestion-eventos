@@ -2,17 +2,15 @@
 
 import express from 'express'
 import bodyParser from 'body-parser'
+import routes from './routes'
 
-let app = express()
+const app = express()
 
 // middlewares e body-parser
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-// configurar rutas
-import routes from './routes'
-
-// congigurar CORS
+// configurar CORS
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method')
@@ -21,7 +19,7 @@ app.use((req, res, next) => {
     next()
 })
 
-// ruta api api base
+// ruta api base
 app.use('/api', routes)
 
 module.exports = app

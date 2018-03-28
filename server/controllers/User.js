@@ -1,16 +1,18 @@
-'use strict';
+'use strict'
 
 import models from '../models'
+import responser from '../services/ResponseService'
 
 const operations = {
-    show: (req, resp) => {
+    index: (req, resp) => {
         models.User.findAll().then(users => {
-            return resp.status(200).json(users);
+            return resp.status(200).json(
+                responser.response(200, users)
+            )
         })
-
     }
 
 }
 
 
-export default operations;
+export default operations
