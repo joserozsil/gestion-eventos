@@ -1,16 +1,16 @@
 'use strict'
 
-var express = require('express')
-var bodyParser = require('body-parser')
+import express from 'express'
+import bodyParser from 'body-parser'
 
-var app = express()
+let app = express()
 
 // middlewares e body-parser
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // configurar rutas
-var routes = require('./routes')
+import routes from './routes'
 
 // congigurar CORS
 app.use((req, res, next) => {

@@ -1,10 +1,8 @@
-module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define('User', {
-        title: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        }
-    });
+'use strict'
 
-    return User;
-};
+module.exports = (sequelize, DataTypes) => {
+    var User = sequelize.define('User', {
+        username: DataTypes.STRING
+    })
+    return User
+}

@@ -1,11 +1,16 @@
-const User = require('../models/').User;
+'use strict';
 
-module.exports = {
-    list(req, res) {
-        console.log('Recibiendo petición')
-        return User
-            .findAll()
-            .then((users) => res.status(200).send(users))
-            .catch((error) => res.status(400).send(error));
+import models from '../models'
+
+const operations = {
+    show: (req, resp) => {
+        models.User.findAll().then(users => {
+            return resp.status(200).json(users);
+        })
+
     }
-};
+
+}
+
+
+export default operations;

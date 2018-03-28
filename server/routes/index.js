@@ -1,11 +1,10 @@
 'use strict'
 
-const express = require('express')
+import express from 'express'
+import userController from '../controllers/user'
 
 const api = express.Router()
 
-const userController = require('../controllers').user;
-
-api.get('', userController.list);
+api.get('/list', userController.show);
 
 module.exports = api

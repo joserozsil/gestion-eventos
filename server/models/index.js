@@ -1,28 +1,30 @@
-const fs = require('fs')
-const path = require('path')
-const Sequelize = require('sequelize')
-const basename = path.basename(module.filename)
+import fs from 'fs'
+import path from 'path'
+import chalk from 'chalk'
+import Sequelize from 'sequelize'
+import settings from '../config/db.json'
+
 const env = process.env.NODE_ENV || 'development'
-const config = require(`../config/db.json`)[env]
+const basename = path.basename(module.filename)
+let sequelize
 const db = {}
 
-let sequelize
-if (config.use_env_variable) {
-    sequelize = new Sequelize(process.env[config.use_env_variable])
-} else {
+try {
     sequelize = new Sequelize(
-        config.database, config.username, config.password, config
+        settings[env].database, settings[env].username, settings[env].password, settings[env]
     )
+    console.log(chalk.blue(`Conectado a la base de datos: ${ settings[env].database }`))
+} catch (e) {
+    console.log(chalk.red(`Ha ocurrido un error ${ e }`))
 }
 
 fs
     .readdirSync(__dirname)
-    .filter((file) =>
-        (file.indexOf('.') !== 0) &&
-        (file !== basename) &&
-        (file.slice(-3) === '.js'))
+    .filter((file) => {
+        return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js')
+    })
     .forEach((file) => {
-        const model = sequelize.import(path.join(__dirname, file))
+        const model = sequelize['import'](path.join(__dirname, file))
         db[model.name] = model
     })
 

@@ -1,8 +1,7 @@
 'use strict'
 
-export const SECRET = process.env.SECRET || "SECRET KEY HERE"
-
-export const SETTINGS = {
+export const settings = {
+    "SECRET": process.env.SECRET || "SECRET KEY HERE",
     "PROD_MODE": process.env.PROD_MODE || false,
     "MANT_MODE": process.env.MANT_MODE || false,
     "APP_PORT": process.env.APP_PORT || "8080",
