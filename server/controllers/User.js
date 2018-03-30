@@ -30,27 +30,25 @@ const operations = {
     },
     store: (req, res) => {
         bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(req.body.password, salt, (err, hash) => {
-                const user = {
-                    idCard: req.body.idCard,
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    address: req.body.address,
-                    password: hash
-                }
-                models.User.create(user)
-                    .then(user => {
-                        return res.status(200).json(
-                            responser.response(200, user, "¡Usuario registrado correctamente!")
-                        )
-                    }).catch(error => {
-                        return res.status(200).json(
-                            responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
-                        )
-                    })
-            })
+            bcrypt.hash(req.body.password, salt, (err, hash) => {})
         })
-
+        const user = {
+            idCard: req.body.idCard,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            address: req.body.address,
+            password: req.body.password
+        }
+        models.User.create(user)
+            .then(user => {
+                return res.status(200).json(
+                    responser.response(200, user, "¡Usuario registrado correctamente!")
+                )
+            }).catch(error => {
+                return res.status(200).json(
+                    responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
+                )
+            })
     },
     update: (req, res) => {
         const userToUpdated = {
