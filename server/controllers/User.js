@@ -1,7 +1,7 @@
 'use strict'
 
 import models from '../models'
-import responser from '../services/format'
+import responser from '../services/response'
 import chalk from 'chalk'
 import bcrypt from 'bcrypt'
 
@@ -13,7 +13,7 @@ const operations = {
             )
         }).catch(error => {
             return res.status(200).json(
-                responser.response(200, {}, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
+                responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
             )
         })
     },
@@ -24,7 +24,7 @@ const operations = {
             )
         }).catch(error => {
             return res.status(200).json(
-                responser.response(200, {}, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
+                responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
             )
         })
     },
@@ -45,7 +45,7 @@ const operations = {
                         )
                     }).catch(error => {
                         return res.status(200).json(
-                            responser.response(200, {}, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
+                            responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
                         )
                     })
             })
@@ -68,7 +68,7 @@ const operations = {
             })
         }).catch(error => {
             return res.status(200).json(
-                responser.response(200, {}, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
+                responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
             )
         })
 
@@ -82,13 +82,13 @@ const operations = {
 
             }).catch(error => {
                 return res.status(200).json(
-                    responser.response(200, {}, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
+                    responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
                 )
             })
 
         }).catch(error => {
             return res.status(200).json(
-                responser.response(200, {}, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
+                responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
             )
         })
     }
