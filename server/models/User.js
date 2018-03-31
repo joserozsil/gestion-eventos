@@ -24,9 +24,12 @@ module.exports = (sequelize, DataTypes) => {
                 type: Sequelize.STRING,
                 allowNull: false,
                 validate: {
-                    is: ["^[a-z]+$", 'i'],
+                    is: {
+                        args: /^[a-zA-Z\s]*$/,
+                        msg: "Solo puede contener letras y espacios"
+                    },
                     notEmpty: true,
-                    len: [3, 15]
+                    len: [3, 25]
                 },
                 get() {
                     return this.getDataValue('firstName').charAt(0).toUpperCase() + this.getDataValue('firstName').slice(1)
@@ -39,9 +42,18 @@ module.exports = (sequelize, DataTypes) => {
                 type: Sequelize.STRING,
                 allowNull: false,
                 validate: {
-                    is: ["^[a-z]+$", 'i'],
+                    is: {
+                        args: /^[a-zA-Z\s]*$/,
+                        msg: "Solo puede contener letras y espacios"
+                    },
                     notEmpty: true,
-                    len: [3, 25]
+                    len: [3, 30]
+                },
+                get() {
+                    return this.getDataValue('lastName').charAt(0).toUpperCase() + this.getDataValue('lastName').slice(1)
+                },
+                set(value) {
+                    this.setDataValue('lastName', value.toLowerCase())
                 }
             },
             address: {
