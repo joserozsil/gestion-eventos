@@ -18,4 +18,9 @@ export class UserService {
       .map( res => res.json());
   }
 
+  delete(idCard:string) {
+    return this._http.delete(this.url + '/' + idCard)
+      .map( res => res.json());
+  }
+
 }

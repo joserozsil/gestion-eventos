@@ -10,16 +10,20 @@ import { error } from 'util';
 })
 
 export class UserListComponent  implements OnInit{
-  public usuarios;
+  public users;
   constructor (private _userService: UserService) {
   }
 
   ngOnInit() {
+    this.show();
+  }
+  show() {
     this._userService.show().subscribe(
       result => {
-        this.usuarios = result.data;
-        if(!this.usuarios) {
-
+        if(!result.data) {
+          this.users = [];
+        } else {
+          this.users = result.data;
         }
       }, 
       error => {
@@ -27,6 +31,20 @@ export class UserListComponent  implements OnInit{
         console.error(errorMessage);
       }
     );
+  }
 
+  delete(idCard:string) {
+    this._userService.delete(idCard).subscribe(
+      result => {
+        if( result.meta.status == 200) {
+          console.log(result.meta.userMessage);
+          this.show();
+        }
+      }, 
+      error => {
+        let errorMessage = <any>error;
+        console.error(errorMessage);
+      }
+    );
   }
 }
