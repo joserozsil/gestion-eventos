@@ -6,6 +6,7 @@ import { AppRoutes } from './app.routing';
 
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(AppRoutes)
+    RouterModule.forRoot(AppRoutes),
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]

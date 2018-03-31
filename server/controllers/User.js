@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt'
 
 const operations = {
     index: (req, res) => {
-        models.User.findAll().then(users => {
+        models.User.findAll({ where: { deletedAt: null } }).then(users => {
             return res.status(200).json(
                 responser.response(200, users)
             )
@@ -73,7 +73,7 @@ const operations = {
     },
     delete: (req, res) => {
         models.User.findOne({ where: { idCard: req.params.idCard } }).then(user => {
-            user.updateAttributes({ deleteAt: Date.now() }).then(updated => {
+            user.updateAttributes({ deletedAt: Date.now() }).then(updated => {
                 return res.status(200).json(
                     responser.response(200, updated, "¡Usuario eliminado correctamente!")
                 )

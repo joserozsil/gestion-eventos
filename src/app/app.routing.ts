@@ -7,6 +7,9 @@ export const AppRoutes: Routes = [{
   children: [{
     path: 'dashboard',
     loadChildren: './dashboard/dashboard.module#DashboardModule'
+  },{
+    path: 'user',
+    loadChildren: './user/user.module#UserModule'
   }]
 }];
 
