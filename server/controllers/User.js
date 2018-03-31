@@ -37,7 +37,8 @@ const operations = {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             address: req.body.address,
-            password: req.body.password
+            password: req.body.password,
+            phone: req.body.phone
         }
         models.User.create(user)
             .then(user => {

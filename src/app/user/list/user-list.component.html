@@ -19,7 +19,7 @@
                 <h3 class="box-title">ADMINISTRACIÓN DE USUARIOS</h3>
                 <div class="scrollable">
                     <div class="table-responsive">
-                        <table id="demo-foo-addrow" class="table m-t-30 table-hover contact-list" data-page-size="10">
+                        <table id="demo-foo-addrow" class=" table toggle-circle table-hover table m-t-30 table-hover contact-list toggle-arrow-tiny" data-page-size="10">
                             <thead>
                                 <tr>
                                     <th>Cedula</th>
@@ -29,8 +29,8 @@
                                     <th>Role</th>
                                     <th>Departamento</th>
                                     <th>Creado</th>
-                                    <th>Salery</th>
                                     <th>Action</th>
+                                    <th data-hide="all"> Dirección </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,10 +38,10 @@
                                     <td>{{ user.idCard }}</td>
                                     <td>
                                         {{ user.firstName }}
-                                        <br/><span class="text-muted">Texas, Unitedd states</span>
+                                        <br/><span class="text-muted">Departamento, criminalistica</span>
                                     </td>
                                     <td>{{ user.lastName }}</td>
-                                    <td>+123 456 789</td>
+                                    <td>{{ user.phone }}</td>
                                     <td>
                                         <select class="form-control">
                                             <option>Modulator</option>
@@ -55,9 +55,11 @@
                                         {{ user.createdAt}}
                                         <br/><span class="text-muted">10: 55 AM</span>
                                     </td>
-                                    <td>$1200</td>
                                     <td>
                                         <button (click)="delete(user.idCard)" type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-close" aria-hidden="true"></i></button>
+                                    </td>
+                                    <td>
+                                        {{ user.address }}
                                     </td>
                                 </tr>
                             </tbody>
