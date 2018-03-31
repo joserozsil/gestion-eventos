@@ -10,7 +10,7 @@ import { error } from 'util';
 })
 
 export class UserListComponent  implements OnInit{
-  public users;
+  public users = [];
   constructor (private _userService: UserService) {
   }
 
@@ -38,7 +38,7 @@ export class UserListComponent  implements OnInit{
       result => {
         if( result.meta.status == 200) {
           console.log(result.meta.userMessage);
-          this.show();
+          this.users.splice(result.data, 1);
         }
       }, 
       error => {
