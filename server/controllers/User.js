@@ -73,19 +73,19 @@ const operations = {
 
     },
     delete: (req, res) => {
-        models.User.findOne({ where: { idCard: req.params.idCard } }).then(user => {
-            user.updateAttributes({ deletedAt: Date.now() }).then(updated => {
+        models.User.findOne({ where: { idCard: req.params.idCard } }).then((user) => {
+            user.updateAttributes({ deletedAt: Date.now() }).then((updated) => {
                 return res.status(200).json(
                     responser.response(200, updated, "¡Usuario eliminado correctamente!")
                 )
 
-            }).catch(error => {
+            }).catch((error) => {
                 return res.status(200).json(
                     responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
                 )
             })
 
-        }).catch(error => {
+        }).catch((error) => {
             return res.status(200).json(
                 responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
             )
