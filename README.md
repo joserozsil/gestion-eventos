@@ -12,4 +12,4 @@ Entrar a la carpeta del proyecto: `cd gestion-novedades`
 
 Instalar las depencias: `npm install`
 
-Correr el proyecto: `npm start`. Navegar al `http://localhost:4200/`. La aplicación automaticamente carga el servidor y el cliente y reinicia ambos si ha ocurrido un cambio
+Correr el proyecto: `npm start`. Navegar al `http://localhost:4200/`. La aplicación automaticamente carga el servidor y el cliente y reinicia ambos si ha ocurrido algún cambio
