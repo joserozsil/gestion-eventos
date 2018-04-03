@@ -19,7 +19,7 @@
                 <p class="text-muted m-b-30 font-13">
                     Por favor rellene el siguiente formulario para registrar un nuevo usuario
                 </p>
-                <form class="form-horizontal">
+                <form (ngSubmit)="saveUser()" class="form-horizontal" #f="ngForm">
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Nombres*</label>
                         <div class="col-sm-9">
@@ -71,7 +71,7 @@
                     </div>
                     <div class="form-group m-b-0">
                         <div class="col-sm-offset-3 col-sm-9">
-                            <button (click)="saveUser()" class="btn btn-info waves-effect waves-light m-t-10">Agregar Nuevo Usuario</button>
+                            <button [disabled]="!createUserForm.valid" type="submit" class="btn btn-info waves-effect waves-light m-t-10">Agregar Nuevo Usuario</button>
                         </div>
                     </div>
                 </form>

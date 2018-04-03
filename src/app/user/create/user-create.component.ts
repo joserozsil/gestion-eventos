@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../services/user.service';
-
-import { error } from 'util';
+import { NgForm } from '@angular/forms';
 import { User } from '../../models/user';
+import { error } from 'util';
 
 @Component({
   selector: 'user-create',
@@ -12,6 +12,7 @@ import { User } from '../../models/user';
 })
 
 export class UserCreateComponent  implements OnInit {
+  @ViewChild('f') createUserForm: NgForm;
 
   private firstName:string ="Jose Angel";
   private lastName:string = "Rodriguez Silva";
@@ -29,14 +30,9 @@ export class UserCreateComponent  implements OnInit {
   }
 
   private saveUser() {
-    let user = new User();
-    user.firstName = this.firstName;
-    user.lastName = this.lastName;
-    user.phone = this.phone;
-    user.address = this.address;
-    user.password = this.password;
-    user.idCard = this.idCard;
-
+    console.log(this.createUserForm);
+    //let user = new User(form.value);
+    /*
     this._userService.store(user).subscribe(
       result => {
         if(result.data.status == 200) {
@@ -52,5 +48,6 @@ export class UserCreateComponent  implements OnInit {
         console.error(errorMessage);
       }
     );
+    */
   }
 }
