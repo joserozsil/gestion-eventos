@@ -6,11 +6,13 @@ import { UserRoutes } from './user.routing';
 
 import { UserListComponent } from './list/user-list.component';
 import { UserCreateComponent } from './create/user-create.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(UserRoutes)
+    RouterModule.forChild(UserRoutes),
+    FormsModule
   ],
   declarations: [UserListComponent, UserCreateComponent]
 })

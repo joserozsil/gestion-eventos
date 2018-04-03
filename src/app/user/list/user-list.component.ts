@@ -18,7 +18,7 @@ export class UserListComponent  implements OnInit{
     this.show();
   }
   show() {
-    this._userService.show().subscribe(
+    this._userService.index().subscribe(
       result => {
         if(!result.data) {
           this.users = [];

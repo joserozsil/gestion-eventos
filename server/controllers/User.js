@@ -42,12 +42,12 @@ const operations = {
         }
         models.User.create(user)
             .then(user => {
-                return res.status(200).json(
-                    responser.response(200, user, "¡Usuario registrado correctamente!")
+                return res.status(201).json(
+                    responser.response(201, user, "¡Usuario registrado correctamente!")
                 )
             }).catch(error => {
-                return res.status(200).json(
-                    responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
+                return res.status(404).json(
+                    responser.error(404, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
                 )
             })
     },
