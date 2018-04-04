@@ -5,9 +5,9 @@
         </div>
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
-                <li><a href="#">Inicio</a></li>
-                <li><a (click)="navigate()" >Usuarios</a></li>
-                <li class="active">Crear</li>
+                <li><a [routerLink]="['/']" href="#">Inicio</a></li>
+                <li><a [routerLink]="['/user/list']" href="#" >Usuarios</a></li>
+                <li [routerLink]="['/user/create']" hred="#" class="active">Crear</li>
             </ol>
         </div>
     </div>
@@ -96,14 +96,48 @@
                     <div class="form-group">
                         <label for="phone" class="col-sm-3 control-label">Teléfono</label>
                         <div class="col-sm-9">
-                            <input class="form-control m-b-5" id="phone" ngModel name="phone" type="text" data-mask="(9999) 999-9999" placeholder="Teléfono">
-                            <span class="font-13 text-muted">Ej: (0414) 123-4567</span>
+                            <input class="form-control m-b-5" id="phone"
+                                ngModel name="phone" type="text"
+                                placeholder="Teléfono"
+                                minlength="11" maxlength="15"
+                                pattern="[0-9]+$"
+                                required #phone="ngModel">
+                            <div *ngIf="phone.errors && (phone.dirty || phone.touched)" class="alert alert-danger">
+                                <div [hidden]="!phone.errors.required">
+                                    El campo teléfono es requerido
+                                </div>
+                                <div [hidden]="!phone.errors.minlength">
+                                    El campo teléfono debe contener mínimo 7 dígitos
+                                </div>
+                                <div [hidden]="!phone.errors.maxlength">
+                                    El campo teléfono debe contener máximo 15 dígitos
+                                </div>
+                                <div [hidden]="!phone.errors.pattern">
+                                    El campo teléfono solo debe contener valores númericos
+                                </div>
+                            </div>
+                            <span class="font-13 text-muted">Ej: 02869319484</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="address" class="col-sm-3 control-label">Dirección</label>
                         <div class="col-sm-9">
-                            <input class="form-control m-b-5" id="address" ngModel name="address" type="text" placeholder="Dirección">
+                            <input class="form-control m-b-5" id="address"
+                            ngModel name="address"
+                            type="text" placeholder="Dirección"
+                            minlength="12" maxlength="100" required
+                            #address="ngModel">
+                        <div *ngIf="address.errors && (address.dirty || address.touched)" class="alert alert-danger">
+                            <div [hidden]="!address.errors.required">
+                                El campo dirección es requerido
+                            </div>
+                            <div [hidden]="!address.errors.minlength">
+                                El campo dirección debe contener mínimo 12 dígitos
+                            </div>
+                            <div [hidden]="!address.errors.maxlength">
+                                El campo dirección debe contener máximo 50 dígitos
+                            </div>
+                        </div>
                             <span class="font-13 text-muted">Ej: Ud 103, San Félix edo Bolívar</span>
                         </div>
                     </div>
@@ -128,7 +162,7 @@
                             <span *ngIf="type == 'text'" class="font-13 text-muted pointer"><a (click)="type = 'password'">Ocultar contraseña</a></span>
                         </div>
                     </div>
-                    <div class="form-group m-b-0">
+                    <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-9">
                             <button [disabled]="!f.valid" type="submit" class="btn btn-info waves-effect waves-light m-t-10">Agregar Nuevo Usuario</button>
                         </div>

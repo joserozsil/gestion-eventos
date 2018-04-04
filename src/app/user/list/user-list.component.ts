@@ -11,19 +11,21 @@ import { error } from 'util';
 
 export class UserListComponent  implements OnInit{
   public users = [];
-  constructor (private _userService: UserService) {
+  constructor (private userService: UserService) {
   }
 
   ngOnInit() {
     this.show();
   }
   show() {
-    this._userService.index().subscribe(
+    this.userService.index().subscribe(
       result => {
         if(!result.data) {
           this.users = [];
         } else {
-          this.users = result.data;
+          result.data.forEach(element => {
+            this.users.push(element);
+          });
         }
       }, 
       error => {
@@ -34,7 +36,7 @@ export class UserListComponent  implements OnInit{
   }
 
   delete(idCard:string) {
-    this._userService.delete(idCard).subscribe(
+    this.userService.delete(idCard).subscribe(
       result => {
         if( result.meta.status == 200) {
           console.log(result.meta.userMessage);

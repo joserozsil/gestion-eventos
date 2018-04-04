@@ -12,27 +12,27 @@ import 'rxjs/add/operator/map';
 export class UserService {
   public url:string;
 
-  constructor(private _http:Http) {
+  constructor(private http:Http) {
     this.url = environment.apiUrl + "/users"
   }
 
   public index() {
-    return this._http.get(this.url)
+    return this.http.get(this.url)
       .map( res => res.json());
   }
 
   public show(idCard:string) {
-    return this._http.get(this.url + '/' + idCard)
+    return this.http.get(this.url + '/' + idCard)
       .map( res => res.json());
   }
 
   public store(user:User) {
-    return this._http.post(this.url, user)
+    return this.http.post(this.url, user)
       .map( res => res.json());
   }
 
   public delete(idCard:string) {
-    return this._http.delete(this.url + '/' + idCard)
+    return this.http.delete(this.url + '/' + idCard)
       .map( res => res.json());
   }
 

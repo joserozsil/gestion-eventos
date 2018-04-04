@@ -59,14 +59,19 @@ module.exports = (sequelize, DataTypes) => {
             address: {
                 type: Sequelize.STRING,
                 allowNull: true,
-                defaultValue: "ciudad guayana"
+                validate: {
+                    len: {
+                        args: [12, 100],
+                        msg: "La dirección debe posee entre 12 a 50 caracteres"
+                    }
+                }
             },
             phone: {
                 type: Sequelize.STRING,
                 allowNull: true,
                 validate: {
                     len: {
-                        args: [7, 25],
+                        args: [11, 15],
                         msg: "El número telefónico debe posee entre 7 a 25 caracteres"
                     }
                 }
