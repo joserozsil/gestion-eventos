@@ -14,8 +14,6 @@ import { error } from 'util';
 export class UserCreateComponent  implements OnInit {
   @ViewChild('f') createUserForm: NgForm;
 
-  private firstName:string ="Jose Angel";
-  private lastName:string = "Rodriguez Silva";
   private phone:string = "04249566353";
   private address:string = "Ud, 146. San Felix edo Bolivar";
   private idCard:string = "24847272";
@@ -49,5 +47,9 @@ export class UserCreateComponent  implements OnInit {
       }
     );
     */
+  }
+
+  private console(test:any) {
+    console.log(test)
   }
 }

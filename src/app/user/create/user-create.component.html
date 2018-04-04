@@ -23,22 +23,74 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Nombres*</label>
                         <div class="col-sm-9">
-                            <input class="form-control m-b-5" id="firstName" [(ngModel)]="firstName" name="firstName" type="text"  placeholder="Nombres">
-                            <span class="font-13 text-muted">Ej: José Angel {{ firstName }}</span>
+                            <input class="form-control m-b-5" 
+                                id="firstName" type="text" 
+                                ngModel name="firstName"
+                                placeholder="Nombres" required
+                                minlength="4" pattern="[a-zA-Z ]*"
+                                #firstName="ngModel">
+                                <div *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="alert alert-danger">
+                                    <div [hidden]="!firstName.errors.required">
+                                        El campo nombre es requerido
+                                    </div>
+                                    <div [hidden]="!firstName.errors.minlength">
+                                        El campo nombre debe poseer al menos 4 caracteres
+                                    </div>
+                                    <div [hidden]="!firstName.errors.pattern">
+                                        Solo esta permitido letras y espacios
+                                    </div>
+                                </div>
+                            <span class="font-13 text-muted">Ej: José Angel</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="lastName" class="col-sm-3 control-label">Apellidos*</label>
                         <div class="col-sm-9">
-                            <input  class="form-control m-b-5" id="lastName" [(ngModel)]="lastName" name="lastName" type="text" placeholder="Apellidos" >
+                            <input class="form-control m-b-5"
+                                id="lastName" ngModel
+                                name="lastName" type="text"
+                                placeholder="Apellidos" required
+                                minlength="4" pattern="[a-zA-Z ]*"
+                                #lastName="ngModel">
+                            <div *ngIf="lastName.errors && (lastName.dirty || lastName.touched)" class="alert alert-danger">
+                                <div [hidden]="!lastName.errors.required">
+                                    El campo apellido es requerido
+                                </div>
+                                <div [hidden]="!lastName.errors.minlength">
+                                    El campo apellido debe poseer al menos 4 caracteres
+                                </div>
+                                <div [hidden]="!lastName.errors.pattern">
+                                    Solo esta permitido letras y espacios
+                                </div>
+                            </div>
                             <span class="font-13 text-muted">Ej: Rodríguez Silva</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="lastName" class="col-sm-3 control-label">Cédula*</label>
                         <div class="col-sm-9">
-                            <input class="form-control m-b-5" id="idCard" [(ngModel)]="idCard" name="idCard" type="number" placeholder="Cédula de identidad" >
-                            <span class="font-13 text-muted">Ej: Rodríguez Silva</span>
+                            <input class="form-control m-b-5" 
+                            id="idCard" ngModel 
+                            name="idCard" type="text" 
+                            placeholder="Cédula de identidad"
+                            minlength="7" maxlength="8"
+                            pattern="[0-9]+$"
+                            required #idCard="ngModel">
+                            <div *ngIf="idCard.errors && (idCard.dirty || idCard.touched)" class="alert alert-danger">
+                                <div [hidden]="!idCard.errors.required">
+                                    El campo cédula es requerido
+                                </div>
+                                <div [hidden]="!idCard.errors.minlength">
+                                    El campo cédula debe contener mínimo 7 dígitos
+                                </div>
+                                <div [hidden]="!idCard.errors.maxlength">
+                                    El campo cédula debe contener máximo 8 dígitos
+                                </div>
+                                <div [hidden]="!idCard.errors.pattern">
+                                    El campo cédula solo puede contener números
+                                </div>
+                            </div>
+                            <span class="font-13 text-muted">Ej: 24847272 {{ console(idCard) }}</span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -49,7 +101,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="address" class="col-sm-3 control-label">Dirección*</label>
+                        <label for="address" class="col-sm-3 control-label">Dirección</label>
                         <div class="col-sm-9">
                             <input class="form-control m-b-5" id="address" [(ngModel)]="address" name="address" type="text" placeholder="Dirección">
                             <span class="font-13 text-muted">Ej: Ud 103, San Félix edo Bolívar</span>
@@ -58,20 +110,20 @@
                     <div class="form-group">
                         <label for="password" class="col-sm-3 control-label">Contraseña*</label>
                         <div class="col-sm-9">
-                            <input class="form-control m-b-5" id="password" [(ngModel)]="password" name="password" type="password" placeholder="Contraseña">
+                            <input class="form-control m-b-5" id="password" [(ngModel)]="password" name="password" type="password" placeholder="Contraseña" required>
                             <span class="font-13 text-muted">Ej: Hday$rc9</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="confirm" class="col-sm-3 control-label">Repetir Contraseña*</label>
                         <div class="col-sm-9">
-                            <input class="form-control m-b-5" id="confirm" [(ngModel)]="confirmPassword" name="confirmPassword" type="password" placeholder="Repetir contraseña">
+                            <input class="form-control m-b-5" id="confirm" [(ngModel)]="confirmPassword" name="confirmPassword" type="password" placeholder="Repetir contraseña" required>
                             <span class="font-13 text-muted">Ej: Hday$rc9</span>
                         </div>
                     </div>
                     <div class="form-group m-b-0">
                         <div class="col-sm-offset-3 col-sm-9">
-                            <button [disabled]="!createUserForm.valid" type="submit" class="btn btn-info waves-effect waves-light m-t-10">Agregar Nuevo Usuario</button>
+                            <button [disabled]="!f.valid" type="submit" class="btn btn-info waves-effect waves-light m-t-10">Agregar Nuevo Usuario</button>
                         </div>
                     </div>
                 </form>
