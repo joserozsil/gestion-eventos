@@ -11,7 +11,7 @@ export class User {
         this.lastName = user.lastName;
         this.idCard = user.idCard;
         this.password = user.password;
-        this.phone = user.phone;
-        this.address = user.address;
+        this.phone = user.phone || "";
+        this.address = user.address || "";
     }
 }
