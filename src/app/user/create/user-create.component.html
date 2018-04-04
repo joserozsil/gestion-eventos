@@ -6,7 +6,7 @@
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
                 <li><a href="#">Inicio</a></li>
-                <li><a href="#">Usuarios</a></li>
+                <li><a (click)="navigate()" >Usuarios</a></li>
                 <li class="active">Crear</li>
             </ol>
         </div>
@@ -90,35 +90,42 @@
                                     El campo cédula solo puede contener números
                                 </div>
                             </div>
-                            <span class="font-13 text-muted">Ej: 24847272 {{ console(idCard) }}</span>
+                            <span class="font-13 text-muted">Ej: 24847272</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="phone" class="col-sm-3 control-label">Teléfono</label>
                         <div class="col-sm-9">
-                            <input class="form-control m-b-5" id="phone" [(ngModel)]="phone" name="phone" type="text" data-mask="(9999) 999-9999" placeholder="Teléfono">
+                            <input class="form-control m-b-5" id="phone" ngModel name="phone" type="text" data-mask="(9999) 999-9999" placeholder="Teléfono">
                             <span class="font-13 text-muted">Ej: (0414) 123-4567</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="address" class="col-sm-3 control-label">Dirección</label>
                         <div class="col-sm-9">
-                            <input class="form-control m-b-5" id="address" [(ngModel)]="address" name="address" type="text" placeholder="Dirección">
+                            <input class="form-control m-b-5" id="address" ngModel name="address" type="text" placeholder="Dirección">
                             <span class="font-13 text-muted">Ej: Ud 103, San Félix edo Bolívar</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="password" class="col-sm-3 control-label">Contraseña*</label>
                         <div class="col-sm-9">
-                            <input class="form-control m-b-5" id="password" [(ngModel)]="password" name="password" type="password" placeholder="Contraseña" required>
-                            <span class="font-13 text-muted">Ej: Hday$rc9</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm" class="col-sm-3 control-label">Repetir Contraseña*</label>
-                        <div class="col-sm-9">
-                            <input class="form-control m-b-5" id="confirm" [(ngModel)]="confirmPassword" name="confirmPassword" type="password" placeholder="Repetir contraseña" required>
-                            <span class="font-13 text-muted">Ej: Hday$rc9</span>
+                            <input class="form-control m-b-5" id="password"
+                                ngModel name="password"
+                                [type]="type" autocomplete="off" 
+                                placeholder="Contraseña" required
+                                pattern="^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$"
+                                #password="ngModel">
+                            <div *ngIf="password.errors && (password.dirty || password.touched)" class="alert alert-danger">
+                                <div [hidden]="!password.errors.required">
+                                    La contraseña es requerida
+                                </div>
+                                <div [hidden]="!password.errors.pattern">
+                                    La contraseña debe tener entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula, al menos una mayúscula y al menos un caracter no alfanumérico.
+                                </div>
+                            </div>
+                            <span *ngIf="type == 'password'" class="font-13 text-muted pointer"><a (click)="type = 'text'">Mostrar contraseña</a></span>
+                            <span *ngIf="type == 'text'" class="font-13 text-muted pointer"><a (click)="type = 'password'">Ocultar contraseña</a></span>
                         </div>
                     </div>
                     <div class="form-group m-b-0">

@@ -4,6 +4,11 @@ input.ng-invalid.ng-touched {
     transition: border 1s;
 }
 
+input.ng-valid.ng-touched {
+    border: 1px solid green;
+    transition: border 1s;
+}
+
 .help-block {
     color: red;
 }
@@ -11,4 +16,8 @@ input.ng-invalid.ng-touched {
 .alert-danger {
     border-radius: 5px;
     transition: all 1s;
+}
+
+.pointer {
+    cursor: pointer;
 }

@@ -38,7 +38,7 @@ export class UserListComponent  implements OnInit{
       result => {
         if( result.meta.status == 200) {
           console.log(result.meta.userMessage);
-          this.users.splice(result.data, 1);
+          this.users.splice(result.data.idCard, 1);
         }
       }, 
       error => {
