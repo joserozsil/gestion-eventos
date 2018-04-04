@@ -1,6 +1,7 @@
 'use strict'
 
 import Sequelize from 'Sequelize'
+import { encrypt } from '../services/password'
 
 module.exports = (sequelize, DataTypes) => {
     var User = sequelize.define('User', {
@@ -120,5 +121,16 @@ module.exports = (sequelize, DataTypes) => {
         }
 
     )
+
+    User.beforeCreate((user, options) => {
+        return encrypt(user.password)
+        .then(success => {
+            user.password = success
+        })
+        .catch(err => {
+            if (err) console.log(err)
+        })
+    })
+
     return User
 }

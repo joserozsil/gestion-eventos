@@ -2,8 +2,8 @@
 
 import models from '../models'
 import responser from '../services/response'
+import { encrypt } from '../services/password'
 import chalk from 'chalk'
-import bcrypt from 'bcrypt'
 
 const operations = {
     index: (req, res) => {
@@ -29,9 +29,6 @@ const operations = {
         })
     },
     store: (req, res) => {
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(req.body.password, salt, (err, hash) => {})
-        })
         const user = {
             idCard: req.body.idCard,
             firstName: req.body.firstName,

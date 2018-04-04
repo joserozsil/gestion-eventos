@@ -2,6 +2,7 @@
 
 export const settings = {
     "SECRET": process.env.SECRET || "SECRET KEY HERE",
+    "EXPIRE_TIME": process.env.EXPIRE_TIME || "",
     "PROD_MODE": process.env.PROD_MODE || false,
     "MANT_MODE": process.env.MANT_MODE || false,
     "APP_PORT": process.env.APP_PORT || "8080",
