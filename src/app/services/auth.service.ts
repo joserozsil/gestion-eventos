@@ -5,6 +5,8 @@ import { environment } from '../../environments/environment';
 
 import 'rxjs/add/operator/map';
 
+import { Credential } from '../models/credential';
+
 @Injectable()
 
 export class AuthService {
@@ -14,7 +16,7 @@ export class AuthService {
       this.url = environment.apiUrl + "/signin"
     }
 
-    public signin(credential:any) {
+    public signin(credential:Credential) {
         return this.http.post(this.url, credential)
           .map( res => res.json());
       }

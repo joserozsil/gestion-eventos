@@ -8,11 +8,13 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
+import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    AuthLayoutComponent
   ],
   imports: [
     BrowserModule,

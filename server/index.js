@@ -7,6 +7,6 @@ import { settings } from './config'
 
 models.sequelize.sync().then(() => {
     app.listen(settings.APP_PORT, () => {
-        console.log(chalk.blue(`Servidor Node y Express está corriendo en el puerto ${ settings.APP_PORT } `))
+        console.log(chalk.blue(`Servidor Node y Express corriendo en el puerto ${ settings.APP_PORT } `))
     })
 })
