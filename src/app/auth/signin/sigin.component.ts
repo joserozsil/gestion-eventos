@@ -13,15 +13,32 @@ import { error } from 'util';
 })
 
 export class SignInComponent  implements OnInit {
-  //@ViewChild('f') createUserForm: NgForm;
+  @ViewChild('f') signInForm: NgForm;
 
   private type="password";
+  private hasErrorCredential:boolean = false;
+  private isContent:boolean = true;
 
-  constructor (private router: Router) {
+  constructor (private router: Router, private authService:AuthService) {
   }
 
   ngOnInit() {
     
+  }
+
+  private signIn() {
+    this.hasErrorCredential = false;
+    let user = new User(this.signInForm.value);
+    this.authService.signin(user).subscribe(
+      result => {
+        localStorage.setItem('token', result.data.token);
+        this.router.navigate(['/']);
+      }, 
+      error => {
+        let errorMessage = <any>error;
+        if( errorMessage.status == 403) this.hasErrorCredential = true;
+      }
+    );
   }
 
 }
