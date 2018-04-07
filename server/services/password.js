@@ -16,7 +16,8 @@ exports.encrypt = (plainPassword) => {
             console.log(err)
             reject({
                 status: 500,
-                message: 'No se ha podido encriptar'
+                message: 'No se ha podido encriptar',
+                err: err
             })
         }
     })

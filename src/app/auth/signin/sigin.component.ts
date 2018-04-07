@@ -12,7 +12,7 @@ import { error } from 'util';
   providers: [AuthService]
 })
 
-export class SignInComponent  implements OnInit {
+export class SignInComponent  implements OnInit{
   @ViewChild('f') signInForm: NgForm;
 
   private type="password";
@@ -32,7 +32,8 @@ export class SignInComponent  implements OnInit {
     this.authService.signin(user).subscribe(
       result => {
         localStorage.setItem('token', result.data.token);
-        this.router.navigate(['/']);
+        localStorage.setItem('user', result.data.user.idCard);
+        this.router.navigate(['/dashboard']);
       }, 
       error => {
         let errorMessage = <any>error;

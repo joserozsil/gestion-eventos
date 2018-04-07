@@ -19,7 +19,7 @@ const operations = {
                 .then((value) => {
                     if( value ) {
                         return res.status(200).json(
-                            responser.response(200, { token: createToken(user) } , "Usuario logeado correctamente")
+                            responser.response(200, { token: createToken(user), user: user } , "Usuario logeado correctamente")
                         )
                     } else {
                         return res.status(403).json(
