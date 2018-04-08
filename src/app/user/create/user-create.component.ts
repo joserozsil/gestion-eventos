@@ -19,7 +19,12 @@ export class UserCreateComponent  implements OnInit {
   private confirmPassword:string = "aderADW7$";
   private type="password";
 
-  constructor (private userService: UserService, private router: Router, private toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor (
+    private userService: UserService,
+    private router: Router,
+    private toastr: ToastsManager,
+    vcr: ViewContainerRef
+  ) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -33,7 +38,7 @@ export class UserCreateComponent  implements OnInit {
     this.userService.store(user).subscribe(
       result => {
         console.dir(result);
-        this.toastr.success('Registrado correctamente!', 'Listo!');
+        this.toastr.success('Registrado correctamente!', '¡Listo!');
         this.createUserForm.reset();
         setTimeout(() => {
           this.router.navigate(['/user/list']);
@@ -41,7 +46,11 @@ export class UserCreateComponent  implements OnInit {
       }, 
       error => {
         let errorMessage = <any>error;
-        this.toastr.error(`${error}`, '¡Error!');
+        let userMessage = JSON.parse(errorMessage._body);
+        this.toastr.error(`${userMessage.meta.userMessage.message}`, '¡Error!');
+        userMessage.meta.userMessage.details.more.forEach(element => {
+          this.toastr.error(`${element.message}`, '¡Error!');
+        });
       }
     );
   }
@@ -49,20 +58,4 @@ export class UserCreateComponent  implements OnInit {
   private console(test:any) {
     console.log(test)
   }
-
-  private show() {
-    this.toastr.error('You are awesome!', 'Success!');
-    /*
-    $.toast({
-        heading: 'Welcome to my Elite admin',
-        text: 'Use the predefined ones, or specify a custom position object.',
-        position: 'top-right',
-        loaderBg: '#ff6849',
-        icon: 'success',
-        hideAfter: 3500,
-        stack: 6
-    });
-    */
-  }
-
 }

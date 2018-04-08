@@ -12,13 +12,19 @@ module.exports = (sequelize, DataTypes) => {
                 validate: {
                     not: {
                         args: ["[a-z]", 'i'],
-                        msg: "La cedula de identidad solo puede contener valores numéricos"
+                        msg: "La cédula de identidad solo puede contener valores numéricos"
                     },
                     notEmpty: true,
                     len: [7, 8],
                     isNumeric: true,
-                    min: 4000000,
-                    max: 30000000
+                    min: {
+                        args: 4000000,
+                        msg: "La cédula de identidad es invalida"
+                    },
+                    max: {
+                        args: 35000000,
+                        msg: "La cédula de identidad es invalida"
+                    }
                 }
             },
             firstName: {
