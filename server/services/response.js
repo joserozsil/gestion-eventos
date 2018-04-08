@@ -13,10 +13,11 @@ function response(status = null, data = null, userMessage = null, devMessage = n
 }
 
 function error(status = null, userMessage = null, devMessage = null) {
+    
     return response = {
         "meta": {
             "status": status,
-            "userMessage": userMessage,
+            "userMessage": { message: userMessage, details: { name: devMessage.name, more: devMessage.errors } },
             "devMessage": settings.PROD_MODE == false ? devMessage : devMessage.name
         },
         "data": {}

@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -18,7 +19,8 @@ export class UserCreateComponent  implements OnInit {
   private confirmPassword:string = "aderADW7$";
   private type="password";
 
-  constructor (private userService: UserService, private router: Router) {
+  constructor (private userService: UserService, private router: Router, private toastr: ToastsManager, vcr: ViewContainerRef) {
+    this.toastr.setRootViewContainerRef(vcr);
   }
 
   ngOnInit() {
@@ -31,18 +33,36 @@ export class UserCreateComponent  implements OnInit {
     this.userService.store(user).subscribe(
       result => {
         console.dir(result);
-        console.info('Registrado correctamente');
-        this.router.navigate(['/user/list']);
+        this.toastr.success('Registrado correctamente!', 'Listo!');
+        this.createUserForm.reset();
+        setTimeout(() => {
+          this.router.navigate(['/user/list']);
+        }, 1500);
       }, 
       error => {
         let errorMessage = <any>error;
-        console.error(errorMessage);
+        this.toastr.error(`${error}`, '¡Error!');
       }
     );
   }
 
   private console(test:any) {
     console.log(test)
+  }
+
+  private show() {
+    this.toastr.error('You are awesome!', 'Success!');
+    /*
+    $.toast({
+        heading: 'Welcome to my Elite admin',
+        text: 'Use the predefined ones, or specify a custom position object.',
+        position: 'top-right',
+        loaderBg: '#ff6849',
+        icon: 'success',
+        hideAfter: 3500,
+        stack: 6
+    });
+    */
   }
 
 }

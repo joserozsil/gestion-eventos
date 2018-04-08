@@ -1,7 +1,7 @@
 'use strict'
 
-const { decodeToken } = require('../services/jwt')
-const responser = require('../services/response')
+import { decodeToken } from '../services/jwt'
+import responser from '../services/response'
 
 function isAuth (req, res, next) {
     if (!req.headers.authorization) {

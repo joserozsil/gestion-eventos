@@ -43,8 +43,8 @@ const operations = {
                     responser.response(201, user, "¡Usuario registrado correctamente!")
                 )
             }).catch(error => {
-                return res.status(404).json(
-                    responser.error(404, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
+                return res.status(400).json(
+                    responser.error(400, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
                 )
             })
     },
