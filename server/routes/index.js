@@ -18,11 +18,11 @@ api.post('/users',isAuth, isAuth, userController.store)
 api.put('/users/:idCard', isAuth, userController.update)
 api.delete('/users/:idCard', isAuth, userController.delete)
 
-api.get('/chronologies', chronologyController.index)
-api.get('/chronologies/:idChronology', chronologyController.show)
-api.post('/chronologies', chronologyController.store)
-api.put('/chronologies/:idChronology', chronologyController.update)
-api.delete('/chronologies/:idChronology', chronologyController.delete)
+api.get('/chronologies', isAuth, chronologyController.index)
+api.get('/chronologies/:idChronology', isAuth, chronologyController.show)
+api.post('/chronologies', isAuth, chronologyController.store)
+api.put('/chronologies/:idChronology', isAuth, chronologyController.update)
+api.delete('/chronologies/:idChronology', isAuth, chronologyController.delete)
 
 
 api.post('/signin', authController.signIn)

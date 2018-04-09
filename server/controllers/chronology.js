@@ -27,7 +27,7 @@ const operations = {
         let chronology = new Chronology(req.body)
         chronology.save((err, save) => {
             if (err) {
-                return res.status(500).send({ message: 'error al listar' })
+                return res.status(500).send({ message: 'error al listar', error: err })
             } else {
                 return res.status(200).send(responser.response(200, save))
             }
