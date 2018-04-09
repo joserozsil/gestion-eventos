@@ -11,9 +11,9 @@ import { Credential } from '../models/credential';
 
 export class AuthService {
     public url:string;
-
+    
     constructor(private http:Http) {
-      this.url = environment.apiUrl + "/signin"
+      this.url = environment.apiUrl + "/signin";
     }
 
     public signin(credential:Credential) {

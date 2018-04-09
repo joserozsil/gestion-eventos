@@ -11,11 +11,11 @@ import isAuth from '../middlewares/authenticated'
 
 const api = express.Router()
 
-api.get('/users', userController.index)
-api.get('/users/:idCard', userController.show)
-api.post('/users', userController.store)
-api.put('/users/:idCard', userController.update)
-api.delete('/users/:idCard', userController.delete)
+api.get('/users', isAuth, userController.index)
+api.get('/users/:idCard', isAuth, userController.show)
+api.post('/users',isAuth, isAuth, userController.store)
+api.put('/users/:idCard', isAuth, userController.update)
+api.delete('/users/:idCard', isAuth, userController.delete)
 
 api.post('/signin', authController.signIn)
 
