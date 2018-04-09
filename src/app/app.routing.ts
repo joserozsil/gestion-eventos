@@ -14,6 +14,10 @@ export const AppRoutes: Routes = [
       {
         path: 'user',
         loadChildren: './user/user.module#UserModule'
+      },
+      {
+        path: 'chronology',
+        loadChildren: './chronology/chronology.module#ChronologyModule'
       }
     ]
   },

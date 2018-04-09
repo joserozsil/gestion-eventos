@@ -7,18 +7,17 @@ let m = mongoose
 const ChronologySchema = Schema({
     type: String,
     date: Date,
-    supervisions: [
+    supervision:
         { 
             users: [ 
                 { 
                     idUser: String,
-                    nameUser: String,
-                    idCard: String 
+                    nameUser: String
                 } 
             ],
             description: String
         }
-    ],
+    ,
     isDelete: Date
 });
 

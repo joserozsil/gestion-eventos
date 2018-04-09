@@ -1,0 +1,44 @@
+<!-- container -->
+<div class="container-fluid">
+    <div class="row bg-title">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h4 class="page-title">Starter Page</h4>
+        </div>
+        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <ol class="breadcrumb">
+                <li><a href="#">Inicio</a></li>
+                <li class="active">Cronología de Actividades</li>
+            </ol>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white-box">
+                <h3 class="box-title">Cronología</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12">
+            <div class="white-box">
+                <h3 class="box-title">Cronología</h3>
+                <div class="comment-center">
+                    <div *ngFor="let chronology of chronologies">
+                        <div *ngIf="chronology.type == 'supervision' " class="comment-body">
+                            <div class="user-img"> <img src="assets/plugins/images/users/pawandeep.jpg" alt="user" class="img-circle"></div>
+                            <div class="mail-contnet">
+                                <h5>SUPERVISIÓN</h5>
+                                <span class="time">{{ chronology.date }}</span>
+                                <br/>
+                                <span class="mail-desc">
+                                    {{chronology.supervision.description }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+<!-- /.container-fluid -->
