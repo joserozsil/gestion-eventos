@@ -18,7 +18,8 @@ const ChronologySchema = Schema({
             ],
             description: String
         }
-    ]
+    ],
+    isDelete: Date
 });
 
 module.exports = m.model('Chronologies', ChronologySchema);

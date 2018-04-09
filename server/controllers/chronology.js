@@ -6,18 +6,18 @@ import chalk from 'chalk'
 
 const operations = {
     index: (req, res) => {
-        Chronology.find().exec((err, list) => {
+        Chronology.find({ isDelete: null }).exec((err, list) => {
             if (err) {
-                return res.status(500).send({ message: 'error al listar' })
+                return res.status(500).send({message: err})
             } else {
                 return res.status(200).send(responser.response(200, list))
             }
         })
     },
     show: (req, res) => {
-        Chronology.find({ id: req.params.id }).exec((err, list) => {
+        Chronology.find({ _id: req.params.idChronology, isDelete: null }).exec((err, list) => {
             if (err) {
-                return res.status(500).send({ message: 'error al listar' })
+                return res.status(500).send({message: err})
             } else {
                 return res.status(200).send(responser.response(200, list))
             }
@@ -27,7 +27,7 @@ const operations = {
         let chronology = new Chronology(req.body)
         chronology.save((err, save) => {
             if (err) {
-                return res.status(500).send({ message: 'error al guardar' })
+                return res.status(500).send({ message: 'error al listar' })
             } else {
                 return res.status(200).send(responser.response(200, save))
             }
@@ -37,13 +37,20 @@ const operations = {
         let toUpdate = req.body 
         Chronology.findByIdAndUpdate(req.params.idChronology, toUpdate, { new: true }, (err, updated) => {
             if (err) {
-                res.status(500).send(responser.error('Algho ha salido mal', err))
+                res.status(500).send({message: err})
             } else {
                 return res.status(200).send(responser.response(200, updated))
             }
         });
     },
     delete: (req, res) => {
+        Chronology.findByIdAndUpdate(req.params.idChronology, { isDelete: Date.now() }, { new: true }, (err, updated) => {
+            if (err) {
+                res.status(500).send({message: err})
+            } else {
+                return res.status(200).send(responser.response(200, updated))
+            }
+        });
     }
 }
 
