@@ -6,13 +6,13 @@
                 <!-- logo -->
                 <a class="logo" href="index.html">
                     <b>
-                            <img src="assets/plugins/images/admin-logo.png" alt="home" class="dark-logo" />
-                            <img src="assets/plugins/images/admin-logo-dark.png" alt="home" class="light-logo" />
-                        </b>
+                        <img src="assets/plugins/images/admin-logo.png" alt="home" class="dark-logo" />
+                        <img src="assets/plugins/images/admin-logo-dark.png" alt="home" class="light-logo" />
+                    </b>
                     <span class="hidden-xs">
-                            <img src="assets/plugins/images/admin-text.png" alt="home" class="dark-logo" />
-                            <img src="assets/plugins/images/admin-text-dark.png" alt="home" class="light-logo" />
-                        </span>
+                        <img src="assets/plugins/images/admin-text.png" alt="home" class="dark-logo" />
+                        <img src="assets/plugins/images/admin-text-dark.png" alt="home" class="light-logo" />
+                    </span>
                 </a>
                 <!--/ logo -->
             </div>
@@ -113,22 +113,54 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="waves-effect"><i class="mdi mdi-av-timer fa-fw"></i> <span class="hide-menu">Cronología<span class="fa arrow"></span><span class="label label-rouded label-inverse pull-right">4</span></span></a>
+                    <a href="#" class="waves-effect">
+                        <i class="mdi mdi-av-timer fa-fw"></i>
+                        <span class="hide-menu">Cronología<span class="fa arrow"></span>
+                        <span class="label label-rouded label-inverse pull-right">4</span></span>
+                    </a>
                     <ul class="nav nav-second-level">
-                        <li> <a [routerLink]="['/chronology/list']" routerLinkActive="active"><i class="fa-fw">F</i><span class="hide-menu">Cronología Lista</span></a> </li>
+                        <li>
+                            <a [routerLink]="['/chronology/list']" routerLinkActive="active">
+                                <i class="fa-fw">F</i>
+                                <span class="hide-menu">Cronología Lista</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#" class="waves-effect"><i class="mdi mdi-av-timer fa-fw"></i> <span class="hide-menu">Usuarios<span class="fa arrow"></span><span class="label label-rouded label-inverse pull-right">4</span></span></a>
+                    <a href="#" class="waves-effect">
+                        <i class="mdi mdi-av-timer fa-fw"></i>
+                        <span class="hide-menu">Usuarios<span class="fa arrow"></span>
+                        <span class="label label-rouded label-inverse pull-right">4</span></span>
+                    </a>
                     <ul class="nav nav-second-level">
-                        <li> <a [routerLink]="['/user/list']" routerLinkActive="active"><i class="fa-fw">F</i><span class="hide-menu">Lista de usuarios</span></a> </li>
-                        <li> <a [routerLink]="['/user/create']" routerLinkActive="active"><i class="fa-fw">F</i><span class="hide-menu">Crear usuario</span></a> </li>
+                        <li>
+                            <a [routerLink]="['/user/list']" routerLinkActive="active">
+                                <i class="fa-fw">F</i>
+                                <span class="hide-menu">Lista de usuarios</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a [routerLink]="['/user/create']" routerLinkActive="active">
+                                <i class="fa-fw">F</i>
+                                <span class="hide-menu">Crear usuario</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#" class="waves-effect"><i class="mdi mdi-av-timer fa-fw"></i> <span class="hide-menu">Login<span class="fa arrow"></span><span class="label label-rouded label-inverse pull-right">4</span></span></a>
+                <li style="display: none;">
+                    <a href="#" class="waves-effect">
+                        <i class="mdi mdi-av-timer fa-fw"></i>
+                        <span class="hide-menu">Login<span class="fa arrow"></span>
+                        <span class="label label-rouded label-inverse pull-right">4</span></span>
+                    </a>
                     <ul class="nav nav-second-level">
-                        <li> <a [routerLink]="['/auth/action/signin']" routerLinkActive="active"><i class="fa-fw">F</i><span class="hide-menu">Iniciar Sesión</span></a> </li>
+                        <li>
+                            <a [routerLink]="['/auth/action/signin']" routerLinkActive="active">
+                                <i class="fa-fw">F</i>
+                                <span class="hide-menu">Iniciar Sesión</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

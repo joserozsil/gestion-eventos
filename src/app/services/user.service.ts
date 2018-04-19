@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
@@ -14,12 +15,17 @@ export class UserService {
   private headers;
   private options;
 
-  constructor(private http:Http) {
+  constructor(private http:Http, private router:Router) {
     this.url = environment.apiUrl + "/users";
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-    this.headers.append('Authorization', `${localStorage.getItem('token')}`);
-    this.options = new RequestOptions({headers: this.headers});
+    let token = localStorage.getItem('token')
+    if ( token ) {
+      this.headers.append('Authorization', `${token}`);
+      this.options = new RequestOptions({headers: this.headers});
+    } else {
+      this.router.navigate(['/auth/action/signin']);
+    }
   }
 
   public index() {

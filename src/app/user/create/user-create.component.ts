@@ -33,11 +33,10 @@ export class UserCreateComponent  implements OnInit {
   }
 
   private saveUser() {
-    console.log(this.createUserForm);
     let user = new User(this.createUserForm.value);
+
     this.userService.store(user).subscribe(
       result => {
-        console.dir(result);
         this.toastr.success('Registrado correctamente!', '¡Listo!');
         this.createUserForm.reset();
         setTimeout(() => {
@@ -45,6 +44,7 @@ export class UserCreateComponent  implements OnInit {
         }, 1500);
       }, 
       error => {
+        console.log(error)
         let errorMessage = <any>error;
         let userMessage = JSON.parse(errorMessage._body);
         this.toastr.error(`${userMessage.meta.userMessage.message}`, '¡Error!');
