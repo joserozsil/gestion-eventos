@@ -17,7 +17,7 @@ models.sequelize.sync()
             console.log(chalk.blue(`Mongo DB mongodb://localhost:27017/news`))
         })
     })
-    .catch(err => console.log(err))
+    .catch((err) => console.log(err))
 })
 
 

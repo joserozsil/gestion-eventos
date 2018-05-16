@@ -37,6 +37,7 @@ const operations = {
             password: req.body.password,
             phone: req.body.phone
         }
+
         models.User.create(user)
             .then(user => {
                 return res.status(201).json(

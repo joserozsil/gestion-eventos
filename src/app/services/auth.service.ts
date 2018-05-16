@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 
@@ -11,13 +11,18 @@ import { Credential } from '../models/credential';
 
 export class AuthService {
     public url:string;
+    private headers;
+    private options;
     
     constructor(private http:Http) {
       this.url = environment.apiUrl + "/signin";
+      this.headers = new Headers();
+			
+			this.options = new RequestOptions({ headers: this.headers });
     }
 
     public signin(credential:Credential) {
-        return this.http.post(this.url, credential)
+        return this.http.post(this.url, credential, this.options)
           .map( res => res.json());
       }
 }

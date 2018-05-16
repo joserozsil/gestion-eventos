@@ -14,7 +14,7 @@ const api = express.Router()
 
 api.get('/users', isAuth, userController.index)
 api.get('/users/:idCard', isAuth, userController.show)
-api.post('/users', userController.store)
+api.post('/users', isAuth, userController.store)
 api.put('/users/:idCard', isAuth, userController.update)
 api.delete('/users/:idCard', isAuth, userController.delete)
 
