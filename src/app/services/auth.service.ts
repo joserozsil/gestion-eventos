@@ -17,7 +17,6 @@ export class AuthService {
     constructor(private http:Http) {
       this.url = environment.apiUrl + "/signin";
       this.headers = new Headers();
-			
 			this.options = new RequestOptions({ headers: this.headers });
     }
 

@@ -20,12 +20,14 @@ export class ChronologyService {
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json; charset=UTF-8');
     let token = localStorage.getItem('token')
+
     if ( token ) {
       this.headers.append('Authorization', `${token}`);
-      this.options = new RequestOptions({headers: this.headers});
+      this.options = new RequestOptions({ headers: this.headers });
     } else {
       this.router.navigate(['/auth/action/signin']);
     }
+
   }
 
   public index() {
