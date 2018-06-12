@@ -18,6 +18,7 @@ let UserSchema = mongoose.Schema(
             type: String,
             required: true
         },
+        token: String,
         createdAt: {
             type: Date,
             default: Date.now()
