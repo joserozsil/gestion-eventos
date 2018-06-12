@@ -5,7 +5,11 @@ import { encrypt } from '../services/password'
 
 let UserSchema = mongoose.Schema(
     {
-        idCard: String,
+        idCard: {
+            type: String,
+            unique: true,
+            index: true
+        },
         firstName: String,
         lastName: String,
         address: String,

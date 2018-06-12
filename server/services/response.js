@@ -1,5 +1,9 @@
 'user strict'
 
+function showOne (status = 200, data = {}, userMessage = "", devMessage = "") {
+	return showMessage(status, data, userMessage, devMessage)
+}
+
 function showAll (status = 200, data = [], userMessage = "", devMessage = "") {
 	return showMessage(status, data)
 }
@@ -24,6 +28,7 @@ function showMessage(status = 200, data = [], userMessage = "", devMessage = "")
 }
 
 export default {
+	showOne,
 	showAll,
 	handleError,
 	handleFatalError

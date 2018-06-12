@@ -7,34 +7,35 @@ import User from '../models/user'
 
 const operations = {
     signIn: async (req, res) => {
-        await User.find({ id: req.body.id })
+        await User.find({ idCard: req.body.idCard })
             .then(user => {
-                if( user == null ) {
+                if( !user || user == null || user == undefined || !user.length) {
                     return res.status(403).json(
                         Response.handleError(403, {} , "El usuario no coincide con nuestros registros")
                     )
+                } else {
+                    const compared = compare(req.body.password, user[0].password)
+                    .then((value) => {
+                        if( value ) {
+                            return res.status(200).json(
+                                Response.showOne(200, { token: createToken(user), user: user[0] } , "Usuario logeado correctamente")
+                            )
+                        } else {
+                            return res.status(403).json(
+                                Response.handleError(403, {} , "La contraseña no coincide con nuestros registros")
+                            )
+                        }
+                    })
+                    .catch(error => {
+                        return res.status(400).json(
+                            Response.handleError(400, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
+                        )
+                    })
                 }
-                const compared = compare(req.body.password, user.password)
-                .then((value) => {
-                    if( value ) {
-                        return res.status(200).json(
-                            Response.handleError(200, { token: createToken(user), user: user } , "Usuario logeado correctamente")
-                        )
-                    } else {
-                        return res.status(403).json(
-                            Response.handleError(403, {} , "La contraseña no coincide con nuestros registros")
-                        )
-                    }
-                })
-                .catch(error => {
-                    return res.status(400).json(
-                        Response.error(400, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
-                    )
-                })
                 
             }).catch(error => {
                 return res.status(400).json(
-                    Response.error(400, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
+                    Response.handleError(400, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
                 )
             })
     }

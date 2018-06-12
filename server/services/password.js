@@ -26,13 +26,15 @@ exports.compare = (plainPassword, hash) => {
         try {
             bcrypt.compare(plainPassword, hash).then((res) => {
                 resolve(res)
+            }).catch(err => {
+                reject({
+                    status: 500,
+                    message: 'No se ha podido comparar',
+                    error: err
+                })
             })
         } catch (err) {
-            reject({
-                status: 500,
-                message: 'No se ha podido comparar',
-                error: err
-            })
+            console.log(err)
         }
     })
 }
