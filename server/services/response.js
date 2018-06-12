@@ -1,30 +1,30 @@
 'user strict'
-import { settings } from "../config"
 
-function response(status = null, data = null, userMessage = null, devMessage = null) {
-    return response = {
-        "meta": {
-            "status": status,
-            "userMessage": userMessage,
-            "devMessage": devMessage
-        },
-        "data": data
-    }
+function showAll (status = 200, data = [], userMessage = "", devMessage = "") {
+	return showMessage(status, data)
 }
 
-function error(status = null, userMessage = null, devMessage = null) {
-    
-    return response = {
-        "meta": {
-            "status": status,
-            "userMessage": { message: userMessage, details: { name: devMessage.name, more: devMessage.errors } },
-            "devMessage": settings.PROD_MODE == false ? devMessage : devMessage.name
-        },
-        "data": {}
-    }
+function handleFatalError (status = 500, devMessage = "") {
+	return showMessage(status, [], "Algo ha salido mal, por favor intentelo nuevamente más tarde", devMessage)
 }
 
-module.exports = {
-    response,
-    error
+function handleError (status = 500, userMessage = "", devMessage = "") {
+	return showMessage(status, [], userMessage, devMessage)
+}
+
+function showMessage(status = 200, data = [], userMessage = "", devMessage = "") {
+	return {
+		"meta": {
+			status,
+			devMessage,
+			userMessage
+		},
+		data
+	} 
+}
+
+export default {
+	showAll,
+	handleError,
+	handleFatalError
 }

@@ -4,7 +4,6 @@ import jwt from 'jwt-simple'
 import randtoken from 'rand-token'
 import moment from 'moment'
 import { settings } from '../config'
-import { reject } from 'q';
 
 exports.createToken = (user) => {
     const payload = {

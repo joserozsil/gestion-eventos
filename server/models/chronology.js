@@ -39,8 +39,15 @@ const ChronologySchema = Schema(
             description: String,
             tp: String
         },
-        isDelete: Date
+        createdAt: {
+            type: Date,
+            default: Date.now()
+        },
+        updatedAt: {
+
+        },
+        deletedAt: Date
     }
 );
 
-module.exports = m.model('Chronologies', ChronologySchema);
+module.exports = m.model('chronologies', ChronologySchema);

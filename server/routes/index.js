@@ -12,17 +12,17 @@ import isAuth from '../middlewares/authenticated'
 
 const api = express.Router()
 
-api.get('/users', isAuth, userController.index)
-api.get('/users/:idCard', isAuth, userController.show)
-api.post('/users', isAuth, userController.store)
-api.put('/users/:idCard', isAuth, userController.update)
-api.delete('/users/:idCard', isAuth, userController.delete)
+api.get('/users', userController.index)
+api.get('/users/:id', userController.show)
+api.post('/users', userController.store)
+api.put('/users/:id', userController.update)
+api.delete('/users/:id', userController.delete)
 
-api.get('/chronologies', isAuth, chronologyController.index)
-api.get('/chronologies/:idChronology', isAuth, chronologyController.show)
-api.post('/chronologies', isAuth, chronologyController.store)
-api.put('/chronologies/:idChronology', isAuth, chronologyController.update)
-api.delete('/chronologies/:idChronology', isAuth, chronologyController.delete)
+api.get('/chronologies', chronologyController.index)
+api.get('/chronologies/:id', chronologyController.show)
+api.post('/chronologies', chronologyController.store)
+api.put('/chronologies/:id', chronologyController.update)
+api.delete('/chronologies/:id', chronologyController.delete)
 
 api.post('/signin', authController.signIn)
 

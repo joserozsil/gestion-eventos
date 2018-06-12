@@ -1,93 +1,78 @@
 'use strict'
 
-import models from '../models'
-import responser from '../services/response'
-import { encrypt } from '../services/password'
-import chalk from 'chalk'
+import User from '../models/user'
+import Response from '../services/response'
 
 const operations = {
-    index: (req, res) => {
-        models.User.findAll({ where: { deletedAt: null } }).then(users => {
-            return res.status(200).json(
-                responser.response(200, users)
-            )
-        }).catch(error => {
-            return res.status(200).json(
-                responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
-            )
-        })
-    },
-    show: (req, res) => {
-        models.User.findOne({ where: { idCard: req.params.idCard } }).then(user => {
-            return res.status(200).json(
-                responser.response(200, user)
-            )
-        }).catch(error => {
-            return res.status(200).json(
-                responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
-            )
-        })
-    },
-    store: (req, res) => {
-        const user = {
-            idCard: req.body.idCard,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            address: req.body.address,
-            password: req.body.password,
-            phone: req.body.phone
-        }
-
-        models.User.create(user)
-            .then(user => {
-                return res.status(201).json(
-                    responser.response(201, user, "¡Usuario registrado correctamente!")
-                )
-            }).catch(error => {
-                return res.status(400).json(
-                    responser.error(400, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
-                )
+    index: async (req, res, next) => {
+        try {
+            await User.find({ deletedAt: null }).exec((err, list) => {
+                if (err) {
+                    return res.status(500).send(Response.handleFatalError(500, err.message))
+                } else {
+                    return res.status(200).send(Response.showAll(200, list))
+                }
             })
+		} catch( e ) {
+			return next(e)
+		}
     },
-    update: (req, res) => {
-        const userToUpdated = {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            address: req.body.address,
-            password: req.body.password
-        }
-        models.User.findOne({ where: { idCard: req.params.idCard } }).then(user => {
-            user.updateAttributes(userToUpdated).then(updated => {
-                return res.status(200).json(
-                    responser.response(200, updated, "¡Usuario actualizado correctamente!")
-                )
-
+    show: async (req, res, next) => {
+        try {
+            await User.find({ _id: req.params.id, deletedAt: null }).exec((err, list) => {
+                if (err) {
+                    return res.status(500).send(Response.handleFatalError(500, err.message))
+                } else {
+                    return res.status(200).send(Response.showAll(200, list))
+                }
             })
-        }).catch(error => {
-            return res.status(200).json(
-                responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
-            )
-        })
-
+		} catch( e ) {
+            return next(e)
+		}
     },
-    delete: (req, res) => {
-        models.User.findOne({ where: { idCard: req.params.idCard } }).then((user) => {
-            user.updateAttributes({ deletedAt: Date.now() }).then((updated) => {
-                return res.status(200).json(
-                    responser.response(200, updated, "¡Usuario eliminado correctamente!")
-                )
+    store: async (req, res, next) => {
+        try {
+            let user = new User(req.body)
 
-            }).catch((error) => {
-                return res.status(200).json(
-                    responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
-                )
+            await user.save((err, list) => {
+                if (err) {
+                    return res.status(500).send(Response.handleFatalError(500, err.message))
+                } else {
+                    return res.status(201).send(Response.showAll(201, list))
+                }
             })
-
-        }).catch((error) => {
-            return res.status(200).json(
-                responser.error(200, "¡Algo ha salido mal, por favor intentelo nuevamente!", error)
-            )
-        })
+		} catch( e ) {
+			return next(e)
+		}
+    },
+    update: async (req, res, next) => {
+        try {
+            let toUpdate = req.body
+            Object.assign(toUpdate, { updatedAt: Date.now() })
+            
+            await User.findByIdAndUpdate(req.params.id, toUpdate, { new: true }, (err, list) => {
+                if (err) {
+                    return res.status(500).send(Response.handleFatalError(500, err.message))
+                } else {
+                    return res.status(200).send(Response.showAll(200, list))
+                }
+            })
+		} catch( e ) {
+			return next(e)
+		}
+    },
+    delete: async (req, res, next) => {
+        try {
+            await User.findByIdAndUpdate(req.params.id, { deletedAt: Date.now() }, { new: true }, (err, list) => {
+                if (err) {
+                    return res.status(500).send(Response.handleFatalError(500, err.message))
+                } else {
+                    return res.status(200).send(Response.showAll(200, list))
+                }
+            })
+		} catch( e ) {
+			return next(e)
+		}
     }
 }
 
