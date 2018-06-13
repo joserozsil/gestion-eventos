@@ -3,37 +3,29 @@
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
             <h4 class="page-title">Lista de usuarios</h4>
         </div>
-        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-            <ol class="breadcrumb">
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#">Usuarios</a></li>
-                <li class="active">Listar</li>
-            </ol>
-        </div>
-        <!-- /.col-lg-12 -->
     </div>
-    <!-- row -->
+
     <div class="row">
-        <div class="col-md-12">
-            <div class="white-box">
-                <h3 class="box-title">ADMINISTRACIÓN DE USUARIOS</h3>
-                <div class="scrollable">
-                    <div class="table-responsive">
-                        <table id="demo-foo-addrow" class="table m-t-5 table-hover toggle-arrow-tiny">
+        <div class="col-12">
+            <div class="card-box">
+
+                <div class="table-rep-plugin">
+                    <div class="table-responsive" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table  table-striped">
                             <thead>
                                 <tr>
                                     <th data-toggle="true">Cedula</th>
-                                    <th>Nombre</th>
-                                    <th>Apellido</th>
-                                    <th>Teléfono</th>
-                                    <th>Rol</th>
-                                    <th>Departamento</th>
-                                    <th>Creado</th>
-                                    <th>Action</th>
-                                    <th data-hide="all">Dirección</th>
+                                    <th data-priority="1">Nombre</th>
+                                    <th data-priority="3">Apellido</th>
+                                    <th data-priority="1">Teléfono</th>
+                                    <th data-priority="3">Rol</th>
+                                    <th data-priority="3">Departamento</th>
+                                    <th data-priority="6">Creado</th>
+                                    <th data-priority="6">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <!-- Repeat -->
                                 <tr *ngFor="let user of users">
                                     <td>{{ user.idCard }}</td>
                                     <td>
@@ -56,30 +48,26 @@
                                         <br/><span class="text-muted">10: 55 AM</span>
                                     </td>
                                     <td>
-                                        <button (click)="delete(user.idCard)" type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-close" aria-hidden="true"></i></button>
-                                    </td>
-                                    <td>
-                                        {{ user.address }}
+                                        <button (click)="delete(user._id)" class="btn btn-icon waves-effect waves-light btn-trans btn-danger m-b-5"> <i class="fa fa-remove"></i> </button>
                                     </td>
                                 </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <a [routerLink]="['/user/create']" class="btn btn-info btn-rounded">Agregar nuevo usuario</a>
-                                    </td>
-                                    <td colspan="7">
-                                        <div class="text-right">
-                                            <ul class="pagination"> </ul>
-                                        </div>
+                                        <a [routerLink]="['/user/create']" class="btn btn-primary btn-trans waves-effect waves-primary">
+                                            Agregar nuevo usuario
+                                        </a>
                                     </td>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
+
                 </div>
+
             </div>
         </div>
     </div>
-    <!-- /row -->
+    <!-- end row -->
 </div>

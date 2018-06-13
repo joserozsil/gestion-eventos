@@ -32,27 +32,30 @@ export class UserListComponent  implements OnInit{
       }, 
       error => {
         let errorMessage = <any>error;
-        console.error(errorMessage);
+        let userMessage = JSON.parse(errorMessage._body);
+        this.toastr.error(`${userMessage.meta.userMessage}`, '¡Error!');
+        setTimeout(() => {
+          this.toastr.error(`${userMessage.meta.devMessage}`, '¡Error!');
+        }, 500);
       }
     );
   }
 
-  delete(idCard:string) {
-    this.userService.delete(idCard).subscribe(
+  delete(id:string) {
+    this.userService.delete(id).subscribe(
       result => {
         if( result.meta.status == 200) {
-          console.log(result.meta.userMessage);
-          this.users.splice(result.data.idCard, 1);
+          this.users.splice(result.data._id, 1);
           this.toastr.success('Usuario eliminado correctamente', '¡Listo!');
         }
       }, 
       error => {
         let errorMessage = <any>error;
         let userMessage = JSON.parse(errorMessage._body);
-        this.toastr.error(`${userMessage.meta.userMessage.message}`, '¡Error!');
-        userMessage.meta.userMessage.details.more.forEach(element => {
-            this.toastr.error(`${element.message}`, '¡Error!');
-        });
+        this.toastr.error(`${userMessage.meta.userMessage}`, '¡Error!');
+        setTimeout(() => {
+          this.toastr.error(`${userMessage.meta.devMessage}`, '¡Error!');
+        }, 500);
       }
     );
   }

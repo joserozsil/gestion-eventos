@@ -18,7 +18,6 @@ export class UserService {
   constructor(private http:Http, private router:Router) {
     this.url = environment.apiUrl + "/users";
     this.headers = new Headers();
-    this.headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     let token = localStorage.getItem('token')
     
     if ( token ) {

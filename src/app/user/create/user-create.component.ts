@@ -34,28 +34,24 @@ export class UserCreateComponent  implements OnInit {
 
   private saveUser() {
     let user = new User(this.createUserForm.value);
-
+    
     this.userService.store(user).subscribe(
       result => {
-        this.toastr.success('Registrado correctamente!', '¡Listo!');
+        this.toastr.success('¡Registrado correctamente!', '¡Listo!');
         this.createUserForm.reset();
         setTimeout(() => {
           this.router.navigate(['/user/list']);
         }, 1500);
       }, 
       error => {
-        console.log(error)
         let errorMessage = <any>error;
         let userMessage = JSON.parse(errorMessage._body);
-        this.toastr.error(`${userMessage.meta.userMessage.message}`, '¡Error!');
-        userMessage.meta.userMessage.details.more.forEach(element => {
-          this.toastr.error(`${element.message}`, '¡Error!');
-        });
+        this.toastr.error(`${userMessage.meta.userMessage}`, '¡Error!');
+        setTimeout(() => {
+          this.toastr.error(`${userMessage.meta.devMessage}`, '¡Error!');
+        }, 500);
       }
     );
   }
 
-  private console(test:any) {
-    console.log(test)
-  }
 }

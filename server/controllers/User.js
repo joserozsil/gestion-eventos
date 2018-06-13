@@ -33,7 +33,6 @@ const operations = {
     store: async (req, res, next) => {
         try {
             let user = new User(req.body)
-
             await user.save((err, list) => {
                 if (err) {
                     return res.status(500).send(Response.handleFatalError(500, err.message))

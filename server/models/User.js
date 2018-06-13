@@ -14,10 +14,7 @@ let UserSchema = mongoose.Schema(
         lastName: String,
         address: String,
         phone: String,
-        password: {
-            type: String,
-            required: true
-        },
+        password: String,
         token: String,
         createdAt: {
             type: Date,
