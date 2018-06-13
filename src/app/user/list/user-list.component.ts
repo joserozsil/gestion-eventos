@@ -11,7 +11,9 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 
 export class UserListComponent  implements OnInit{
-  public users = [];
+  private users = [];
+  private loading:boolean = false;
+
   constructor (private userService: UserService, public toastr: ToastsManager, public vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
@@ -20,14 +22,17 @@ export class UserListComponent  implements OnInit{
     this.show();
   }
   show() {
+    this.loading = true;
     this.userService.index().subscribe(
       result => {
         if(!result.data) {
           this.users = [];
+          this.loading = false;
         } else {
           result.data.forEach(element => {
             this.users.push(element);
           });
+          this.loading = false;
         }
       }, 
       error => {
@@ -37,16 +42,20 @@ export class UserListComponent  implements OnInit{
         setTimeout(() => {
           this.toastr.error(`${userMessage.meta.devMessage}`, '¡Error!');
         }, 500);
+        this.loading = false;
       }
     );
   }
 
   delete(id:string) {
+    this.loading = true;
+
     this.userService.delete(id).subscribe(
       result => {
         if( result.meta.status == 200) {
           this.users.splice(result.data._id, 1);
           this.toastr.success('Usuario eliminado correctamente', '¡Listo!');
+          this.loading = false;
         }
       }, 
       error => {
@@ -56,6 +65,7 @@ export class UserListComponent  implements OnInit{
         setTimeout(() => {
           this.toastr.error(`${userMessage.meta.devMessage}`, '¡Error!');
         }, 500);
+        this.loading = false;
       }
     );
   }
