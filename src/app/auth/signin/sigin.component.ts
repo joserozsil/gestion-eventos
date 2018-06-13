@@ -8,7 +8,10 @@ import { error } from 'util';
 @Component({
   selector: 'signin',
   templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss'],
+  styleUrls: [
+    './signin.component.scss',
+    '../../../../node_modules/animate.css/animate.min.css'
+  ],
   providers: [AuthService]
 })
 
@@ -18,6 +21,7 @@ export class SignInComponent  implements OnInit{
   private type="password";
   private hasErrorCredential:boolean = false;
   private isContent:boolean = true;
+  private isPadding:boolean = true;
 
   constructor (private router: Router, private authService:AuthService) {
   }
@@ -37,7 +41,9 @@ export class SignInComponent  implements OnInit{
       }, 
       error => {
         let errorMessage = <any>error;
-        if( errorMessage.status == 403) this.hasErrorCredential = true;
+        if( errorMessage.status == 403) { 
+          this.hasErrorCredential = true;
+        }
       }
     );
   }
