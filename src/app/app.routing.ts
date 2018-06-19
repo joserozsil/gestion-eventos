@@ -18,6 +18,10 @@ export const AppRoutes: Routes = [
       {
         path: 'chronology',
         loadChildren: './chronology/chronology.module#ChronologyModule'
+      },
+      {
+        path: 'security',
+        loadChildren: './security/security.module#SecurityModule'
       }
     ]
   },

@@ -8,7 +8,6 @@
     <div class="row">
         <div class="col-12">
             <div class="card-box">
-
                 <div class="table-rep-plugin">
                     <div class="table-responsive" data-pattern="priority-columns">
                         <table id="tech-companies-1" class="table  table-striped">
@@ -26,7 +25,7 @@
                             </thead>
                             <tbody *ngIf="!loading">
                                 <!-- Repeat -->
-                                <tr *ngFor="let user of users">
+                                <tr *ngFor="let user of users; let i = index" [id]="i">
                                     <td>{{ user.idCard }}</td>
                                     <td>
                                         {{ user.firstName }}
@@ -48,7 +47,7 @@
                                         <br/><span class="text-muted">10: 55 AM</span>
                                     </td>
                                     <td>
-                                        <button (click)="delete(user._id)" class="btn btn-icon waves-effect waves-light btn-trans btn-danger m-b-5"> <i class="fa fa-remove"></i> </button>
+                                        <button (click)="delete(user._id, i)" class="btn btn-icon waves-effect waves-light btn-trans btn-danger m-b-5"> <i class="fa fa-remove"></i> </button>
                                     </td>
                                 </tr>
                             </tbody>

@@ -6,6 +6,7 @@ import express from 'express'
 import userController from '../controllers/user'
 import authController from '../controllers/auth'
 import chronologyController from '../controllers/chronology'
+import rolController from '../controllers/rol'
 
 // middlewares
 import isAuth from '../middlewares/authenticated'
@@ -23,6 +24,12 @@ api.get('/chronologies/:id', isAuth, chronologyController.show)
 api.post('/chronologies', isAuth, chronologyController.store)
 api.put('/chronologies/:id', isAuth, chronologyController.update)
 api.delete('/chronologies/:id', isAuth, chronologyController.delete)
+
+api.get('/rols', isAuth, rolController.index)
+api.get('/rols/:id', isAuth, rolController.show)
+api.post('/rols', rolController.store)
+api.put('/rols/:id', isAuth, rolController.update)
+api.delete('/rols/:id', isAuth, rolController.delete)
 
 api.post('/signin', authController.signIn)
 

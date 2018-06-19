@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { error } from 'util';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss'],
+  styleUrls: [
+    './user-list.component.scss'
+  ],
   providers: [UserService]
 })
 
@@ -47,13 +48,12 @@ export class UserListComponent  implements OnInit{
     );
   }
 
-  delete(id:string) {
+  delete(id:string, index:String) {
     this.loading = true;
 
     this.userService.delete(id).subscribe(
       result => {
         if( result.meta.status == 200) {
-          this.users.splice(result.data._id, 1);
           this.toastr.success('Usuario eliminado correctamente', '¡Listo!');
           this.loading = false;
         }
