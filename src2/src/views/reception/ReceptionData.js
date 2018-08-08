@@ -1,0 +1,31 @@
+const receptionData = [
+  {id: 0, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'John Doe', registered: '2018/01/01 8:25am', role: 'Guest', status: 'Pending'},
+  {id: 1, description: 'Se recibe memorandum correspondiente a ...', type: 'Supervisión', username: '@', name: 'Samppa Nori', registered: '2018/01/01 8:25am', role: 'Operador', status: 'Active'},
+  {id: 2, description: 'Se recibe la guardia correspondiente a ...', type: 'Recibo de Guardia', username: '@', name: 'Estavan Lykos', registered: '2018/02/01 7:19am', role: 'Recepcionista', status: 'Banned'},
+  {id: 3, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Chetan Mohamed', registered: '2018/02/01 7:19am', role: 'Administrador', status: 'Inactive'},
+  {id: 4, description: 'Se recibe memorandum correspondiente a ...', type: 'Cambio de turno', username: '@', name: 'Derick Maximinus', registered: '2018/03/01 1:40 pm', role: 'Operador', status: 'Pending'},
+  {id: 5, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Friderik Dávid', registered: '2018/01/21 1:50pm', role: 'Recepcionista', status: 'Active'},
+  {id: 6, description: 'Se recibe memorandum correspondiente a ...', type: 'Entrega de Guardia', username: '@', name: 'Yiorgos Avraamu', registered: '2018/01/01 8:25am', role: 'Operador', status: 'Active'},
+  {id: 7, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Avram Tarasios', registered: '2018/02/01 7:19am', role: 'Recepcionista', status: 'Banned'},
+  {id: 8, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Quintin Ed', registered: '2018/02/01 7:19am', role: 'Administrador', status: 'Inactive'},
+  {id: 9, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Enéas Kwadwo', registered: '2018/03/01 1:40 pm', role: 'Operador', status: 'Pending'},
+  {id: 10, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Agapetus Tadeáš', registered: '2018/01/21 1:50pm', role: 'Recepcionista', status: 'Active'},
+  {id: 11, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Carwyn Fachtna', registered: '2018/01/01 8:25am', role: 'Operador', status: 'Active'},
+  {id: 12, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Nehemiah Tatius', registered: '2018/02/01 7:19am', role: 'Recepcionista', status: 'Banned'},
+  {id: 13, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Ebbe Gemariah', registered: '2018/02/01 7:19am', role: 'Administrador', status: 'Inactive'},
+  {id: 14, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Eustorgios Amulius', registered: '2018/03/01 1:40 pm', role: 'Operador', status: 'Pending'},
+  {id: 15, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Leopold Gáspár', registered: '2018/01/21 1:50pm', role: 'Recepcionista', status: 'Active'},
+  {id: 16, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Pompeius René', registered: '2018/01/01 8:25am', role: 'Operador', status: 'Active'},
+  {id: 17, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Paĉjo Jadon', registered: '2018/02/01 7:19am', role: 'Recepcionista', status: 'Banned'},
+  {id: 18, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Micheal Mercurius', registered: '2018/02/01 7:19am', role: 'Administrador', status: 'Inactive'},
+  {id: 19, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Ganesha Dubhghall', registered: '2018/03/01 1:40 pm', role: 'Operador', status: 'Pending'},
+  {id: 20, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Hiroto Šimun', registered: '2018/01/21 1:50pm', role: 'Recepcionista', status: 'Active'},
+  {id: 21, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Vishnu Serghei', registered: '2018/01/01 8:25am', role: 'Operador', status: 'Active'},
+  {id: 22, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Zbyněk Phoibos', registered: '2018/02/01 7:19am', role: 'Recepcionista', status: 'Banned'},
+  {id: 23, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Einar Randall', registered: '2018/02/01 7:19am', role: 'Administrador', status: 'Inactive'},
+  {id: 24, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Félix Troels', registered: '2018/03/21', role: 'Recepcionista', status: 'Active'},
+  {id: 25, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Aulus Agmundr', registered: '2018/01/01 8:25am', role: 'Operador', status: 'Pending'},
+  {id: 42, description: 'Se recibe memorandum correspondiente a ...', type: 'Recibo de Memorandum', username: '@', name: 'Ford Prefex', registered: '2001/05/21', role: 'Alien', status: 'Don\'t panic!'}
+]
+
+export default receptionData

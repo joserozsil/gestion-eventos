@@ -1,0 +1,31 @@
+const usersData = [
+  {id: 0, username: '@', name: 'John Doe', registered: '2018/01/01 8:25am', role: 'Guest', status: 'Pending'},
+  {id: 1, username: '@', name: 'Samppa Nori', registered: '2018/01/01 8:25am', role: 'Operador', status: 'Active'},
+  {id: 2, username: '@', name: 'Estavan Lykos', registered: '2018/02/01 7:19am', role: 'Recepcionista', status: 'Banned'},
+  {id: 3, username: '@', name: 'Chetan Mohamed', registered: '2018/02/01 7:19am', role: 'Administrador', status: 'Inactive'},
+  {id: 4, username: '@', name: 'Derick Maximinus', registered: '2018/03/01 1:40 pm', role: 'Operador', status: 'Pending'},
+  {id: 5, username: '@', name: 'Friderik Dávid', registered: '2018/01/21 1:50pm', role: 'Recepcionista', status: 'Active'},
+  {id: 6, username: '@', name: 'Yiorgos Avraamu', registered: '2018/01/01 8:25am', role: 'Operador', status: 'Active'},
+  {id: 7, username: '@', name: 'Avram Tarasios', registered: '2018/02/01 7:19am', role: 'Recepcionista', status: 'Banned'},
+  {id: 8, username: '@', name: 'Quintin Ed', registered: '2018/02/01 7:19am', role: 'Administrador', status: 'Inactive'},
+  {id: 9, username: '@', name: 'Enéas Kwadwo', registered: '2018/03/01 1:40 pm', role: 'Operador', status: 'Pending'},
+  {id: 10, username: '@', name: 'Agapetus Tadeáš', registered: '2018/01/21 1:50pm', role: 'Recepcionista', status: 'Active'},
+  {id: 11, username: '@', name: 'Carwyn Fachtna', registered: '2018/01/01 8:25am', role: 'Operador', status: 'Active'},
+  {id: 12, username: '@', name: 'Nehemiah Tatius', registered: '2018/02/01 7:19am', role: 'Recepcionista', status: 'Banned'},
+  {id: 13, username: '@', name: 'Ebbe Gemariah', registered: '2018/02/01 7:19am', role: 'Administrador', status: 'Inactive'},
+  {id: 14, username: '@', name: 'Eustorgios Amulius', registered: '2018/03/01 1:40 pm', role: 'Operador', status: 'Pending'},
+  {id: 15, username: '@', name: 'Leopold Gáspár', registered: '2018/01/21 1:50pm', role: 'Recepcionista', status: 'Active'},
+  {id: 16, username: '@', name: 'Pompeius René', registered: '2018/01/01 8:25am', role: 'Operador', status: 'Active'},
+  {id: 17, username: '@', name: 'Paĉjo Jadon', registered: '2018/02/01 7:19am', role: 'Recepcionista', status: 'Banned'},
+  {id: 18, username: '@', name: 'Micheal Mercurius', registered: '2018/02/01 7:19am', role: 'Administrador', status: 'Inactive'},
+  {id: 19, username: '@', name: 'Ganesha Dubhghall', registered: '2018/03/01 1:40 pm', role: 'Operador', status: 'Pending'},
+  {id: 20, username: '@', name: 'Hiroto Šimun', registered: '2018/01/21 1:50pm', role: 'Recepcionista', status: 'Active'},
+  {id: 21, username: '@', name: 'Vishnu Serghei', registered: '2018/01/01 8:25am', role: 'Operador', status: 'Active'},
+  {id: 22, username: '@', name: 'Zbyněk Phoibos', registered: '2018/02/01 7:19am', role: 'Recepcionista', status: 'Banned'},
+  {id: 23, username: '@', name: 'Einar Randall', registered: '2018/02/01 7:19am', role: 'Administrador', status: 'Inactive'},
+  {id: 24, username: '@', name: 'Félix Troels', registered: '2018/03/21', role: 'Recepcionista', status: 'Active'},
+  {id: 25, username: '@', name: 'Aulus Agmundr', registered: '2018/01/01 8:25am', role: 'Operador', status: 'Pending'},
+  {id: 42, username: '@', name: 'Ford Prefex', registered: '2001/05/21', role: 'Alien', status: 'Don\'t panic!'}
+]
+
+export default usersData

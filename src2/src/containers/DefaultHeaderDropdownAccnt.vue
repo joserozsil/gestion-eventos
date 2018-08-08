@@ -1,0 +1,43 @@
+<template>
+  <AppHeaderDropdown right no-caret>
+    <template slot="header">
+      <img
+        src="img/avatars/6.jpg"
+        class="img-avatar"
+        alt="admin@bootstrapmaster.com" />
+    </template>\
+    <template slot="dropdown">
+      <b-dropdown-header
+        tag="div"
+        class="text-center">
+        <strong>Cuenta</strong>
+      </b-dropdown-header>
+      <b-dropdown-item>
+        <i class="fa fa-lock"/>
+        <router-link class="black" to="/pages/iniciar-sesion">
+          Cerrar Sesión
+        </router-link>
+      </b-dropdown-item>
+    </template>
+  </AppHeaderDropdown>
+</template>
+
+<script>
+import { HeaderDropdown as AppHeaderDropdown } from '@coreui/vue'
+export default {
+  name: 'DefaultHeaderDropdownAccnt',
+  components: {
+    AppHeaderDropdown
+  },
+  data: () => {
+    return { itemsCount: 42 }
+  }
+}
+</script>
+
+
+<style>
+.black {
+  color: black;
+}
+</style>
