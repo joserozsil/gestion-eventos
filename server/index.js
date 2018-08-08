@@ -16,7 +16,7 @@ mongoose.connect(settings.MONGO_DB || `mongodb://localhost:27017/${settings.DB_N
     })
 })*/
 
-app.listen(80, () => {
+app.listen(3000, () => {
     console.log(chalk.cyan(`Servidor Node y Express corriendo en el puerto 80 `))
 })
 
