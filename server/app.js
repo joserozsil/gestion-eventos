@@ -11,7 +11,7 @@ import path from 'path'
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
+console.log(path.join(__dirname, '../src2/dist'))
 app.use('/', express.static(path.join(__dirname, '../src2/dist')))
 
 app.use((req, res, next) => {
