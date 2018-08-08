@@ -2,15 +2,17 @@
 
 import express from 'express'
 import bodyParser from 'body-parser'
-import routes from './routes'
 import Response from './services/response'
-import asyncify from 'express-asyncify'
 import chalk from 'chalk'
 
-const app = asyncify(express())
+const app = express()
+
+import path from 'path'
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+app.use('/', express.static(path.join(__dirname, '../src2/dist')))
 
 app.use((req, res, next) => {
 	console.log(`Request endpoint: ${ chalk.yellow(req.originalUrl) } method ${ req.method }`)
@@ -26,7 +28,6 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/api/v1', routes)
 
 app.use((err, req, res, next) => {
 	console.log(chalk.red(err))
