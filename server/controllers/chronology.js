@@ -1,72 +1,73 @@
 'use strict'
 
-import Chronology from '../models/chronology'
-import Response from '../services/response'
+import Model from '../models/chronology'
 
 const operations = {
-    index: async (req, res) => {
+    index: (req, res, next) => {
         try {
-            await Chronology.find({ deletedAt: null }).exec((err, list) => {
+            Model.find({ deletedAt: null })
+            .exec((err, list) => {
                 if (err) {
-                    return res.status(500).send(Response.handleFatalError(500, err.message))
+                    return res.status(500).send(err.message)
                 } else {
-                    return res.status(200).send(Response.showAll(200, list))
+                    return res.status(200).send(list)
                 }
             })
 		} catch( e ) {
 			return next(e)
 		}
     },
-    show: async (req, res) => {
+    show: (req, res, next) => {
         try {
-            await Chronology.find({ _id: req.params.id, deletedAt: null }).exec((err, list) => {
+            Model.find({ _id: req.params.id, deletedAt: null })
+            .exec((err, list) => {
                 if (err) {
-                    return res.status(500).send(Response.handleFatalError(500, err.message))
+                    return res.status(500).send(err.message)
                 } else {
-                    return res.status(200).send(Response.showAll(200, list))
+                    return res.status(200).send(list)
+                }
+            })
+		} catch( e ) {
+            return next(e)
+		}
+    },
+    store: (req, res, next) => {
+        try {
+            let model = new Model(req.body)
+            model.save((err, list) => {
+                if (err) {
+                    return res.status(500).send(err.message)
+                } else {
+                    return res.status(200).send(list)
                 }
             })
 		} catch( e ) {
 			return next(e)
 		}
     },
-    store: async (req, res) => {
-        try {
-            let chronology = new Chronology(req.body)
-            chronology.save((err, save) => {
-                if (err) {
-                    return res.status(500).send(Response.handleFatalError(500, err.message))
-                } else {
-                    return res.status(201).send(Response.showAll(201, save))
-                }
-            })
-		} catch( e ) {
-			return next(e)
-		}
-    },
-    update: async (req, res) => {
+    update: (req, res, next) => {
         try {
             let toUpdate = req.body
             Object.assign(toUpdate, { updatedAt: Date.now() })
-
-            await Chronology.findByIdAndUpdate(req.params.id, toUpdate, { new: true }, (err, updated) => {
+            
+            Model.findByIdAndUpdate(req.params.id, toUpdate, { new: true }, (err, list) => {
                 if (err) {
-                    return res.status(500).send(Response.handleFatalError(500, err.message))
+                    return res.status(500).send(err.message)
                 } else {
-                    return res.status(200).send(Response.showAll(200, updated))
+                    return res.status(200).send(list)
                 }
             })
 		} catch( e ) {
 			return next(e)
 		}
     },
-    delete: async (req, res) => {
+    delete: (req, res, next) => {
         try {
-            await Chronology.findByIdAndUpdate(req.params.id, { deletedAt: Date.now() }, { new: true }, (err, updated) => {
+            Model.findByIdAndUpdate(req.params.id, { deletedAt: Date.now() }, { new: true }, (err, list) => {
                 if (err) {
-                    return res.status(500).send(Response.handleFatalError(500, err.message))
+                    return res.status(500).send(err.message)
                 } else {
-                    return res.status(200).send(Response.showAll(200, updated))
+                    return res.status(200).send(list)
                 }
             })
 		} catch( e ) {

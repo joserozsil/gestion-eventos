@@ -1,72 +1,83 @@
 'use strict'
 
-import User from '../models/user'
-import Response from '../services/response'
+import Model from '../models/user'
 
 const operations = {
-    index: async (req, res, next) => {
+    index: (req, res, next) => {
         try {
-            await User.find({ deletedAt: null }).exec((err, list) => {
+            Model.find(
+                { deletedAt: null }, 
+                'username firstName lastName idCard address phone',
+                {
+                    skip: req.query.skip || 0,
+                    limit: req.query.limit || 15
+                }
+            )
+            .sort({
+                createdAt: -1
+            })
+            .exec((err, list) => {
                 if (err) {
-                    return res.status(500).send(Response.handleFatalError(500, err.message))
+                    return res.status(500).send(err.message)
                 } else {
-                    return res.status(200).send(Response.showAll(200, list))
+                    return res.status(200).send(list)
                 }
             })
 		} catch( e ) {
 			return next(e)
 		}
     },
-    show: async (req, res, next) => {
+    show: (req, res, next) => {
         try {
-            await User.find({ _id: req.params.id, deletedAt: null }).exec((err, list) => {
+            Model.find({ _id: req.params.id, deletedAt: null })
+            .exec((err, list) => {
                 if (err) {
-                    return res.status(500).send(Response.handleFatalError(500, err.message))
+                    return res.status(500).send(err.message)
                 } else {
-                    return res.status(200).send(Response.showAll(200, list))
+                    return res.status(200).send(list)
                 }
             })
 		} catch( e ) {
             return next(e)
 		}
     },
-    store: async (req, res, next) => {
+    store: (req, res, next) => {
         try {
-            let user = new User(req.body)
-            await user.save((err, list) => {
+            let model = new Model(req.body)
+            model.save((err, list) => {
                 if (err) {
-                    return res.status(500).send(Response.handleFatalError(500, err.message))
+                    return res.status(500).send(err.message)
                 } else {
-                    return res.status(201).send(Response.showAll(201, list))
+                    return res.status(200).send(list)
                 }
             })
 		} catch( e ) {
 			return next(e)
 		}
     },
-    update: async (req, res, next) => {
+    update: (req, res, next) => {
         try {
             let toUpdate = req.body
             Object.assign(toUpdate, { updatedAt: Date.now() })
             
-            await User.findByIdAndUpdate(req.params.id, toUpdate, { new: true }, (err, list) => {
+            Model.findByIdAndUpdate(req.params.id, toUpdate, { new: true }, (err, list) => {
                 if (err) {
-                    return res.status(500).send(Response.handleFatalError(500, err.message))
+                    return res.status(500).send(err.message)
                 } else {
-                    return res.status(200).send(Response.showAll(200, list))
+                    return res.status(200).send(list)
                 }
             })
 		} catch( e ) {
 			return next(e)
 		}
     },
-    delete: async (req, res, next) => {
+    delete: (req, res, next) => {
         try {
-            await User.findByIdAndUpdate(req.params.id, { deletedAt: Date.now() }, { new: true }, (err, list) => {
+            Model.findByIdAndUpdate(req.params.id, { deletedAt: Date.now() }, { new: true }, (err, list) => {
                 if (err) {
-                    return res.status(500).send(Response.handleFatalError(500, err.message))
+                    return res.status(500).send(err.message)
                 } else {
-                    return res.status(200).send(Response.showAll(200, list))
+                    return res.status(200).send(list)
                 }
             })
 		} catch( e ) {

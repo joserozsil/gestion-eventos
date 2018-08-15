@@ -2,8 +2,8 @@
 
 import express from 'express'
 import bodyParser from 'body-parser'
-import Response from './services/response'
 import chalk from 'chalk'
+import routes from './routes'
 
 const app = express()
 
@@ -30,10 +30,11 @@ app.use((req, res, next) => {
   next()
 })
 
+app.use('/api/v1', routes)
 
 app.use((err, req, res, next) => {
 	console.log(chalk.red(err))
-	res.json(Response.handleFatalError(500, err.message))
+	res.json({ message: err.message })
 })
 
 module.exports = app

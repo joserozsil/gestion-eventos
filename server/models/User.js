@@ -1,17 +1,27 @@
 'use strict'
 
 import mongoose from 'mongoose'
+
 import { encrypt } from '../services/password'
 
 let UserSchema = mongoose.Schema(
     {
-        idCard: {
+        username: {
             type: String,
             unique: true,
             index: true
         },
-        firstName: String,
-        lastName: String,
+        idCard: {
+            type: String,
+        },
+        firstName: {
+            type: String,
+            required: true
+        },
+        lastName: {
+            type: String,
+            required: true
+        },
         address: String,
         phone: String,
         password: String,
