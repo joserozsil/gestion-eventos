@@ -8,6 +8,7 @@ import accessController from '../controllers/access'
 import alertController from '../controllers/alert'
 import evidenceController from '../controllers/evidence'
 import chronologyController from '../controllers/chronology'
+import historyController from '../controllers/history'
 
 import authController from '../controllers/auth'
 
@@ -27,6 +28,9 @@ api.post('/access', accessController.store)
 
 api.get('/alerts', alertController.index)
 api.post('/alerts', alertController.store)
+
+api.get('/history', historyController.index)
+api.post('/history', historyController.store)
 
 api.get('/evidences', evidenceController.index)
 api.get('/evidences/:id', evidenceController.show)

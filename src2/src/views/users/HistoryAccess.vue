@@ -8,16 +8,16 @@
             <strong>{{data.item.id}}</strong>
           </template>
           <template slot="usuario" slot-scope="data">
-            <strong>{{data.item.username}}{{getUsername(data.item.name)}}</strong>
+            <strong>{{data.item.Usuario.usuario}}</strong>
           </template>
           <template slot="nombre" slot-scope="data">
-            <strong>{{data.item.name}}</strong>
+            <strong>{{data.item.Usuario.nombre}} {{data.item.Usuario.apellido}}</strong>
           </template>
           <template slot="fecha" slot-scope="data">
-            <b-badge >{{data.item.registered}}</b-badge>
+            <b-badge >{{data.item.f_creacion }}</b-badge>
           </template>
           <template slot="acción" slot-scope="data">
-            <b-button variant="primary" class="btn-pill">Detalles</b-button>
+            <b-badge >{{data.item.Usuario.rol }}</b-badge>
           </template>
         </b-table>
         <nav>
@@ -31,6 +31,8 @@
 
 <script>
 import usersData from './UsersData'
+import axios from 'axios'
+import settings from '../../config'
 
 export default {
   name: 'Usuarios',
@@ -62,7 +64,7 @@ export default {
   },
   data: () => {
     return {
-      items: usersData.filter((user) => user.id < 42),
+      items: [],
       fields: [
         {key: 'id'},
         {key: 'usuario'},
@@ -76,6 +78,9 @@ export default {
     }
   },
   computed: {
+  },
+  mounted() {
+    this.getHistory()
   },
   methods: {
     getBadge (status) {
@@ -96,6 +101,15 @@ export default {
     },
     getUsername(name){
       return name.split(' ')[0]
+    },
+    getHistory() {
+      axios.get(`${settings.API_URL}/history?limit=1`)
+      .then(resp => {
+        axios.get(`${settings.API_URL}/history?limit=${resp.total}`)
+        .then(resp => {
+          this.items = resp.data.data
+        })
+      })
     }
 
   }
