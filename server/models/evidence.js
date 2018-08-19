@@ -1,0 +1,63 @@
+'use strict'
+
+import { encrypt } from '../services/password'
+
+module.exports = (sequelize, Sequelize) => {
+
+    const Evidence = sequelize.define('Evidencia', {
+            id: { 
+                type: Sequelize.INTEGER,
+                autoIncrement: true,
+                primaryKey: true
+            },
+            departamento: {
+                type: Sequelize.ENUM('BALISTICA', 'HECHOS', 'RECONSTRUCCION', 'RECEPCION'),
+                allowNull: false
+            },
+            nombre: {
+              type: Sequelize.STRING,
+            },
+            descripcion: {
+              type: Sequelize.STRING,
+              allowNull: false
+            },
+            observacion: {
+              type: Sequelize.STRING,
+            },
+            tipo_recepcion: { // memorados u oficios
+              type: Sequelize.ENUM('RECIBO_MEMORADUM', 'RECIBO_OFICIO', 'PRESENTACION_JEFE', 'PRESENTACION_FUNCIONARIO', 'SUPERVISION', 'RECIBO_GUARDIA'),
+              allowNull: false
+            },
+            tipo_experticia: {
+              type: Sequelize.ENUM('RETRATO_HABLADO'),
+            },
+            f_creacion: {
+                type: Sequelize.DATE,
+                allowNull: false,
+                defaultValue: Sequelize.NOW
+            },
+            f_actualizacion: Sequelize.DATE,
+            f_eliminacion: {
+                type: Sequelize.DATE,
+                defaultValue: null
+            }
+        },
+        {
+            tableName: 'evidencias',
+            underscored: true
+        }
+    )
+
+    Evidence.associate = function (models) {
+        models.Usuario.hasMany(models.Imagen, { as: 'imagenes allowNull: false' })
+    }
+
+    Evidence.associate = function (models) {
+        Evidence.belongsTo(models.Retrato,{
+            onDelete: "CASCADE",
+            foreignKey: 'retrato_id'
+        })
+    }
+
+    return Evidence
+}

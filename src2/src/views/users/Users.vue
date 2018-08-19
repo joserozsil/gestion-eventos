@@ -3,23 +3,31 @@
     <b-col cols="12" xl="12">
       <transition name="slide">
       <b-card :header="caption">
-        <b-table :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" @row-clicked="rowClicked">
-          <template slot="id" slot-scope="data">
-            <strong>{{data.item.id}}</strong>
+        <!-- @row-clicked="rowClicked" -->
+        <b-table :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" >
+          <template slot="cedula" slot-scope="data">
+            <strong>{{data.item.cedula}}</strong>
           </template>
           <template slot="usuario" slot-scope="data">
-            <strong>{{data.item.username}}{{getUsername(data.item.name)}}</strong>
+            <strong>{{data.item.usuario}}</strong>
           </template>
           <template slot="nombre" slot-scope="data">
-            <strong>{{data.item.name}}</strong>
+            <strong>{{data.item.nombre}} {{data.item.apellido}}</strong>
           </template>
           <template slot="rol" slot-scope="data">
-            <b-badge >{{data.item.role}}</b-badge>
+            <select @change="setRol(data.item.id, data.item.rol)" v-model="data.item.rol" class="form-control">
+              <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+              <option value="RECEPCION">RECEPCIONISTA</option>
+              <option value="OPERADOR_LABORATORIO">OPERADOR DE LABORATORIO</option>
+              <option value="OPERADOR_BALISTICA">OPERADOR DE BALISTICA</option>
+              <option value="OPERADOR_HECHOS">OPERADOR DE RECONSTRUCCIÓN DE HECHOS</option>
+            </select>
           </template>
           <template slot="acción" slot-scope="data">
-            <b-button variant="primary" class="btn-pill">Detalles</b-button>
-            <b-button variant="success" class="btn-pill">Actualizar</b-button>
-            <b-button variant="danger" class="btn-pill">Suspender</b-button>
+            <b-button @click="goToUpdate(data.item.id)" variant="success" class="btn-pill">Actualizar</b-button>
+            <b-button @click="deleteUser(data.item.id)" variant="danger" class="btn-pill">
+              Suspender
+            </b-button>
           </template>
         </b-table>
         <nav>
@@ -32,14 +40,32 @@
 </template>
 
 <script>
-import usersData from './UsersData'
+
+import axios from 'axios'
+import settings from '../../config'
+import swal from 'sweetalert'
 
 export default {
   name: 'Usuarios',
+  data: () => {
+    return {
+      items: [],
+      fields: [
+        {key: 'cedula'},
+        {key: 'usuario'},
+        {key: 'nombre'},
+        {key: 'rol'},
+        {key: 'acción'}
+      ],
+      currentPage: 1,
+      perPage: 15,
+      totalRows: 0
+    }
+  },
   props: {
     caption: {
       type: String,
-      default: 'Users'
+      default: 'Lista de Usuarios'
     },
     hover: {
       type: Boolean,
@@ -62,22 +88,8 @@ export default {
       default: false
     }
   },
-  data: () => {
-    return {
-      items: usersData.filter((user) => user.id < 42),
-      fields: [
-        {key: 'id'},
-        {key: 'usuario'},
-        {key: 'nombre'},
-        {key: 'rol'},
-        {key: 'acción'}
-      ],
-      currentPage: 1,
-      perPage: 15,
-      totalRows: 0
-    }
-  },
-  computed: {
+  mounted() {
+    this.getUsers()
   },
   methods: {
     getBadge (status) {
@@ -96,8 +108,44 @@ export default {
       const userLink = this.userLink(item.id)
       this.$router.push({path: userLink})
     },
-    getUsername(name){
-      return name.split(' ')[0]
+    goToUpdate(id) {
+      this.$router.push({ name: 'userUpdate', params: { id } })
+    },
+    getUsers() {
+      axios.get(`${settings.API_URL}/users?limit=1`)
+      .then(resp => {
+        axios.get(`${settings.API_URL}/users?limit=${resp.total}`)
+        .then(resp => {
+          this.items = resp.data.data
+        })
+      })
+    },
+    deleteUser(idUser) {
+      swal({
+        title: "¿Estás seguro que desea suspender el usuario?",
+        text: "Esta acción no se podrá deshacer",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          axios.delete(`${settings.API_URL}/users/${idUser}`).then(resp => {
+            this.getUsers()
+          })
+        } 
+      })
+      
+    },
+    setRol(id, rol) {
+      axios.put(`${settings.API_URL}/users/${id}`, { rol })
+      .then(resp => {
+        swal({
+          title: "Usuario actualizado correctamente",
+          text: `El usuario ${resp.data.usuario} se le ha asignado el rol ${rol}`,
+          icon: "success",
+        })
+      })
     }
 
   }

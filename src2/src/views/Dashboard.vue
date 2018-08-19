@@ -4,6 +4,7 @@
       <b-col sm="6" lg="3">
         <b-card no-body class="bg-primary">
           <b-card-body class="pb-0">
+            <!--
             <b-dropdown class="float-right" variant="transparent p-0" right>
               <template slot="button-content">
                 <i class="icon-settings"></i>
@@ -13,7 +14,8 @@
               <b-dropdown-item>Something else here...</b-dropdown-item>
               <b-dropdown-item disabled>Disabled action</b-dropdown-item>
             </b-dropdown>
-            <h4 class="mb-0">190</h4>
+            -->
+            <h4 class="mb-0">{{ userTotal }}</h4>
             <p>Usuarios Registrados</p>
           </b-card-body>
           <card-line1-chart-example chartId="card-chart-01" class="chart-wrapper px-3" style="height:70px;" :height="70"/>
@@ -31,7 +33,7 @@
               <b-dropdown-item>Something else here...</b-dropdown-item>
               <b-dropdown-item disabled>Disabled action</b-dropdown-item>
             </b-dropdown>
-            <h4 class="mb-0">247</h4>
+            <h4 class="mb-0">{{ chronologyTotal }}</h4>
             <p>Cronologías Registradas</p>
           </b-card-body>
           <card-line2-chart-example chartId="card-chart-02" class="chart-wrapper px-3" style="height:70px;" :height="70"/>
@@ -40,6 +42,7 @@
       <b-col sm="6" lg="3">
         <b-card no-body class="bg-warning">
           <b-card-body class="pb-0">
+            <!--
             <b-dropdown class="float-right" variant="transparent p-0" right>
               <template slot="button-content">
                 <i class="icon-settings"></i>
@@ -49,7 +52,8 @@
               <b-dropdown-item>Something else here...</b-dropdown-item>
               <b-dropdown-item disabled>Disabled action</b-dropdown-item>
             </b-dropdown>
-            <h4 class="mb-0">23</h4>
+            -->
+            <h4 class="mb-0">{{ alertTotal }}</h4>
             <p>Alertas Reportadas</p>
           </b-card-body>
           <card-line3-chart-example chartId="card-chart-03" class="chart-wrapper" style="height:70px;" height="70"/>
@@ -58,6 +62,7 @@
       <b-col sm="6" lg="3">
         <b-card no-body class="bg-danger">
           <b-card-body class="pb-0">
+            <!--
             <b-dropdown class="float-right" variant="transparent p-0" right>
               <template slot="button-content">
                 <i class="icon-settings"></i>
@@ -67,7 +72,8 @@
               <b-dropdown-item>Something else here...</b-dropdown-item>
               <b-dropdown-item disabled>Disabled action</b-dropdown-item>
             </b-dropdown>
-            <h4 class="mb-0">1601</h4>
+            -->
+            <h4 class="mb-0">{{ evidenceTotal }}</h4>
             <p>Evidencias registradas</p>
           </b-card-body>
           <card-bar-chart-example chartId="card-chart-04" class="chart-wrapper px-3" style="height:70px;" height="70"/>
@@ -90,17 +96,17 @@
         <b-row class="text-center">
           <b-col class="mb-sm-2 mb-0">
             <div class="text-muted">Balística</div>
-            <strong>19 Evidencias (40%)</strong>
+            <strong>{{ evidenceTotal }} Evidencias (40%)</strong>
             <b-progress height={} class="progress-xs mt-2" :precision="1" variant="success" :value="40"></b-progress>
           </b-col>
           <b-col class="mb-sm-2 mb-0 d-md-down-none">
             <div class="text-muted">Laboratorio</div>
-            <strong>29 Evidencias (20%)</strong>
+            <strong>{{ evidenceTotal }} Evidencias (20%)</strong>
             <b-progress height={} class="progress-xs mt-2" :precision="1" variant="info" :value="20"></b-progress>
           </b-col>
           <b-col class="mb-sm-2 mb-0 d-md-down-none">
             <div class="text-muted">Reconstrucción de Hechos</div>
-            <strong>14 Evidencias (40.15%)</strong>
+            <strong>{{ evidenceTotal }} Evidencias (40.15%)</strong>
             <b-progress height={} class="progress-xs mt-2" :precision="1" :value="40"></b-progress>
           </b-col>
         </b-row>
@@ -111,6 +117,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import settings from '../config'
+
 import CardLine1ChartExample from './dashboard/CardLine1ChartExample'
 import CardLine2ChartExample from './dashboard/CardLine2ChartExample'
 import CardLine3ChartExample from './dashboard/CardLine3ChartExample'
@@ -135,97 +144,38 @@ export default {
   data: function () {
     return {
       selected: 'Month',
-      tableItems: [
-        {
-          avatar: { url: 'img/avatars/1.jpg', status: 'success' },
-          user: { name: 'José Rodríguez', new: true, registered: 'Enero 1, 2015' },
-          country: { name: 'USA', flag: 'us' },
-          usage: { value: 50, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Mastercard', icon: 'fa fa-cc-mastercard' },
-          activity: '10 sec ago'
-        },
-        {
-          avatar: { url: 'img/avatars/2.jpg', status: 'danger' },
-          user: { name: 'Avram Tarasios', new: false, registered: 'Jan 1, 2015' },
-          country: { name: 'Brazil', flag: 'br' },
-          usage: { value: 22, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Visa', icon: 'fa fa-cc-visa' },
-          activity: '5 minutes ago'
-        },
-        {
-          avatar: { url: 'img/avatars/3.jpg', status: 'warning' },
-          user: { name: 'Quintin Ed', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'India', flag: 'in' },
-          usage: { value: 74, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Stripe', icon: 'fa fa-cc-stripe' },
-          activity: '1 hour ago'
-        },
-        {
-          avatar: { url: 'img/avatars/4.jpg', status: '' },
-          user: { name: 'Enéas Kwadwo', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'France', flag: 'fr' },
-          usage: { value: 98, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'PayPal', icon: 'fa fa-paypal' },
-          activity: 'Last month'
-        },
-        {
-          avatar: { url: 'img/avatars/5.jpg', status: 'success' },
-          user: { name: 'Agapetus Tadeáš', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'Spain', flag: 'es' },
-          usage: { value: 22, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Google Wallet', icon: 'fa fa-google-wallet' },
-          activity: 'Last week'
-        },
-        {
-          avatar: { url: 'img/avatars/6.jpg', status: 'danger' },
-          user: { name: 'Friderik Dávid', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'Poland', flag: 'pl' },
-          usage: { value: 43, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Amex', icon: 'fa fa-cc-amex' },
-          activity: 'Last week'
-        }
-      ],
-      tableFields: {
-        avatar: {
-          label: '<i class="icon-people"></i>',
-          class: 'text-center'
-        },
-        user: {
-          label: 'User'
-        },
-        country: {
-          label: 'Country',
-          class: 'text-center'
-        },
-        usage: {
-          label: 'Usage'
-        },
-        payment: {
-          label: 'Payment method',
-          class: 'text-center'
-        },
-        activity: {
-          label: 'Activity'
-        }
-      }
+      userTotal: 0,
+      evidenceTotal: 0,
+      alertTotal: 0,
+      chronologyTotal: 0
     }
   },
+  mounted() {
+    this.getUsers()
+    this.getEvidence()
+    this.getAlerts()
+    this.getChronlogy()
+  },
   methods: {
-    variant (value) {
-      let $variant
-      if (value <= 25) {
-        $variant = 'info'
-      } else if (value > 25 && value <= 50) {
-        $variant = 'success'
-      } else if (value > 50 && value <= 75) {
-        $variant = 'warning'
-      } else if (value > 75 && value <= 100) {
-        $variant = 'danger'
-      }
-      return $variant
+    getUsers() {
+      axios.get(settings.API_URL + '/users').then(resp => {
+        this.userTotal = resp.data.total
+      })
     },
-    flag (value) {
-      return 'flag-icon flag-icon-' + value
+    getEvidence() {
+      axios.get(settings.API_URL + '/evidences').then(resp => {
+        this.evidenceTotal = resp.data.total
+      })
+    },
+    getAlerts() {
+      axios.get(settings.API_URL + '/alerts').then(resp => {
+        this.alertTotal = resp.data.total
+      })
+    },
+    getChronlogy() {
+      axios.get(settings.API_URL + '/chronologies').then(resp => {
+        this.chronologyTotal = resp.data.total
+      })
     }
   }
 }

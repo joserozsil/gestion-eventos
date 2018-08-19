@@ -26,22 +26,17 @@
         "jsonwebtoken": "^8.1.0",
         "jwt-simple": "^0.5.1",
         "moment": "^2.22.0",
-        "mongoose": "^5.0.14",
         "mysql": "^2.15.0",
         "mysql2": "^1.5.3",
-        "ng2-toastr": "^4.1.2",
-        "ng2-validation": "4.2.0",
         "password-validator": "^4.0.0",
         "rand-token": "^0.4.0",
+        "request-ip": "^2.1.1",
+        "sequelize": "^4.38.0",
+        "underscore": "^1.9.1",
+        "volleyball": "^1.5.1",
         "zone.js": "^0.8.26"
     },
     "devDependencies": {
-        "@angular/cli": "~1.7.3",
-        "@angular/compiler-cli": "^5.2.0",
-        "@angular/language-service": "^5.2.0",
-        "@types/jasmine": "~2.8.3",
-        "@types/jasminewd2": "~2.0.2",
-        "@types/node": "~6.0.60",
         "babel-core": "^6.26.3",
         "babel-loader": "^7.1.5",
         "babel-polyfill": "^6.26.0",
@@ -58,8 +53,7 @@
         "nodemon": "^1.12.1",
         "protractor": "~5.1.2",
         "ts-node": "~4.1.0",
-        "tslint": "~5.9.1",
-        "typescript": "~2.5.3"
+        "tslint": "~5.9.1"
     },
     "keywords": [
         "gestión",

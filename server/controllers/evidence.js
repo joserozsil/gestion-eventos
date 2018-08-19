@@ -1,20 +1,27 @@
 'use strict'
 
+import Sequelize from 'sequelize'
 import Model from '../models'
 import _ from 'underscore'
-import { encrypt } from '../services/password'
+const Op = Sequelize.Op
 
 const operations = {
     index: (req, res, next) => {
         try {
-            Model.Usuario.findAndCountAll({
-                attributes: ['id', 'usuario', 'nombre', 'apellido', 'direccion', 'telefono', 'telefono_casa', 'rol', 'cedula', 'f_creacion'],
+            Model.Evidencia.findAndCountAll({
+                attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion'],
+                include: [{
+                    model: Model.Retrato,
+                }],
                 where: {
-                    f_eliminacion: null
+                    f_eliminacion: null,
+                    departamento: {
+                        [Op.ne]: 'RECEPCION'
+                    }
                 },
                 order: [[ 'f_creacion', 'DESC' ]],
-                offset: Number(req.query.offset) || 0,
-                limit: Number(req.query.limit) || 15
+                offset: req.query.offset || 0,
+                limit: req.query.limit || 15
             })
             .then(result => {
                 return res.status(200).json({
@@ -33,22 +40,23 @@ const operations = {
     },
     show: (req, res, next) => {
         try {
-
             if(!req.params.id) {
                 return res.status(400).json({
                     message: "Por favor indique el id del usuario"
                 })
             }
 
-            Model.Usuario.findOne({
-                attributes: ['id','usuario', 'nombre', 'apellido', 'direccion', 'telefono', 'telefono_casa', 'rol', 'cedula' ],
+            Model.Evidencia.findOne({
+                attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion'],
                 where: {
                     id: req.params.id,
                     f_eliminacion: null
                 }
             })
             .then(result => {
-                return res.status(200).json(result)
+                return res.status(200).json({
+                    data: result
+                })
             })
             .catch(error => {
                 return res.status(400).json(error)
@@ -58,23 +66,8 @@ const operations = {
 		}
     },
     store: (req, res, next) => {
-        if(!req.body.nombre) {
-            return res.status(400).json({
-                message: "El nombre es requerido"
-            })
-        }
-        if(!req.body.apellido) {
-            return res.status(400).json({
-                message: "El apellido es requerido"
-            })
-        }
-        if(!req.body.rol) {
-            return res.status(400).json({
-                message: "El rol es requerido"
-            })
-        }
         try {
-            Model.Usuario.create(req.body)
+            Model.Evidencia.create(_.pick(req.body, ['departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia']))
             .then(result => {
                 return res.status(200).json(result)
             })
@@ -94,19 +87,20 @@ const operations = {
                 })
             }
 
-            Model.Usuario.findById(req.params.id)
+            Model.Evidencia.findById(req.params.id)
             .then(usuario => {
-                let update = _.pick(req.body, ['rol', 'usuario', 'nombre', 'apellido', 'direccion', 'telefono', 'telefono_casa', 'contraseña'])
+                let update = _.pick(req.body, ['departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia'])
                 Object.assign(update, { f_actualizacion: Date.now() })
                 usuario.update(update)
                 .then(result => {
-                    return res.status(200).json(result)
+                    return res.status(200).json({
+                        data: result
+                    })
                 })
                 .catch(error => {
                     return res.status(400).json(error)
                 })
             })
-            
 		} catch( e ) {
 			return next(e)
 		}
@@ -120,7 +114,7 @@ const operations = {
                 })
             }
 
-            Model.Usuario.findById(req.params.id)
+            Model.Evidencia.findById(req.params.id)
             .then(usuario => {
                 usuario.update({
                     f_eliminacion: Date.now()

@@ -2,12 +2,15 @@
 
 import express from 'express'
 import bodyParser from 'body-parser'
-import Response from './services/response'
 import chalk from 'chalk'
+import routes from './routes'
+import volleyball from 'volleyball'
 
 const app = express()
 
 import path from 'path'
+
+app.use(volleyball)
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -30,10 +33,11 @@ app.use((req, res, next) => {
   next()
 })
 
+app.use('/api/v1', routes)
 
 app.use((err, req, res, next) => {
 	console.log(chalk.red(err))
-	res.json(Response.handleFatalError(500, err.message))
+	return res.status(500).json(err)
 })
 
 module.exports = app

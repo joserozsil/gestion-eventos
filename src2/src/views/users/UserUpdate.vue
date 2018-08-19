@@ -4,7 +4,7 @@
     <b-col sm="12">
       <b-card>
         <div slot="header">
-          <strong>Crear Nuevo Usuario</strong>
+          <strong>Actualizar Usuario</strong>
         </div>
         <b-row>
           <b-col sm="6">
@@ -27,13 +27,6 @@
           </b-col>
         </b-row>
         <b-form-group
-          description="Ej: 24847272"
-          label="Cédula"
-          laber-for="cedula"
-          :horizontal="false">
-          <b-form-input v-model="user.cedula" type="text" id="cedula"></b-form-input>
-        </b-form-group>
-        <b-form-group
           description="Ej: Ud 104 San Félix, Edo Bolívar"
           label="Dirección"
           laber-for="address"
@@ -48,28 +41,13 @@
           <b-form-input v-model="user.telefono" type="text" id="phone"></b-form-input>
         </b-form-group>
         <b-row>
-          <b-col sm="6">
+          <b-col sm="12">
             <b-form-group
               description="Ej: jrodriguez"
               label="Nombre de Usuario"
               laber-for="username"
               :horizontal="false">
               <b-form-input v-model="user.usuario" type="text" id="username"></b-form-input>
-            </b-form-group>
-          </b-col>
-          <b-col sm="6">
-            <b-form-group
-              description="Ej: ADMINISTRADOR"
-              label="Rol del usuario"
-              laber-for="rol"
-              :horizontal="false">
-              <select v-model="user.rol" class="form-control">
-                <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-                <option value="RECEPCION" default selected="true">RECEPCIONISTA</option>
-                <option value="OPERADOR_LABORATORIO">OPERADOR DE LABORATORIO</option>
-                <option value="OPERADOR_BALISTICA">OPERADOR DE BALISTICA</option>
-                <option value="OPERADOR_HECHOS">OPERADOR DE RECONSTRUCCIÓN DE HECHOS</option>
-              </select>
             </b-form-group>
           </b-col>
         </b-row>
@@ -95,12 +73,8 @@
         </b-row>
       </b-card>
       <div class="form-actions">
-        <b-button @click="storeUser()" class="mr" type="submit" variant="primary">
-          Crear
-        </b-button>
-        <b-button  @click="$router.go(-1)" type="button" variant="secondary">
-          Cancelar
-        </b-button>
+        <b-button @click="updateUser()" class="mr" type="submit" variant="primary">Actualizar</b-button>
+        <b-button  @click="$router.go(-1)" type="button" variant="secondary">Cancelar</b-button>
       </div>
     </b-col>
   </b-row>
@@ -119,36 +93,33 @@ export default {
     }
   },
   mounted() {
+    this.getUser()
   },
   methods: {
-    storeUser() {
-      axios.post(`${settings.API_URL}/users`, {
+    getUser() {
+      axios.get(`${settings.API_URL}/users/${this.$route.params.id}`)
+      .then(resp => {
+        this.user = resp.data
+      })
+    },
+    updateUser() {
+      axios.put(`${settings.API_URL}/users/${this.$route.params.id}`, {
         usuario: this.user.usuario,
         nombre: this.user.nombre,
         apellido: this.user.apellido,
         direccion: this.user.direccion,
-        contraseña: this.user.contraseña,
-        cedula: this.user.cedula,
-        rol: this.user.rol
+        contraseña: this.user.contraseña
       })
       .then(resp => {
         swal({
-          title: "Usuario registrado correctamente",
-          text: `El usuario ${resp.data.usuario} se ha registrado correctamente`,
+          title: "Usuario actualizado correctamente",
+          text: `El usuario ${resp.data.usuario} se ha actualizado correctamente`,
           icon: "success",
         })
 
         this.$router.push({ name: 'userList' })
       })
       .catch(error => {
-        if(error.response.data.message) {
-          swal({
-            title: `Atención`,
-            text: `${ error.response.data.message }`,
-            icon: "error",
-          })
-        }
-        
         error.response.data.errors.forEach(element => {
           swal({
             title: `Atención`,
@@ -156,6 +127,7 @@ export default {
             icon: "error",
           })
         })
+        console.dir(error)
       })
     }
   }

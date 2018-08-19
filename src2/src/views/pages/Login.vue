@@ -10,19 +10,18 @@
                   <h1>Iniciar Sesión</h1>
                   <p class="text-muted">Iniciar sesión en el sistema</p>
                   <b-input-group class="mb-3">
-                    <b-input-group-prepend><b-input-group-text><i class="icon-user"></i></b-input-group-text></b-input-group-prepend>
-                    <b-form-input type="text" class="form-control" placeholder="Usuario" autocomplete="username email" />
+                    <b-input-group-prepend>
+                      <b-input-group-text><i class="icon-user"></i></b-input-group-text></b-input-group-prepend>
+                      <b-form-input v-model="loginData.usuario" type="text" class="form-control" placeholder="Usuario" autocomplete="username email" />
                   </b-input-group>
                   <b-input-group class="mb-4">
                     <b-input-group-prepend><b-input-group-text><i class="icon-lock"></i></b-input-group-text></b-input-group-prepend>
-                    <b-form-input type="password" class="form-control" placeholder="Contraseña" autocomplete="current-password" />
+                    <b-form-input @keyup.enter="signIn()" v-model="loginData.contraseña" type="password" class="form-control" placeholder="Contraseña" autocomplete="current-password" />
                   </b-input-group>
                   <b-row>
                     <b-col cols="6">
-                      <b-button variant="primary" class="px-4">
-                        <router-link class="white"  to="/dashboard">
+                      <b-button @click="signIn()" variant="primary" class="px-4">
                           Iniciar Sesión
-                        </router-link>
                       </b-button>
                     </b-col>
                     <b-col cols="6" class="text-right">
@@ -40,9 +39,90 @@
 </template>
 
 <script>
-export default {
-  name: 'Login'
-}
+  import axios from 'axios'
+  import settings from '../../config'
+  import swal from 'sweetalert';
+
+  export default {
+    name: 'Login',
+    data: () => {
+      return {
+        alertCount: 0,
+        ip: '',
+        loginData: {
+          usuario: 'jrodriguez',
+          contraseña: 'Joseangel19$'
+        }
+      }
+    },
+    mounted() {
+      this.getUserIP((ip) => {
+        console.log(ip)
+        this.ip = ip
+      })
+    },
+    methods: {
+      signIn() {
+        axios.post(settings.API_URL + '/signin', this.loginData)
+        .then(resp => {
+          if(resp.status == 200) {
+            localStorage.setItem('token', resp.data.token)
+            swal("¡Listo!", `Bienvenido al sistema ${resp.data.user.nombre}`, "success")
+            this.$router.push({ name: 'Dashboard' })
+          }
+        })
+        .catch(error => {
+          swal("¡Atención!", error.response.data.message, "error")
+          this.alertCount++
+          if(this.alertCount >= 2) {
+            this.storeAlert()
+          }
+        })
+      },
+      storeAlert() {
+        axios.post(settings.API_URL + '/alerts', { ip: this.ip,usuario: this.loginData.usuario })
+        .then(resp => {
+          this.alertCount = 0
+        })
+      },
+      getUserIP(onNewIP) {
+        var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+        
+        var pc = new myPeerConnection({
+            iceServers: []
+        }),
+        noop = function() {},
+        localIPs = {},
+        ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g,
+        key;
+
+        function iterateIP(ip) {
+            if (!localIPs[ip]) onNewIP(ip);
+            localIPs[ip] = true;
+        }
+
+        //create a bogus data channel
+        pc.createDataChannel("");
+
+        // create offer and set local description
+        pc.createOffer().then(function(sdp) {
+            sdp.sdp.split('\n').forEach(function(line) {
+                if (line.indexOf('candidate') < 0) return;
+                line.match(ipRegex).forEach(iterateIP);
+            });
+            pc.setLocalDescription(sdp, noop, noop);
+        }).catch(function(reason) {
+            // An error occurred, so handle the failure to connect
+        });
+
+        //listen for candidate events
+        pc.onicecandidate = function(ice) {
+            if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
+            ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
+        };
+      }
+    }
+  }
 </script>
 
 <style scoped>

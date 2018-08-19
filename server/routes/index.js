@@ -4,32 +4,37 @@ import express from 'express'
 
 // controladores
 import userController from '../controllers/user'
-import authController from '../controllers/auth'
+import accessController from '../controllers/access'
+import alertController from '../controllers/alert'
+import evidenceController from '../controllers/evidence'
 import chronologyController from '../controllers/chronology'
-import rolController from '../controllers/rol'
+
+import authController from '../controllers/auth'
 
 // middlewares
 import isAuth from '../middlewares/authenticated'
 
 const api = express.Router()
 
-api.get('/users', isAuth, userController.index)
-api.get('/users/:id', isAuth, userController.show)
+api.get('/users', userController.index)
+api.get('/users/:id', userController.show)
 api.post('/users', userController.store)
-api.put('/users/:id', isAuth, userController.update)
-api.delete('/users/:id', isAuth, userController.delete)
+api.put('/users/:id', userController.update)
+api.delete('/users/:id', userController.delete)
 
-api.get('/chronologies', isAuth, chronologyController.index)
-api.get('/chronologies/:id', isAuth, chronologyController.show)
-api.post('/chronologies', isAuth, chronologyController.store)
-api.put('/chronologies/:id', isAuth, chronologyController.update)
-api.delete('/chronologies/:id', isAuth, chronologyController.delete)
+api.get('/access', accessController.index)
+api.post('/access', accessController.store)
 
-api.get('/rols', isAuth, rolController.index)
-api.get('/rols/:id', isAuth, rolController.show)
-api.post('/rols', rolController.store)
-api.put('/rols/:id', isAuth, rolController.update)
-api.delete('/rols/:id', isAuth, rolController.delete)
+api.get('/alerts', alertController.index)
+api.post('/alerts', alertController.store)
+
+api.get('/evidences', evidenceController.index)
+api.get('/evidences/:id', evidenceController.show)
+api.post('/evidences', evidenceController.store)
+api.put('/evidences/:id', evidenceController.update)
+api.delete('/evidences/:id', evidenceController.delete)
+
+api.get('/chronologies', chronologyController.index)
 
 api.post('/signin', authController.signIn)
 

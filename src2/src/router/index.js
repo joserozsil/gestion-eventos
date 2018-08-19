@@ -57,6 +57,7 @@ const Register = () => import('@/views/pages/Register')
 // Users
 const Users = () => import('@/views/users/Users')
 const UserCreate = () => import('@/views/users/UserCreate')
+const UserUpdate = () => import('@/views/users/UserUpdate')
 const HistoryAccess = () => import('@/views/users/HistoryAccess')
 
 // Security
@@ -82,8 +83,8 @@ const Clothes = () => import('@/views/laboratory/Clothes')
 Vue.use(Router)
 
 export default new Router({
-  mode: 'hash', // https://router.vuejs.org/api/#mode
-  linkActiveClass: 'open active',
+  mode: 'history', // https://router.vuejs.org/api/#mode
+  linkActiveClass: 'open active actived',
   scrollBehavior: () => ({ y: 0 }),
   routes: [
     {
@@ -108,10 +109,16 @@ export default new Router({
             {
               path: 'consultar',
               component: Users,
+              name: 'userList'
             },
             {
               path: 'crear',
               component: UserCreate,
+            },
+            {
+              path: 'actualizar/:id',
+              component: UserUpdate,
+              name: 'userUpdate'
             },
             {
               path: 'historial-acceso',
