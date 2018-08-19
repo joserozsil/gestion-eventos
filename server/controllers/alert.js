@@ -7,10 +7,10 @@ const operations = {
     index: (req, res, next) => {
       try {
           Model.Alerta.findAndCountAll({
-              attributes: ['ip', 'usuario', 'f_creacion' ],
+              attributes: ['id','ip', 'usuario', 'f_creacion' ],
               order: [[ 'f_creacion', 'DESC' ]],
-              offset: req.query.offset || 0,
-              limit: req.query.limit || 15
+              offset: Number(req.query.offset) || 0,
+              limit: Number(req.query.limit) || 15
           })
           .then(result => {
               return res.status(200).json({

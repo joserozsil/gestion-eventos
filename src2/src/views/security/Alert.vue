@@ -8,19 +8,13 @@
             <strong>{{data.item.id}}</strong>
           </template>
           <template slot="usuario" slot-scope="data">
-            <strong>{{data.item.username}}{{getUsername(data.item.name)}}</strong>
-          </template>
-          <template slot="nombre" slot-scope="data">
-            <strong>{{data.item.name}}</strong>
+            <strong>{{data.item.usuario}}</strong>
           </template>
           <template slot="descripción" slot-scope="data">
-            <strong>Intento de autenticación fallido - 192.168.1.{{data.item.id + 1}}</strong>
+            <strong>Intento de autenticación fallido - {{ data.item.ip }}</strong>
           </template>
           <template slot="fecha" slot-scope="data">
-            <strong>{{data.item.registered}}</strong>
-          </template>
-          <template slot="acción" slot-scope="data">
-            <b-button variant="primary" class="btn-pill">Detalles</b-button>
+            <strong>{{data.item.f_creacion}}</strong>
           </template>
         </b-table>
         <nav>
@@ -34,6 +28,8 @@
 
 <script>
 import usersData from './UsersData'
+import axios from 'axios'
+import settings from '../../config'
 
 export default {
   name: 'Alert',
@@ -65,14 +61,12 @@ export default {
   },
   data: () => {
     return {
-      items: usersData.filter((user) => user.id < 42),
+      items: [],
       fields: [
         {key: 'id'},
         {key: 'usuario'},
-        {key: 'nombre'},
         {key: 'descripción'},
-        {key: 'fecha'},
-        {key: 'acción'}
+        {key: 'fecha'}
       ],
       currentPage: 1,
       perPage: 15,
@@ -80,6 +74,9 @@ export default {
     }
   },
   computed: {
+  },
+  mounted() {
+    this.getAlerts()
   },
   methods: {
     getBadge (status) {
@@ -100,6 +97,15 @@ export default {
     },
     getUsername(name){
       return name.split(' ')[0]
+    },
+    getAlerts() {
+      axios.get(`${settings.API_URL}/alerts?limit=1`)
+      .then(resp => {
+        axios.get(`${settings.API_URL}/alerts?limit=${resp.total}`)
+        .then(resp => {
+          this.items = resp.data.data
+        })
+      })
     }
 
   }

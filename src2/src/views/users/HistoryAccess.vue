@@ -107,6 +107,7 @@ export default {
       .then(resp => {
         axios.get(`${settings.API_URL}/history?limit=${resp.total}`)
         .then(resp => {
+          console.dir(resp)
           this.items = resp.data.data
         })
       })
