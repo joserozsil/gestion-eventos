@@ -80,7 +80,7 @@ export default {
       labels: ['Ene', 'Feb', 'Marz', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
       datasets: [
         {
-          label: 'My First dataset',
+          label: 'Balística',
           backgroundColor: hexToRgba(brandInfo, 10),
           borderColor: brandInfo,
           pointHoverBackgroundColor: '#fff',
@@ -88,7 +88,7 @@ export default {
           data: data1
         },
         {
-          label: 'My Second dataset',
+          label: 'Laboratorio',
           backgroundColor: 'transparent',
           borderColor: brandSuccess,
           pointHoverBackgroundColor: '#fff',
@@ -96,7 +96,7 @@ export default {
           data: data2
         },
         {
-          label: 'My Third dataset',
+          label: 'Análisis y Reconstrucción de Hechos',
           backgroundColor: 'transparent',
           borderColor: brandDanger,
           pointHoverBackgroundColor: '#fff',
