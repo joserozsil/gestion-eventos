@@ -201,6 +201,7 @@ export default new Router({
             {
               path: 'consultar',
               component: Chronology,
+              name: 'chronologyList'
             }
           ]
         },

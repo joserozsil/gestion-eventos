@@ -76,7 +76,7 @@ const operations = {
         try {
             Model.Usuario.create(req.body)
             .then(result => {
-                return res.status(200).json(result)
+                return res.status(200).json(_.pick(result, 'id', 'nombre', 'apellido', 'cedula', 'direccion', 'telefono', 'rol'))
             })
             .catch(error => {
                 return res.status(400).json(error)

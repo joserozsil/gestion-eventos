@@ -11,7 +11,7 @@ const operations = {
             Model.Evidencia.findAndCountAll({
                 attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion'],
                 include: [{
-                    model: Model.Retrato,
+                    model: Model.Retrato
                 }],
                 where: {
                     f_eliminacion: null,
@@ -30,6 +30,7 @@ const operations = {
                 })
             })
             .catch(error => {
+                console.log(error)
                 return res.status(400).json(error)
             })
 		} catch( e ) {

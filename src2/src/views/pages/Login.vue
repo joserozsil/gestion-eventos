@@ -39,6 +39,8 @@
 </template>
 
 <script>
+  import store from '../../store/store'
+
   import axios from 'axios'
   import settings from '../../config'
   import swal from 'sweetalert';
@@ -55,6 +57,7 @@
         }
       }
     },
+    store,
     mounted() {
       this.getUserIP((ip) => {
         console.log(ip)
@@ -69,6 +72,8 @@
             localStorage.setItem('token', resp.data.token)
             axios.post(settings.API_URL + '/history', { usuario_id: resp.data.user.id }).then(other => {
               swal("¡Listo!", `Bienvenido al sistema ${resp.data.user.nombre}`, "success")
+              this.$store.commit('setDataUser', resp.data.user)
+              //console.dir(this.$store.state)
               this.$router.push({ name: 'Dashboard' })
             })
           }

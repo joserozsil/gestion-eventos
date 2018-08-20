@@ -9,10 +9,15 @@ const operations = {
     index: (req, res, next) => {
         try {
             Model.Evidencia.findAndCountAll({
-                attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion'],
-                include: [{
-                    model: Model.Retrato,
-                }],
+                attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion', 'usuario_id'],
+                include: [
+                    {
+                        model: Model.Usuario
+                    },
+                    {
+                        model: Model.Retrato
+                    }
+                ],
                 where: {
                     f_eliminacion: null,
                     departamento: {
@@ -20,8 +25,8 @@ const operations = {
                     }
                 },
                 order: [[ 'f_creacion', 'DESC' ]],
-                offset: req.query.offset || 0,
-                limit: req.query.limit || 15
+                offset: Number(req.query.offset) || 0,
+                limit: Number(req.query.limit) || 15
             })
             .then(result => {
                 return res.status(200).json({
@@ -32,6 +37,7 @@ const operations = {
                 })
             })
             .catch(error => {
+                console.log(error)
                 return res.status(400).json(error)
             })
 		} catch( e ) {
@@ -40,6 +46,7 @@ const operations = {
     },
     show: (req, res, next) => {
         try {
+            
             if(!req.params.id) {
                 return res.status(400).json({
                     message: "Por favor indique el id del usuario"
@@ -67,7 +74,7 @@ const operations = {
     },
     store: (req, res, next) => {
         try {
-            Model.Evidencia.create(_.pick(req.body, ['departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia']))
+            Model.Evidencia.create(_.pick(req.body, ['departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'usuario_id']))
             .then(result => {
                 return res.status(200).json(result)
             })

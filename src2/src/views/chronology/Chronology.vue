@@ -5,19 +5,19 @@
       <b-card :header="caption">
         <b-table :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" @row-clicked="rowClicked">
           <template slot="tipo" slot-scope="data">
-            <strong>{{data.item.type}}</strong>
+            <strong>{{data.item.id}}</strong>
           </template>
           <template slot="usuario" slot-scope="data">
-            <strong>{{data.item.username}}{{getUsername(data.item.name)}}</strong>
+            <strong>{{data.item.Usuario.nombre}} {{data.item.Usuario.apellido}}</strong>
           </template>
           <template slot="departamento" slot-scope="data">
-            <strong>{{data.item.departament}}</strong>
+            <strong>{{data.item.departamento}}</strong>
           </template>
           <template slot="descripción" slot-scope="data">
-            <strong>{{data.item.description}}</strong>
+            <strong>{{data.item.descripcion}}</strong>
           </template>
           <template slot="fecha" slot-scope="data">
-            <b-badge >{{data.item.registered}}</b-badge>
+            <b-badge >{{data.item.f_creacion}}</b-badge>
           </template>
           <template slot="acción" slot-scope="data">
             <b-button variant="primary" class="btn-pill">Detalles</b-button>
@@ -34,6 +34,8 @@
 
 <script>
 import receptionData from './ReceptionData'
+import axios from 'axios'
+import settings from '../../config'
 
 export default {
   name: 'Usuarios',
@@ -65,7 +67,7 @@ export default {
   },
   data: () => {
     return {
-      items: receptionData.filter((user) => user.id < 42),
+      items: [],
       fields: [
         {key: 'tipo'},
         {key: 'usuario'},
@@ -80,6 +82,9 @@ export default {
     }
   },
   computed: {
+  },
+  mounted() {
+    this.getChronologies()
   },
   methods: {
     getBadge (status) {
@@ -100,8 +105,17 @@ export default {
     },
     getUsername(name){
       return name.split(' ')[0]
+    },
+    getChronologies() {
+      axios.get(`${settings.API_URL}/evidences?limit=1`)
+      .then(resp => {
+        axios.get(`${settings.API_URL}/evidences?limit=${resp.total}`)
+        .then(resp => {
+          console.dir(resp)
+          this.items = resp.data.data
+        })
+      })
     }
-
   }
 }
 </script>

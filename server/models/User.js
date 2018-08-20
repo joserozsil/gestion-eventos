@@ -155,6 +155,7 @@ module.exports = (sequelize, Sequelize) => {
         }
     )
 
+    /*
     User.beforeCreate(user => {
         return encrypt(user.contraseña)
         .then(success => {
@@ -166,6 +167,7 @@ module.exports = (sequelize, Sequelize) => {
             }
         })
     })
+    */
 
 
     User.afterValidate(user => {
@@ -190,6 +192,10 @@ module.exports = (sequelize, Sequelize) => {
 
     User.associate = function (models) {
         models.Usuario.hasMany(models.Historial, { as: 'historia' } )
+    }
+
+    User.associate = function (models) {
+        models.Usuario.hasMany(models.Evidencia, { as: 'usuarios' })
     }
 
     return User

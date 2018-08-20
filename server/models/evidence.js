@@ -1,7 +1,5 @@
 'use strict'
 
-import { encrypt } from '../services/password'
-
 module.exports = (sequelize, Sequelize) => {
 
     const Evidence = sequelize.define('Evidencia', {
@@ -11,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
                 primaryKey: true
             },
             departamento: {
-                type: Sequelize.ENUM('BALISTICA', 'HECHOS', 'RECONSTRUCCION', 'RECEPCION'),
+                type: Sequelize.ENUM('BALISTICA', 'HECHOS', 'RECONSTRUCCION', 'RECEPCION', 'LABORATORIO'),
                 allowNull: false
             },
             nombre: {
@@ -49,13 +47,15 @@ module.exports = (sequelize, Sequelize) => {
     )
 
     Evidence.associate = function (models) {
-        models.Usuario.hasMany(models.Imagen, { as: 'imagenes allowNull: false' })
-    }
+        models.Usuario.hasMany(models.Imagen, { as: 'imagenes' })
+        
+        models.Evidencia.belongsTo(models.Retrato,{
+            foreignKey: "retrato_id"
+        })
 
-    Evidence.associate = function (models) {
-        Evidence.belongsTo(models.Retrato,{
+        models.Evidencia.belongsTo(models.Usuario,{
             onDelete: "CASCADE",
-            foreignKey: 'retrato_id'
+            allowNull: false
         })
     }
 

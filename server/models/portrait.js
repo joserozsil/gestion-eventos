@@ -1,7 +1,5 @@
 'use strict'
 
-import { encrypt } from '../services/password'
-
 module.exports = (sequelize, Sequelize) => {
 
     const Portrait = sequelize.define('Retrato', {
@@ -108,6 +106,12 @@ module.exports = (sequelize, Sequelize) => {
             underscored: true
         }
     )
-    
+
+    Portrait.associate = function (models) {
+        Portrait.hasOne(models.Evidencia,{
+            foreignKey: "retrato_id"
+        })
+    }
+
     return Portrait
 }
