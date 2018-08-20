@@ -96,18 +96,18 @@
         <b-row class="text-center">
           <b-col class="mb-sm-2 mb-0">
             <div class="text-muted">Balística</div>
-            <strong>{{ evidenceTotal }} Evidencias (40%)</strong>
-            <b-progress height={} class="progress-xs mt-2" :precision="1" variant="success" :value="40"></b-progress>
+            <strong>{{ statdistic.balistica }} Evidencias ({{ parseInt(statdistic.balistica * 100 / (statdistic.balistica + statdistic.laboratorio + statdistic.hechos)) }}%)</strong>
+            <b-progress height={} class="progress-xs mt-2" :precision="1" variant="success" :value="statdistic.balistica * 100 / (statdistic.balistica + statdistic.laboratorio + statdistic.hechos)"></b-progress>
           </b-col>
           <b-col class="mb-sm-2 mb-0 d-md-down-none">
             <div class="text-muted">Laboratorio</div>
-            <strong>{{ evidenceTotal }} Evidencias (20%)</strong>
-            <b-progress height={} class="progress-xs mt-2" :precision="1" variant="info" :value="20"></b-progress>
+            <strong>{{ statdistic.laboratorio }} Evidencias ({{ parseInt(statdistic.laboratorio * 100 / (statdistic.balistica + statdistic.laboratorio + statdistic.hechos)) }}%)</strong>
+            <b-progress height={} class="progress-xs mt-2" :precision="1" variant="info" :value="statdistic.laboratorio * 100 / (statdistic.balistica + statdistic.laboratorio + statdistic.hechos)"></b-progress>
           </b-col>
           <b-col class="mb-sm-2 mb-0 d-md-down-none">
             <div class="text-muted">Reconstrucción de Hechos</div>
-            <strong>{{ evidenceTotal }} Evidencias (40.15%)</strong>
-            <b-progress height={} class="progress-xs mt-2" :precision="1" :value="40"></b-progress>
+            <strong>{{ statdistic.hechos }} Evidencias ({{ parseInt(statdistic.hechos * 100 / (statdistic.balistica + statdistic.laboratorio + statdistic.hechos)) }}%)</strong>
+            <b-progress height={} class="progress-xs mt-2" :precision="1" :value="statdistic.hechos * 100 / (statdistic.balistica + statdistic.laboratorio + statdistic.hechos)"></b-progress>
           </b-col>
         </b-row>
       </div>
@@ -147,7 +147,12 @@ export default {
       userTotal: 0,
       evidenceTotal: 0,
       alertTotal: 0,
-      chronologyTotal: 0
+      chronologyTotal: 0,
+      statdistic: {
+        balistica: 0,
+        hechos: 0,
+        laboratorio: 0
+      }
     }
   },
   mounted() {
@@ -155,26 +160,46 @@ export default {
     this.getEvidence()
     this.getAlerts()
     this.getChronlogy()
+    this.getCount()
   },
   methods: {
     getUsers() {
-      axios.get(settings.API_URL + '/users').then(resp => {
+      axios.get(settings.API_URL + '/users?limit=1').then(resp => {
         this.userTotal = resp.data.total
       })
     },
     getEvidence() {
-      axios.get(settings.API_URL + '/evidences').then(resp => {
+      axios.get(settings.API_URL + '/evidences?limit=1').then(resp => {
         this.evidenceTotal = resp.data.total
       })
     },
     getAlerts() {
-      axios.get(settings.API_URL + '/alerts').then(resp => {
+      axios.get(settings.API_URL + '/alerts?limit=1').then(resp => {
         this.alertTotal = resp.data.total
       })
     },
     getChronlogy() {
-      axios.get(settings.API_URL + '/chronologies').then(resp => {
+      axios.get(settings.API_URL + '/chronologies?limit=1').then(resp => {
         this.chronologyTotal = resp.data.total
+      })
+    },
+    getCount() {
+      axios.get(`${settings.API_URL}/evidences?limit=1`)
+      .then(resp => {
+        axios.get(`${settings.API_URL}/evidences?limit=${resp.total}`)
+        .then(resp => {
+          resp.data.data.forEach(element => {
+            if(element.departamento == 'HECHOS') {
+              this.statdistic.hechos++;
+            }
+            if(element.departamento == 'BALISTICA') {
+              this.statdistic.balistica++;
+            }
+            if(element.departamento == 'LABORATORIO') {
+              this.statdistic.laboratorio++;
+            }
+          })
+        })
       })
     }
   }

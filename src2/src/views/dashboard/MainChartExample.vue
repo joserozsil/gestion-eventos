@@ -2,6 +2,7 @@
 import { Line } from 'vue-chartjs'
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips'
+import settings from '../../config'
 
 function random (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
@@ -10,23 +11,73 @@ function random (min, max) {
 export default {
   extends: Line,
   props: ['height'],
+  data: () => {
+    return {
+      statdistic: {
+        evidencias: [],
+        balistica: 0,
+        hechos: 0,
+        laboratorio: 0,
+        total: 250
+      }
+    }
+  },
   mounted () {
+    this.getCount()
+  },
+  methods: {
+    getCount() {
+      axios.get(`${settings.API_URL}/evidences?limit=1`)
+      .then(resp => {
+        axios.get(`${settings.API_URL}/evidences?limit=${resp.total}`)
+        .then(resp => {
+          this.statdistic.total = resp.data.total
+          this.statdistic.evidencias = resp.data.data
+
+          resp.data.data.forEach(element => {
+            if(element.departamento == 'HECHOS') {
+              this.statdistic.hechos++;
+            }
+            if(element.departamento == 'BALISTICA') {
+              this.statdistic.balistica++;
+            }
+            if(element.departamento == 'LABORATORIO') {
+              this.statdistic.laboratorio++;
+            }
+          })
+
     const brandSuccess = getStyle('--success') || '#4dbd74'
     const brandInfo = getStyle('--info') || '#20a8d8'
     const brandDanger = getStyle('--danger') || '#f86c6b'
 
-    let elements = 27
-    const data1 = []
-    const data2 = []
-    const data3 = []
+    let elements = 12
 
-    for (let i = 0; i <= elements; i++) {
-      data1.push(random(50, 200))
-      data2.push(random(80, 100))
-      data3.push(65)
-    }
+    const data1 = [0,0,0,0,0,0,0,0,0,0,0,0] // balistica
+    const data2 = [0,0,0,0,0,0,0,0,0,0,0,0] // laboratorio
+    const data3 = [0,0,0,0,0,0,0,0,0,0,0,0] // hechos
+
+    let now = new Date()
+
+    resp.data.data.forEach(element => {
+      let date = new Date(element.f_creacion)
+      console.log(element.departamento)
+      if(element.departamento === 'BALISTICA' && date.getYear() == now.getYear()) {
+        data1[date.getMonth()] = Number(data1[date.getMonth()]) + 1
+      }
+
+      if(element.departamento === 'LABORATORIO' && date.getYear() == now.getYear()) {
+        data2[date.getMonth()] = Number(data2[date.getMonth()]) + 1
+      }
+
+      if(element.departamento === 'HECHOS' && date.getYear() == now.getYear()) {
+        data3[date.getMonth()] = Number(data3[date.getMonth()]) + 1
+      }
+
+    })
+
+
     this.renderChart({
-      labels: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+      labels: ['Ene', 'Feb', 'Marz', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
       datasets: [
         {
           label: 'My First dataset',
@@ -81,8 +132,8 @@ export default {
           ticks: {
             beginAtZero: true,
             maxTicksLimit: 5,
-            stepSize: Math.ceil(250 / 5),
-            max: 250
+            stepSize: Math.ceil(this.statdistic.total / 5),
+            max: this.statdistic.total
           },
           gridLines: {
             display: true
@@ -98,6 +149,11 @@ export default {
         }
       }
     })
+
+    // end render chart
+        })
+      })
+    }
   }
 }
 </script>
