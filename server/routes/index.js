@@ -17,28 +17,28 @@ import isAuth from '../middlewares/authenticated'
 
 const api = express.Router()
 
-api.get('/users', userController.index)
-api.get('/users/:id', userController.show)
-api.post('/users', userController.store)
-api.put('/users/:id', userController.update)
-api.delete('/users/:id', userController.delete)
+api.get('/users', isAuth, userController.index)
+api.get('/users/:id', isAuth, userController.show)
+api.post('/users', isAuth, userController.store)
+api.put('/users/:id', isAuth, userController.update)
+api.delete('/users/:id', isAuth, userController.delete)
 
-api.get('/access', accessController.index)
-api.post('/access', accessController.store)
+api.get('/access', isAuth, accessController.index)
+api.post('/access', isAuth, accessController.store)
 
-api.get('/alerts', alertController.index)
-api.post('/alerts', alertController.store)
+api.get('/alerts', isAuth, alertController.index)
+api.post('/alerts', isAuth, alertController.store)
 
-api.get('/history', historyController.index)
+api.get('/history', isAuth, historyController.index)
 api.post('/history', historyController.store)
 
-api.get('/evidences', evidenceController.index)
-api.get('/evidences/:id', evidenceController.show)
-api.post('/evidences', evidenceController.store)
-api.put('/evidences/:id', evidenceController.update)
-api.delete('/evidences/:id', evidenceController.delete)
+api.get('/evidences', isAuth, evidenceController.index)
+api.get('/evidences/:id', isAuth, evidenceController.show)
+api.post('/evidences', isAuth, evidenceController.store)
+api.put('/evidences/:id', isAuth, evidenceController.update)
+api.delete('/evidences/:id', isAuth, evidenceController.delete)
 
-api.get('/chronologies', chronologyController.index)
+api.get('/chronologies', isAuth, chronologyController.index)
 
 api.post('/signin', authController.signIn)
 

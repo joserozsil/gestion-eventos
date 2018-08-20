@@ -25,7 +25,7 @@
                       </b-button>
                     </b-col>
                     <b-col cols="6" class="text-right">
-                      <b-button variant="link" class="px-0">¿Ha olvidado su contraseña?</b-button>
+                      <!--<b-button variant="link" class="px-0">¿Ha olvidado su contraseña?</b-button>-->
                     </b-col>
                   </b-row>
                 </b-form>
@@ -41,7 +41,7 @@
 <script>
   import store from '../../store/store'
 
-  import axios from 'axios'
+  import axios from '../../axios'
   import settings from '../../config'
   import swal from 'sweetalert';
 

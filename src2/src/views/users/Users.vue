@@ -41,7 +41,7 @@
 
 <script>
 
-import axios from 'axios'
+import axios from '../../axios'
 import settings from '../../config'
 import swal from 'sweetalert'
 

@@ -13,9 +13,10 @@
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
         <b-nav-item class="d-md-down-none">
-          <b-nav-item class="px-3" to="/dashboard">José Rodríguez</b-nav-item>
+          <b-nav-item class="px-3" to="/dashboard">
+            {{ usuario.nombre }} {{ usuario.apellido }}
+          </b-nav-item>
         </b-nav-item>
-
         <DefaultHeaderDropdownAccnt/>
       </b-navbar-nav>
       <AsideToggler style="visibility:hidden" class="d-none d-lg-block" />
@@ -60,6 +61,8 @@ import { Header as AppHeader, SidebarToggler, Sidebar as AppSidebar, SidebarFoot
 import DefaultAside from './DefaultAside'
 import DefaultHeaderDropdownAccnt from './DefaultHeaderDropdownAccnt'
 
+import store from '../store/store'
+
 export default {
   name: 'full',
   components: {
@@ -80,9 +83,11 @@ export default {
   },
   data () {
     return {
-      nav: nav.items
+      nav: nav.items,
+      usuario: this.$store.state.user
     }
   },
+  store,
   computed: {
     name () {
       return this.$route.name

@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '../axios'
 import settings from '../config'
 
 import CardLine1ChartExample from './dashboard/CardLine1ChartExample'
