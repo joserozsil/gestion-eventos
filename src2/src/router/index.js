@@ -92,6 +92,14 @@ export default new Router({
       redirect: '/dashboard',
       name: 'Home',
       component: DefaultContainer,
+      beforeEnter: (to, from, next) => {
+        let token = localStorage.getItem('token')
+        if(token) {
+          next()
+        } else {
+          next('/pages/iniciar-sesion')
+        }
+      },
       children: [
         {
           path: 'dashboard',

@@ -18,7 +18,8 @@ export default {
         balistica: 0,
         hechos: 0,
         laboratorio: 0,
-        total: 250
+        total: 250,
+        mayor: 0
       }
     }
   },
@@ -45,6 +46,16 @@ export default {
               this.statdistic.laboratorio++;
             }
           })
+
+          this.statdistic.mayor = this.statdistic.balistica
+
+          if(this.statdistic.mayor < this.statdistic.laboratorio) {
+            this.statdistic.mayor = this.statdistic.laboratorio
+          }
+
+          if(this.statdistic.mayor < this.statdistic.hechos) {
+            this.statdistic.mayor = this.statdistic.hechos
+          }
 
     const brandSuccess = getStyle('--success') || '#4dbd74'
     const brandInfo = getStyle('--info') || '#20a8d8'
@@ -132,8 +143,8 @@ export default {
           ticks: {
             beginAtZero: true,
             maxTicksLimit: 5,
-            stepSize: Math.ceil(this.statdistic.total / 5),
-            max: this.statdistic.total
+            stepSize: Math.ceil(this.statdistic.mayor / 5),
+            max: this.statdistic.mayor + 1
           },
           gridLines: {
             display: true

@@ -2,7 +2,7 @@
   <AppHeaderDropdown right no-caret>
     <template slot="header">
       <img
-      src="img/avatars/6.jpg"
+      src="img/profile.jpg"
       class="img-avatar"
       /> 
     </template>
