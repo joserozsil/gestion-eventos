@@ -31,7 +31,7 @@
         <SidebarMinimizer/>
       </AppSidebar>
       <main class="main">
-        <Breadcrumb :list="list"/>
+        <Breadcrumb style="visibility: hidden;" :list="list"/>
         <div class="container-fluid">
           <router-view></router-view>
         </div>
@@ -81,13 +81,16 @@ export default {
     SidebarNav,
     SidebarMinimizer
   },
+  store,
   data () {
     return {
       nav: nav.items,
-      usuario: this.$store.state.user
+      usuario: {}
     }
   },
-  store,
+  mounted() {
+    this.usuario =this.$store.state.user
+  },
   computed: {
     name () {
       return this.$route.name

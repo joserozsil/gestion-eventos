@@ -11,6 +11,11 @@ import router from './router'
 
 import Vuex from 'vuex'
 
+import axios from 'axios'
+
+axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
+
+global.axios = axios
 
 Vue.use(Vuex)
 

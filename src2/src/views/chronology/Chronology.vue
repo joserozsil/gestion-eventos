@@ -5,7 +5,7 @@
       <b-card :header="caption">
         <b-table :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" @row-clicked="rowClicked">
           <template slot="tipo" slot-scope="data">
-            <strong>{{data.item.id}}</strong>
+            <strong>{{data.item.tipo_recepcion}}</strong>
           </template>
           <template slot="usuario" slot-scope="data">
             <strong>{{data.item.Usuario.nombre}} {{data.item.Usuario.apellido}}</strong>
@@ -34,7 +34,7 @@
 
 <script>
 import receptionData from './ReceptionData'
-import axios from 'axios'
+//import axios from 'axios'
 import settings from '../../config'
 
 export default {
@@ -111,7 +111,6 @@ export default {
       .then(resp => {
         axios.get(`${settings.API_URL}/evidences?limit=${resp.total}`)
         .then(resp => {
-          console.dir(resp)
           this.items = resp.data.data
         })
       })

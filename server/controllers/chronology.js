@@ -10,16 +10,21 @@ const operations = {
         try {
             Model.Evidencia.findAndCountAll({
                 attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion'],
-                include: [{
-                    model: Model.Retrato
-                }],
+                include: [
+                    {
+                        model: Model.Usuario
+                    },
+                    {
+                        model: Model.Retrato
+                    }
+                ],
                 where: {
                     f_eliminacion: null,
                     departamento: 'RECEPCION'
                 },
                 order: [[ 'f_creacion', 'DESC' ]],
-                offset: req.query.offset || 0,
-                limit: req.query.limit || 15
+                offset: Number(req.query.offset) || 0,
+                limit: Number(req.query.limit) || 15
             })
             .then(result => {
                 return res.status(200).json({

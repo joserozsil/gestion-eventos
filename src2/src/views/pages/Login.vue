@@ -70,11 +70,11 @@
         .then(resp => {
           if(resp.status == 200) {
             localStorage.setItem('token', resp.data.token)
+            this.$store.commit('setDataUser', resp.data.user)
             axios.post(settings.API_URL + '/history', { usuario_id: resp.data.user.id }).then(other => {
               swal("¡Listo!", `Bienvenido al sistema ${resp.data.user.nombre}`, "success")
-              this.$store.commit('setDataUser', resp.data.user)
-              //console.dir(this.$store.state)
               this.$router.push({ name: 'Dashboard' })
+              //console.dir(this.$store.state)
             })
           }
         })

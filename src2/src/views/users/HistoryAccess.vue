@@ -16,7 +16,7 @@
           <template slot="fecha" slot-scope="data">
             <b-badge >{{data.item.f_creacion }}</b-badge>
           </template>
-          <template slot="acción" slot-scope="data">
+          <template slot="rol" slot-scope="data">
             <b-badge >{{data.item.Usuario.rol }}</b-badge>
           </template>
         </b-table>
@@ -70,7 +70,7 @@ export default {
         {key: 'usuario'},
         {key: 'nombre'},
         {key: 'fecha'},
-        {key: 'acción'}
+        {key: 'rol'}
       ],
       currentPage: 1,
       perPage: 15,
