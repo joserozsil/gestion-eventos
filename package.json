@@ -6,9 +6,9 @@
     "scripts": {
         "prestart": "babel server --out-dir dist-server",
         "start": "node dist-server/index.js",
-        "starting": "concurrently -r \"npm run start:server\" \"npm run start:client\" ",
+        "starting": "concurrently -r \"npm run start:server\" \"npm run start:client src2/\" ",
         "start:server": "cross-env NODE_ENV=development nodemon server/index.js --exec babel-node",
-        "start:client": "npm run serve src2/"
+        "start:client": "npm run serve"
     },
     "private": true,
     "dependencies": {

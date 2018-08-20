@@ -2,15 +2,25 @@
 
 - [Mysql](https://www.mysql.com/downloads/)
 - [Nodejs](https://nodejs.org/en/) versión 8.11.1 LTS
-- [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3
-- [Mongodb](https://www.mongodb.com/)
+- [Vuejs CLI](https://cli.vuejs.org/) version 1.7.3 (para evaluación no es necesario)
 
-# Instalación
+# Configuración
 
-Clonar el repositorio: `git clone https://github.com/joserozsil/gestion-novedades.git`
+Crear Base de Datos llamada 'novedades'
 
-Entrar a la carpeta del proyecto: `cd gestion-novedades`
+En la colección de archivo config.json dentro del directorio server/config,
+editar la colección 'development' con los datos de autenticación de sus BD
 
-Instalar las depencias: `npm install`
+# Evaluación de proyecto
 
-Correr el proyecto: `npm start`. Navegar al `http://localhost:4200/`. La aplicación automaticamente carga el servidor y el cliente y reinicia ambos si ha ocurrido algún cambio
+Clonar o descargar el repositorio: `git clone https://github.com/joserozsil/gestion-novedades.git`
+
+Ingresar a la carpeta del servidor: `cd gestion-novedades`
+
+Ejecutar `npm install` para instalar las dependencias
+
+Ejecutar `npm run start:server` para ejecutar el servidor
+
+El servidor provee el cliente mediante la url `http://localhost:3000/`
+
+
