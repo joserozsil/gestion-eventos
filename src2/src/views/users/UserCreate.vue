@@ -108,7 +108,6 @@
 </template>
 
 <script>
-import axios from '../../axios'
 import settings from '../../config'
 import swal from 'sweetalert'
 
@@ -119,6 +118,7 @@ export default {
     }
   },
   mounted() {
+    axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
   },
   methods: {
     storeUser() {

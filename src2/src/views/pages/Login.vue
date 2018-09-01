@@ -40,8 +40,6 @@
 
 <script>
   import store from '../../store/store'
-
-  import axios from '../../axios'
   import settings from '../../config'
   import swal from 'sweetalert';
 
@@ -60,7 +58,6 @@
     store,
     mounted() {
       this.getUserIP((ip) => {
-        console.log(ip)
         this.ip = ip
       })
     },
@@ -79,6 +76,7 @@
           }
         })
         .catch(error => {
+          console.dir(error)
           swal("¡Atención!", error.response.data.message, "error")
           this.alertCount++
           if(this.alertCount >= 2) {

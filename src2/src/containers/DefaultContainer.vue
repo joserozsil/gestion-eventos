@@ -89,7 +89,7 @@ export default {
     }
   },
   mounted() {
-    this.usuario =this.$store.state.user
+    this.usuario = this.$store.state.user
   },
   computed: {
     name () {

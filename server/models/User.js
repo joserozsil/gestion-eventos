@@ -137,6 +137,11 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.ENUM('ADMINISTRADOR', 'RECEPCION', 'OPERADOR_BALISTICA', 'OPERADOR_LABORATORIO', 'OPERADOR_HECHOS'),
                 allowNull: false
             },
+            token: {
+                type: Sequelize.STRING,
+                allowNull: true,
+                unique: true
+            },
             f_creacion: {
                 type: Sequelize.DATE,
                 allowNull: false,

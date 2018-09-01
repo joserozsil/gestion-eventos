@@ -31,7 +31,6 @@
 
 <script>
 import usersData from './UsersData'
-import axios from '../../axios'
 import settings from '../../config'
 
 export default {
@@ -80,6 +79,7 @@ export default {
   computed: {
   },
   mounted() {
+    axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
     this.getHistory()
   },
   methods: {

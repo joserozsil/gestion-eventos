@@ -93,6 +93,10 @@ export default new Router({
       name: 'Home',
       component: DefaultContainer,
       beforeEnter: (to, from, next) => {
+        // acá deberíamos comprobar:
+        // existen token
+        // token sea valido
+        // token no ha expirado
         let token = localStorage.getItem('token')
         if(token) {
           next()

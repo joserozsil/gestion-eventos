@@ -117,7 +117,6 @@
 </template>
 
 <script>
-//import axios from '../axios'
 import settings from '../config'
 
 import CardLine1ChartExample from './dashboard/CardLine1ChartExample'
@@ -156,6 +155,8 @@ export default {
     }
   },
   mounted() {
+    axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
+
     this.getUsers()
     this.getEvidence()
     this.getAlerts()

@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import axios from 'axios'
 
 const store = new Vuex.Store({
     state: {
@@ -15,6 +16,11 @@ const store = new Vuex.Store({
         },
         increment (state) {
             state.count++
+        }
+    },
+    computed: {
+        getToken() {
+            return this.state.token
         }
     }
   })
