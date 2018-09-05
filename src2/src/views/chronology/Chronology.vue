@@ -3,7 +3,17 @@
     <b-col cols="12" xl="12">
       <transition name="slide">
       <b-card :header="caption">
-        <b-table :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" @row-clicked="rowClicked">
+        <b-table 
+          :hover="hover" 
+          :striped="striped" 
+          :bordered="bordered" 
+          :small="small" 
+          :fixed="fixed" 
+          responsive="sm" 
+          :items="items" 
+          :fields="fields" 
+          :current-page="currentPage" 
+          :per-page="perPage">
           <template slot="tipo" slot-scope="data">
             <strong>{{data.item.tipo_recepcion}}</strong>
           </template>
@@ -20,7 +30,13 @@
             <b-badge >{{data.item.f_creacion}}</b-badge>
           </template>
           <template slot="acción" slot-scope="data">
-            <b-button variant="primary" class="btn-pill">Detalles</b-button>
+            <b-button
+              @click="goToEdit(data.item.departamento, data.item.id)"
+              v-if="isDepartament(data.item.departamento) || user.rol == 'ADMINISTRADOR'"
+              variant="primary" 
+              class="btn-pill">
+              Actualizar
+            </b-button>
           </template>
         </b-table>
         <nav>
@@ -34,7 +50,6 @@
 
 <script>
 import receptionData from './ReceptionData'
-//import axios from 'axios'
 import settings from '../../config'
 
 export default {
@@ -78,12 +93,16 @@ export default {
       ],
       currentPage: 1,
       perPage: 15,
-      totalRows: 0
+      totalRows: 0,
+      user: null
     }
   },
   computed: {
   },
   mounted() {
+    axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
+    this.user = this.$store.state.user
+    
     this.getChronologies()
   },
   methods: {
@@ -101,7 +120,7 @@ export default {
     },
     rowClicked (item) {
       const userLink = this.userLink(item.id)
-      this.$router.push({path: userLink})
+      this.$router.push({ path: userLink })
     },
     getUsername(name){
       return name.split(' ')[0]
@@ -114,6 +133,37 @@ export default {
           this.items = resp.data.data
         })
       })
+    },
+    isDepartament(departament) {
+      if(departament == 'BALISTICA' && this.user.rol == 'OPERADOR_BALISTICA') {
+        return true
+      }
+
+      if(departament == 'LABORATORIO' && this.user.rol == 'OPERADOR_LABORATORIO') {
+        return true
+      }
+
+      if(departament == 'HECHOS' && this.user.rol == 'OPERADOR_HECHOS') {
+        return true
+      }
+
+      return false
+    },
+    goToEdit(departament, id) {
+
+      if(departament == 'BALISTICA') {
+        this.$router.push({ name: 'editAct'})
+      }
+
+      if(departament == 'LABORATORIO') {
+        this.$router.push({ name: 'editAct'})
+      }
+
+      if(departament == 'HECHOS') {
+        this.$router.push({ name: 'editAct', params: { id } })
+      }
+
+      return false
     }
   }
 }

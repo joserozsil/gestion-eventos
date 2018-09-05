@@ -66,6 +66,8 @@ const Action = () => import('@/views/security/Action')
 
 // Act
 const Act = () => import('@/views/act/Act')
+const ActEdit = () => import('@/views/act/editAct')
+
 
 // Reception
 const Reception = () => import('@/views/reception/Reception')
@@ -172,8 +174,8 @@ export default new Router({
         },
         {
           path: 'reconstruccion-de-hechos',
-          redirect: '/seguridad/historial-de-alertas',
-          name: 'security',
+          redirect: '/reconstruccion-de-hechos/consultar',
+          name: 'act',
           component: {
             render (c) { return c('router-view') }
           },
@@ -181,6 +183,11 @@ export default new Router({
             {
               path: 'consultar',
               component: Act,
+            },
+            {
+              path: 'modificar/:id',
+              component: ActEdit,
+              name: 'editAct'
             }
           ]
         },

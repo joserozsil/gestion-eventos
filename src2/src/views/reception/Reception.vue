@@ -80,6 +80,7 @@ export default {
   computed: {
   },
   mounted() {
+    axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
     this.getChronologies()
   },
   methods: {

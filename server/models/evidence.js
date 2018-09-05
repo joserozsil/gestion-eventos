@@ -16,11 +16,11 @@ module.exports = (sequelize, Sequelize) => {
               type: Sequelize.STRING,
             },
             descripcion: {
-              type: Sequelize.STRING,
+              type: Sequelize.TEXT,
               allowNull: false
             },
             observacion: {
-              type: Sequelize.STRING,
+              type: Sequelize.TEXT,
             },
             tipo_recepcion: { // memorados u oficios
               type: Sequelize.ENUM('RECIBO_MEMORADUM', 'RECIBO_OFICIO', 'PRESENTACION_JEFE', 'PRESENTACION_FUNCIONARIO', 'SUPERVISION', 'RECIBO_GUARDIA'),
@@ -45,6 +45,7 @@ module.exports = (sequelize, Sequelize) => {
             underscored: true
         }
     )
+
 
     Evidence.associate = function (models) {
         models.Usuario.hasMany(models.Imagen, { as: 'imagenes' })

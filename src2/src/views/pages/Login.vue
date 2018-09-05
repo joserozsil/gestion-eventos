@@ -71,12 +71,10 @@
             axios.post(settings.API_URL + '/history', { usuario_id: resp.data.user.id }).then(other => {
               swal("¡Listo!", `Bienvenido al sistema ${resp.data.user.nombre}`, "success")
               this.$router.push({ name: 'Dashboard' })
-              //console.dir(this.$store.state)
             })
           }
         })
         .catch(error => {
-          console.dir(error)
           swal("¡Atención!", error.response.data.message, "error")
           this.alertCount++
           if(this.alertCount >= 2) {

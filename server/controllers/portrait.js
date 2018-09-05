@@ -2,18 +2,18 @@
 
 import Model from '../models'
 import _ from 'underscore'
+import Sequelize from 'sequelize'
+const Op = Sequelize.Op
 
 const operations = {
     index: (req, res, next) => {
       try {
         Model.Evidencia.findAndCountAll({
-            attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion'],
-            include: [{
-                model: Model.Retrato,
-            }],
             where: {
                 f_eliminacion: null,
-                retrato_id: null
+                retrato_id: {
+                    [Op.ne]: null
+                }
             },
             order: [[ 'f_creacion', 'DESC' ]],
             offset: req.query.offset || 0,
@@ -39,18 +39,11 @@ const operations = {
 
         if(!req.params.id) {
             return res.status(400).json({
-                message: "Por favor indique el id del usuario"
+                message: "Por favor indique el id del retrato"
             })
         }
 
         Model.Evidencia.findOne({
-            attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion'],
-            include: [{
-                model: Model.Retrato,
-                where: {
-                  id: req.params.id
-                }
-            }],
             where: {
                 f_eliminacion: null
             }
@@ -66,6 +59,19 @@ const operations = {
       } catch( e ) {
         return next(e)
       }
+    },
+    store: (req, res, next) => {
+        try {
+            Model.Retrato.create(req.body)
+            .then(result => {
+                return res.status(200).json(result)
+            })
+            .catch(error => {
+                return res.status(400).json(error)
+            })
+        } catch( e ) {
+            return next(e)
+        }
     }
 }
 

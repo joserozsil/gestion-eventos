@@ -9,6 +9,7 @@ import alertController from '../controllers/alert'
 import evidenceController from '../controllers/evidence'
 import chronologyController from '../controllers/chronology'
 import historyController from '../controllers/history'
+import portraitController from '../controllers/portrait'
 
 import authController from '../controllers/auth'
 
@@ -19,7 +20,7 @@ const api = express.Router()
 
 api.get('/users', isAuth, userController.index)
 api.get('/users/:id', isAuth, userController.show)
-api.post('/users', isAuth, userController.store)
+api.post('/users', userController.store)
 api.put('/users/:id', isAuth, userController.update)
 api.delete('/users/:id', isAuth, userController.delete)
 
@@ -37,6 +38,9 @@ api.get('/evidences/:id', isAuth, evidenceController.show)
 api.post('/evidences', isAuth, evidenceController.store)
 api.put('/evidences/:id', isAuth, evidenceController.update)
 api.delete('/evidences/:id', isAuth, evidenceController.delete)
+
+api.get('/portraits', isAuth, portraitController.index)
+api.post('/portraits', isAuth, portraitController.store)
 
 api.get('/chronologies', isAuth, chronologyController.index)
 

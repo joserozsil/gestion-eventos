@@ -74,7 +74,7 @@ export default {
 
           resp.data.data.forEach(element => {
             let date = new Date(element.f_creacion)
-            console.log(element.departamento)
+            
             if(element.departamento === 'BALISTICA' && date.getYear() == now.getYear()) {
               data1[date.getMonth()] = Number(data1[date.getMonth()]) + 1
             }

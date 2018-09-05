@@ -47,6 +47,7 @@
         </b-form-group>
       </b-card>
       <div class="form-actions">
+        {{ novedad }}
         <b-button @click="store()" class="mr" type="submit" variant="primary">
           Registrar
         </b-button>
@@ -59,7 +60,6 @@
 
 <script>
 
-import axios from '../../axios'
 import settings from '../../config'
 import swal from 'sweetalert'
 
@@ -73,7 +73,7 @@ export default {
   },
   store,
   mounted() {
-    
+    axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
   },
   methods: {
     store() {
@@ -90,7 +90,6 @@ export default {
         })
 
         this.$router.push({ name: 'chronologyList' })
-        
       })
       .catch(error => {
         console.dir(error)

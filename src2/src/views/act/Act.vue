@@ -3,7 +3,19 @@
     <b-col cols="12" xl="12">
       <transition name="slide">
       <b-card :header="caption">
-        <b-table :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" @row-clicked="rowClicked">
+        <b-table 
+          responsive="sm" 
+          :hover="hover" 
+          :striped="striped" 
+          :bordered="bordered" 
+          :small="small" 
+          :fixed="fixed" 
+          :items="items" 
+          :fields="fields" 
+          :current-page="currentPage" 
+          :per-page="perPage" 
+          @row-clicked="rowClicked">
+          
           <template slot="retrato" slot-scope="data">
             <b-navbar variant="faded" type="light">
               <b-navbar-brand tag="h1" href="#">

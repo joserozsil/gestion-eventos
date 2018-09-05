@@ -17,7 +17,8 @@ function isAuth (req, res, next) {
             next()
         })
         .catch(error => {
-            return res.status(500).send({
+            return res.status(403).send({
+                code: 103,
                 message: "Token no valido"
             })
         })

@@ -8,23 +8,35 @@ module.exports = (sequelize, Sequelize) => {
                 autoIncrement: true,
                 primaryKey: true
             },
+            estado: {
+                type: Sequelize.ENUM('COMPLEADO', 'EN_PROCESO', 'ANULADO'),
+                allowNull: false,
+                defaultValue: 'EN_PROCESO'
+            },
+
             clise: {
                 type: Sequelize.STRING,
+                unique: true
             },
             exp: {
                 type: Sequelize.STRING,
+                unique: true
             },
+
             dependencia: {
                 type: Sequelize.STRING,
             },
             memo: {
                 type: Sequelize.STRING,
             },
-            memo: {
-                type: Sequelize.STRING,
+            f_memo: {
+                type: Sequelize.DATE,
             },
             solicitado_por: {
                 type: Sequelize.STRING,
+            },
+            f_caso: {
+                type: Sequelize.DATE
             },
             agraviado: { // FOREIGN KEY
                 type: Sequelize.STRING,
@@ -32,11 +44,18 @@ module.exports = (sequelize, Sequelize) => {
             dibujante: { // FOREIGN KEY
                 type: Sequelize.STRING,
             },
-            dependencia: {
+            f_rh: {
+                type: Sequelize.DATE
+            },
+
+            dependencia2: {
                 type: Sequelize.STRING,
             },
-            solicitado_depend: {
-                type: Sequelize.STRING,
+            solicitado_por2: {
+                type: Sequelize.STRING
+            },
+            agraviado2: {
+                type: Sequelize.STRING
             },
             direccion: {
                 type: Sequelize.STRING,
@@ -44,6 +63,7 @@ module.exports = (sequelize, Sequelize) => {
             origen_datos: {
                 type: Sequelize.STRING,
             },
+
             color_piel: {
                 type: Sequelize.STRING,
             },
@@ -71,6 +91,9 @@ module.exports = (sequelize, Sequelize) => {
             ojos: {
                 type: Sequelize.STRING,
             },
+            ojos_iris: {
+                type: Sequelize.STRING
+            },
             cara: {
                 type: Sequelize.STRING,
             },
@@ -86,8 +109,9 @@ module.exports = (sequelize, Sequelize) => {
             edad: {
                 type: Sequelize.STRING,
             },
+
             comentarios: {
-                type: Sequelize.STRING,
+                type: Sequelize.TEXT,
             },
             f_creacion: {
                 type: Sequelize.DATE,
@@ -108,10 +132,13 @@ module.exports = (sequelize, Sequelize) => {
     )
 
     Portrait.associate = function (models) {
-        Portrait.hasOne(models.Evidencia,{
+        
+        models.Retrato.hasOne(models.Evidencia,{
             foreignKey: "retrato_id"
         })
+
     }
+
 
     return Portrait
 }

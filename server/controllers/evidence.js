@@ -55,6 +55,14 @@ const operations = {
 
             Model.Evidencia.findOne({
                 attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion'],
+                include: [
+                    {
+                        model: Model.Usuario
+                    },
+                    {
+                        model: Model.Retrato
+                    }
+                ],
                 where: {
                     id: req.params.id,
                     f_eliminacion: null
@@ -77,6 +85,7 @@ const operations = {
             Model.Evidencia.create(_.pick(req.body, ['departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'usuario_id']))
             .then(result => {
                 return res.status(200).json(result)
+
             })
             .catch(error => {
                 return res.status(400).json(error)
@@ -96,7 +105,7 @@ const operations = {
 
             Model.Evidencia.findById(req.params.id)
             .then(usuario => {
-                let update = _.pick(req.body, ['departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia'])
+                let update = _.pick(req.body, ['departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'retrato_id'])
                 Object.assign(update, { f_actualizacion: Date.now() })
                 usuario.update(update)
                 .then(result => {

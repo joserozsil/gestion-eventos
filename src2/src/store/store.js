@@ -1,10 +1,10 @@
 import Vuex from 'vuex'
 import axios from 'axios'
+import config from '../config'
 
 const store = new Vuex.Store({
     state: {
         user: {},
-        count: 0,
         token: ''
     },
     mutations: {
@@ -13,14 +13,11 @@ const store = new Vuex.Store({
         },
         setToken(state, token) {
             state.token = token 
-        },
-        increment (state) {
-            state.count++
         }
     },
-    computed: {
-        getToken() {
-            return this.state.token
+    getters: {
+        getUser: state => {
+            return state.user
         }
     }
   })
