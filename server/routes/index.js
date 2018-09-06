@@ -10,11 +10,14 @@ import evidenceController from '../controllers/evidence'
 import chronologyController from '../controllers/chronology'
 import historyController from '../controllers/history'
 import portraitController from '../controllers/portrait'
+import evidencePortraitController from '../controllers/evidencePortrait'
+import pictureController from '../controllers/picture'
 
 import authController from '../controllers/auth'
 
 // middlewares
 import isAuth from '../middlewares/authenticated'
+import file from '../middlewares/file'
 
 const api = express.Router()
 
@@ -40,7 +43,13 @@ api.put('/evidences/:id', isAuth, evidenceController.update)
 api.delete('/evidences/:id', isAuth, evidenceController.delete)
 
 api.get('/portraits', isAuth, portraitController.index)
+api.get('/portraits/:id', isAuth, portraitController.show)
 api.post('/portraits', isAuth, portraitController.store)
+api.put('/portraits/:id', isAuth, portraitController.update)
+
+api.get('/evidences/:id/portraits', isAuth, evidencePortraitController.index)
+
+api.post('/pictures', isAuth, file.single('file'), pictureController.store)
 
 api.get('/chronologies', isAuth, chronologyController.index)
 

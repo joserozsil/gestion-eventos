@@ -8,12 +8,12 @@ const Op = Sequelize.Op
 const operations = {
     index: (req, res, next) => {
       try {
-        Model.Evidencia.findAndCountAll({
+        Model.Retrato.findAndCountAll({
+            include: [{
+                model: Model.Evidencia
+            }],
             where: {
-                f_eliminacion: null,
-                retrato_id: {
-                    [Op.ne]: null
-                }
+                f_eliminacion: null
             },
             order: [[ 'f_creacion', 'DESC' ]],
             offset: req.query.offset || 0,
@@ -43,7 +43,10 @@ const operations = {
             })
         }
 
-        Model.Evidencia.findOne({
+        Model.Retrato.findOne({
+            include: [{
+                model: Model.Evidencia
+            }],
             where: {
                 f_eliminacion: null
             }
@@ -72,7 +75,34 @@ const operations = {
         } catch( e ) {
             return next(e)
         }
-    }
+    },
+    update: (req, res, next) => {
+        try {
+
+            if(!req.params.id) {
+                return res.status(400).json({
+                    message: "Por favor indique el id del retrato"
+                })
+            }
+
+            Model.Retrato.findById(req.params.id)
+            .then(usuario => {
+                let update = req.body
+                Object.assign(update, { f_actualizacion: Date.now() })
+                usuario.update(update)
+                .then(result => {
+                    return res.status(200).json({
+                        data: result
+                    })
+                })
+                .catch(error => {
+                    return res.status(400).json(error)
+                })
+            })
+        } catch( e ) {
+            return next(e)
+        }
+    },
 }
 
 export default operations

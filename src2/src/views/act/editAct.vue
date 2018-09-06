@@ -2,29 +2,7 @@
 <div class="animated fadeIn">
   <b-row>
     <b-col sm="12">
-      <!-- datos de cronologia -->
-      <b-card>
-        <div slot="header">
-          <strong>Imágenes</strong>
-        </div>
-        <b-row>
-          <b-col sm="12">
-            <b-form-file 
-            v-b-popover.hover="'Seleccione imagen principal del retrato, solo soportado archivos con extensión .jpg .png .gif y .jpeg'" 
-            title="Seleccionar imagen de retrato"
-            v-model="file" 
-            :state="Boolean(file)" 
-            placeholder="Seleccione una imagen"
-            accept=".jpg, .png, .gif .jpeg"
-            ref="fileinput">
-            </b-form-file>
-            <div v-show="file && file.name" class="mt-2">
-              Nombre del Archivo: {{ file && file.name }}
-            </div>
-          </b-col>
-        </b-row>
-      </b-card>
-      <!--/ datos de cronología -->
+      
 
       <!-- datos generales -->
       <b-card>
@@ -117,7 +95,9 @@
               :horizontal="false">
               <select v-if="users.length" v-model="port.dibujante" class="form-control">
                 <option v-for="(user, index) in users" :value="user.id">
-                  {{ user.nombre }} {{ user.apellido }} - {{ user.rol }}
+                  <template v-if="user.nombre && user.apellido && user.rol">
+                    {{ user.nombre }} {{ user.apellido }} - {{ user.rol }}
+                  </template>
                 </option>
               </select>
             </b-form-group>
@@ -403,12 +383,41 @@
       </b-card>
       <!--/ datos generales -->
 
+      <!-- datos de imagenes -->
+      <b-card>
+        <div slot="header">
+          <strong>Imágenes</strong>
+        </div>
+        <b-row>
+          <b-col sm="12">
+            <div class="wrapper">
+              <gallery :images="images" :index="index" @close="index = null"></gallery>
+              <div
+                class="image"
+                v-for="(image, imageIndex) in images"
+                :key="imageIndex"
+                :class="['image', index == imageIndex ? 'selected' : '']"
+                @click="index = imageIndex"
+                :style="{ backgroundImage: 'url(' + image + ')', width: '100%', height: '300px' }"
+              ></div>
+            </div>
+            <vue-dropzone
+              v-on:vdropzone-sending="sendingEvent"
+              ref="myVueDropzone" 
+              id="dropzone" 
+              :options="dropzoneOptions">
+            </vue-dropzone>
+          </b-col>
+        </b-row>
+      </b-card>
+      <!--/ datos de imagenes -->
+
       <!-- datos de cronologia -->
       <b-card>
         <div slot="header">
           <strong>Datos de Recepción</strong>
         </div>
-        <b-row>
+        <b-row v-if="!loading">
           <b-col sm="6">
             <b-form-group
               label="Tipo"
@@ -441,9 +450,22 @@
       <!--/ datos de cronología -->
       
       <!-- acciones -->
-      <div class="form-actions padding">
-        <b-button @click="storePortrait()" class="mr" type="submit" variant="primary">
+      <div  class="form-actions padding">
+        <b-button 
+          v-if="isNew" 
+          @click="storePortrait()" 
+          class="mr" 
+          type="submit" 
+          variant="primary">
           Crear
+        </b-button>
+        <b-button 
+          v-if="!isNew" 
+          @click="updatePortrait()" 
+          class="mr" 
+          type="submit" 
+          variant="primary">
+          Actualizar
         </b-button>
         <b-button  @click="$router.go(-1)" class="mr" type="button" variant="secondary">
           Cancelar
@@ -462,42 +484,129 @@
     </b-col>
   </b-row>
 </div>
+
 </template>
 
 <script>
+import vue2Dropzone from 'vue2-dropzone'
+import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+
+import VueGallery from 'vue-gallery'
+
 import settings from '../../config'
 import swal from 'sweetalert'
+import store from '../../store/store'
 
 export default {
+  components: {
+    vueDropzone: vue2Dropzone,
+    'gallery': VueGallery
+  },
   data: () => {
     return {
       users: [],
       file: null,
       port: {},
-      receptionData: {}
+      images: [],
+      index: null,
+      receptionData: {},
+      isNew: false,
+      loading: true,
+      users: {},
+      dropzoneOptions: {
+        url: `${settings.API_URL}/pictures`,
+        dictDefaultMessage: "CARGAR IMAGEN",
+        headers: { 
+          "authorization" : localStorage.getItem('token')
+         }
+      }
     }
   },
   mounted() {
+    this.user = this.$store.getters.getUser
+
     axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
+
+    this.portraitExist().then(resp => {
+      if(this.isEmpty(resp.data.data)) {
+        this.isNew = true
+      } else {
+        this.isNew = false
+        this.port = resp.data.data
+
+        this.port.Evidencium.Imagens.forEach(element => {
+          var url = `${ settings.API_IMAGE}/${element.nombre_archivo}`
+          this.images.push(url)
+        })
+      }
+    })
+
     this.getUsers()
     this.getEvidence()
+
   },
   methods: {
+    portraitExist() {
+      return new Promise((resolve, reject) => {
+        axios.get(`${settings.API_URL}/evidences/${this.$route.params.id}/portraits`)
+        .then(resp => {
+          resolve(resp)
+        })
+      })
+    },
     storePortrait() {
+      Object.assign(this.port, { evidencia_id: this.$route.params.id})
       axios.post(`${settings.API_URL}/portraits`, this.port)
       .then(resp => {
-        axios.put(`${settings.API_URL}/evidences/${this.$route.params.id}`, {
-          retrato_id: resp.data.id
-        })
-        .then(response => {
-          swal({
-            title: "Retrato modificado exitosamente",
-            text: ``,
-            icon: "success",
-          })
+        swal({
+          title: "Retrato modificado exitosamente",
+          text: ``,
+          icon: "success",
         })
       })
       .catch(error => {
+        if(error.response.data.name == 'SequelizeDatabaseError') {
+          swal({
+            title: `Atención`,
+            text: `Algo ha salido mal, intentelo nuevamente`,
+            icon: "error",
+          })
+        }
+
+        if(error.response.data.message) {
+          swal({
+            title: `Atención`,
+            text: `${ error.response.data.message }`,
+            icon: "error",
+          })
+        }
+        
+        error.response.data.errors.forEach(element => {
+          swal({
+            title: `Atención`,
+            text: `${ element.message }`,
+            icon: "error",
+          })
+        })
+      })
+    },
+    updatePortrait() {
+      axios.put(`${settings.API_URL}/portraits/${this.port.id}`, this.port)
+      .then(resp => {
+        swal({
+          title: "Retrato modificado exitosamente",
+          text: ``,
+          icon: "success"
+        })
+      })
+      .catch(error => {
+        if(error.response.data.name == 'SequelizeDatabaseError') {
+          swal({
+            title: `Atención`,
+            text: `Algo ha salido mal, intentelo nuevamente`,
+            icon: "error",
+          })
+        }
 
         if(error.response.data.message) {
           swal({
@@ -526,10 +635,24 @@ export default {
       })
     },
     getEvidence() {
+      this.loading = true
       axios.get(`${settings.API_URL}/evidences/${this.$route.params.id}`)
       .then(resp => {
         this.receptionData = resp.data.data
+        this.loading = false
       })
+    },
+    isEmpty(obj) {
+      for(var prop in obj) {
+          if(obj.hasOwnProperty(prop))
+              return false;
+      }
+
+      return JSON.stringify(obj) === JSON.stringify({})
+    },
+    sendingEvent (file, xhr, formData) {
+      formData.append('evidencia_id', this.$route.params.id)
+      formData.append('usuario_id', this.user.id)
     }
   }
 }
@@ -538,11 +661,24 @@ export default {
 </script>
 
 <style scoped>
-.padding {
-  padding: 2em 0;
-}
+  .padding {
+    padding: 2em 0;
+  }
 
-.mr {
-  margin-right: 1em;
-}
+  .mr {
+    margin-right: 1em;
+  }
+  .wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5px;
+    grid-auto-rows: minmax(200px, auto);
+    margin-bottom: 1em;
+  }
+  .image {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border: 1px solid #ebebeb;
+  }
 </style>  

@@ -10,14 +10,9 @@ const operations = {
         try {
             Model.Evidencia.findAndCountAll({
                 attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion', 'usuario_id'],
-                include: [
-                    {
-                        model: Model.Usuario
-                    },
-                    {
-                        model: Model.Retrato
-                    }
-                ],
+                include: [{
+                    model: Model.Usuario
+                }],
                 where: {
                     f_eliminacion: null,
                     departamento: {
@@ -55,14 +50,9 @@ const operations = {
 
             Model.Evidencia.findOne({
                 attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion'],
-                include: [
-                    {
-                        model: Model.Usuario
-                    },
-                    {
-                        model: Model.Retrato
-                    }
-                ],
+                include: [{
+                    model: Model.Usuario
+                }],
                 where: {
                     id: req.params.id,
                     f_eliminacion: null

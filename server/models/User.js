@@ -186,15 +186,7 @@ module.exports = (sequelize, Sequelize) => {
             }
         })
     })
-    /*
-    User.associate = function (models) {
-        models.Usuario.hasMany(models.Accesos, { as: 'accesos' } )
-    }
-
-    User.associate = function (models) {
-        models.Usuario.hasMany(models.Alerta, { as: 'alertas' } )
-    }*/
-
+    
     User.associate = function (models) {
         models.Usuario.hasMany(models.Historial, { as: 'historia' } )
     }

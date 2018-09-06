@@ -15,17 +15,22 @@ app.use(volleyball)
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-console.log(path.join(__dirname, '../src2/dist'))
-
 app.use('/', express.static(path.join(__dirname, '../src2/dist')))
+
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 
 app.use((req, res, next) => {
 	console.log(`Request endpoint: ${ chalk.yellow(req.originalUrl) } method ${ req.method }`)
   res.header("Access-Control-Allow-Origin", "*")
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Mashape-Authorization, Cache-Control"
   )
+
+  res.header(
+    "Access-Control-Request-Headers", "authorization,cache-control,x-requested-with"
+  )
+
   if (req.method === "OPTIONS") {
     res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET")
     return res.status(200).json({})

@@ -47,7 +47,6 @@
         </b-form-group>
       </b-card>
       <div class="form-actions">
-        {{ novedad }}
         <b-button @click="store()" class="mr" type="submit" variant="primary">
           Registrar
         </b-button>

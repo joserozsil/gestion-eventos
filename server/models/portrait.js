@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
                 primaryKey: true
             },
             estado: {
-                type: Sequelize.ENUM('COMPLEADO', 'EN_PROCESO', 'ANULADO'),
+                type: Sequelize.ENUM('COMPLETADO', 'EN_PROCESO', 'ANULADO'),
                 allowNull: false,
                 defaultValue: 'EN_PROCESO'
             },
@@ -132,13 +132,10 @@ module.exports = (sequelize, Sequelize) => {
     )
 
     Portrait.associate = function (models) {
-        
-        models.Retrato.hasOne(models.Evidencia,{
-            foreignKey: "retrato_id"
+        models.Retrato.belongsTo(models.Evidencia,{
+            foreignKey: "evidencia_id"
         })
-
     }
-
 
     return Portrait
 }

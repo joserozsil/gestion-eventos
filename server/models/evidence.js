@@ -48,10 +48,14 @@ module.exports = (sequelize, Sequelize) => {
 
 
     Evidence.associate = function (models) {
-        models.Usuario.hasMany(models.Imagen, { as: 'imagenes' })
+        //models.Usuario.hasMany(models.Imagen, { as: 'imagenes' })
         
-        models.Evidencia.belongsTo(models.Retrato,{
-            foreignKey: "retrato_id"
+        models.Evidencia.hasMany(models.Imagen, { 
+            foreignKey: 'evidencia_id'
+        })
+
+        models.Evidencia.hasOne(models.Retrato,{
+            foreignKey: "evidencia_id"
         })
 
         models.Evidencia.belongsTo(models.Usuario,{
