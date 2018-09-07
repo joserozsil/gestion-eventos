@@ -13,7 +13,7 @@ function isAuth (req, res, next) {
 
     const decode = decodeToken(token)
         .then(response => {
-            req.userToken = response
+            req.user = response
             next()
         })
         .catch(error => {

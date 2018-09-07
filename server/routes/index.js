@@ -34,7 +34,7 @@ api.get('/alerts', isAuth, alertController.index)
 api.post('/alerts', alertController.store)
 
 api.get('/history', isAuth, historyController.index)
-api.post('/history', historyController.store)
+api.post('/history', isAuth, historyController.store)
 
 api.get('/evidences', isAuth, evidenceController.index)
 api.get('/evidences/:id', isAuth, evidenceController.show)

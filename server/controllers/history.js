@@ -34,6 +34,8 @@ const operations = {
     },
     store: (req, res, next) => {
       try {
+          Object.assign(req.body, { usuario_id: req.user.id })
+
           Model.Historial.create(_.pick(req.body, ['usuario_id']))
           .then(result => {
               return res.status(200).json(result)

@@ -7,7 +7,7 @@ import { settings } from '../config'
 
 exports.createToken = (user) => {
     const payload = {
-        sub: user.cedula,
+        sub: user,
         iat: moment().unix,
         exp: moment().add(8, 'hours').unix()
     }

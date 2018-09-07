@@ -79,8 +79,7 @@ export default {
       axios.post(settings.API_URL + '/evidences', {
         departamento: this.novedad.departamento,
         tipo_recepcion: this.novedad.tipo_recepcion,
-        descripcion: this.novedad.descripcion,
-        usuario_id: this.$store.state.user.id
+        descripcion: this.novedad.descripcion
       })
       .then(resp => {
         swal({
