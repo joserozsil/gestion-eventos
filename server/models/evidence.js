@@ -8,6 +8,15 @@ module.exports = (sequelize, Sequelize) => {
                 autoIncrement: true,
                 primaryKey: true
             },
+            estado: {
+                type: Sequelize.ENUM('COMPLETADO', 'EN_PROCESO', 'ANULADO'),
+                allowNull: false,
+                defaultValue: 'EN_PROCESO'
+            },
+            f_procesado: {
+                type: Sequelize.DATE
+            },
+
             departamento: {
                 type: Sequelize.ENUM('BALISTICA', 'HECHOS', 'RECONSTRUCCION', 'RECEPCION', 'LABORATORIO'),
                 allowNull: false
@@ -48,7 +57,6 @@ module.exports = (sequelize, Sequelize) => {
 
 
     Evidence.associate = function (models) {
-        //models.Usuario.hasMany(models.Imagen, { as: 'imagenes' })
         
         models.Evidencia.hasMany(models.Imagen, { 
             foreignKey: 'evidencia_id'

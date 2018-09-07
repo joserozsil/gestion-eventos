@@ -8,11 +8,7 @@ module.exports = (sequelize, Sequelize) => {
                 autoIncrement: true,
                 primaryKey: true
             },
-            estado: {
-                type: Sequelize.ENUM('COMPLETADO', 'EN_PROCESO', 'ANULADO'),
-                allowNull: false,
-                defaultValue: 'EN_PROCESO'
-            },
+            
 
             clise: {
                 type: Sequelize.STRING,
@@ -39,9 +35,6 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.DATE
             },
             agraviado: { // FOREIGN KEY
-                type: Sequelize.STRING,
-            },
-            dibujante: { // FOREIGN KEY
                 type: Sequelize.STRING,
             },
             f_rh: {
@@ -134,6 +127,10 @@ module.exports = (sequelize, Sequelize) => {
     Portrait.associate = function (models) {
         models.Retrato.belongsTo(models.Evidencia,{
             foreignKey: "evidencia_id"
+        })
+
+        models.Retrato.belongsTo(models.Usuario,{
+            foreignKey: "dibujante"
         })
     }
 

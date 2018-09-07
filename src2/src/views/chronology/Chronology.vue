@@ -29,6 +29,11 @@
           <template slot="fecha" slot-scope="data">
             <b-badge >{{data.item.f_creacion}}</b-badge>
           </template>
+          <template slot="estado" slot-scope="data">
+            <b-badge
+              v-b-popover.hover="'Indica si la cronologia ha sido compleada, o se encuentra en proceso de revisión.'" title="Estado"
+            >{{data.item.estado}}</b-badge>
+          </template>
           <template slot="acción" slot-scope="data">
             <b-button
               @click="goToEdit(data.item.departamento, data.item.id)"
@@ -89,6 +94,7 @@ export default {
         {key: 'descripción'},
         {key: 'departamento'},
         {key: 'fecha'},
+        {key: 'estado'},
         {key: 'acción'}
       ],
       currentPage: 1,

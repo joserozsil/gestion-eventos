@@ -160,20 +160,6 @@ module.exports = (sequelize, Sequelize) => {
         }
     )
 
-    /*
-    User.beforeCreate(user => {
-        return encrypt(user.contraseña)
-        .then(success => {
-            user.contraseña = success
-        })
-        .catch(err => {
-            if (err) {
-                return res.status(400).json(err)
-            }
-        })
-    })
-    */
-
 
     User.afterValidate(user => {
         return encrypt(user.contraseña)
@@ -189,10 +175,11 @@ module.exports = (sequelize, Sequelize) => {
     
     User.associate = function (models) {
         models.Usuario.hasMany(models.Historial, { as: 'historia' } )
-    }
-
-    User.associate = function (models) {
         models.Usuario.hasMany(models.Evidencia, { as: 'usuarios' })
+
+        models.Usuario.hasOne(models.Retrato,{
+            foreignKey: "dibujante"
+        })
     }
 
     return User

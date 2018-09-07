@@ -9,7 +9,7 @@ const operations = {
     index: (req, res, next) => {
         try {
             Model.Evidencia.findAndCountAll({
-                attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion', 'usuario_id'],
+                attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion', 'usuario_id', 'estado'],
                 include: [{
                     model: Model.Usuario
                 }],
@@ -49,7 +49,7 @@ const operations = {
             }
 
             Model.Evidencia.findOne({
-                attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion'],
+                attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion', 'estado'],
                 include: [{
                     model: Model.Usuario
                 }],
@@ -78,6 +78,7 @@ const operations = {
 
             })
             .catch(error => {
+                console.log(error)
                 return res.status(400).json(error)
             })
 		} catch( e ) {
@@ -89,13 +90,13 @@ const operations = {
 
             if(!req.params.id) {
                 return res.status(400).json({
-                    message: "Por favor indique el id del usuario"
+                    message: "Por favor indique el id de la evidencia"
                 })
             }
 
             Model.Evidencia.findById(req.params.id)
             .then(usuario => {
-                let update = _.pick(req.body, ['departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'retrato_id'])
+                let update = _.pick(req.body, ['departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'retrato_id', 'estado'])
                 Object.assign(update, { f_actualizacion: Date.now() })
                 usuario.update(update)
                 .then(result => {
@@ -104,6 +105,8 @@ const operations = {
                     })
                 })
                 .catch(error => {
+            
+
                     return res.status(400).json(error)
                 })
             })

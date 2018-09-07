@@ -13,31 +13,32 @@
           :items="items" 
           :fields="fields" 
           :current-page="currentPage" 
-          :per-page="perPage" 
-          @row-clicked="rowClicked">
-          
+          :per-page="perPage">
           <template slot="retrato" slot-scope="data">
             <b-navbar variant="faded" type="light">
               <b-navbar-brand tag="h1" href="#">
-                <img :src="data.item.photo" width="40px" class="img-avatar d-inline-block align-top" alt="BV">
+                <img 
+                  :src="urlImage + '/' + data.item.Evidencium.Imagens[0].nombre_archivo" 
+                  width="40px" 
+                  class="img-avatar d-inline-block align-top" alt="BV"
+                >
               </b-navbar-brand>
             </b-navbar>
-
           </template>
           <template slot="exp" slot-scope="data">
-            <strong>k-18-0071-0089{{data.item.id}}</strong>
+            <strong>{{data.item.exp}}</strong>
           </template>
           <template slot="dibujante" slot-scope="data">
-            <strong>{{data.item.name}}</strong>
+            <strong>{{data.item.Usuario.nombre}} {{data.item.Usuario.apellido}}</strong>
           </template>
           <template slot="usuario" slot-scope="data">
-            <strong>{{data.item.username}}{{getUsername(data.item.name)}}</strong>
+            <strong>{{data.item.username}}{{ getUsername(data.item.name) }}</strong>
           </template>
           <template slot="fecha" slot-scope="data">
-            <b-badge >{{data.item.registered}}</b-badge>
+            <b-badge >{{data.item.f_creacion}}</b-badge>
           </template>
           <template slot="solicitud" slot-scope="data">
-            <strong>{{data.item.request}}</strong>
+            <strong>{{data.item.solicitado_por}}</strong>
           </template>
           <template slot="acción" slot-scope="data">
             <b-button variant="primary" class="btn-pill">Detalles</b-button>
@@ -54,7 +55,11 @@
 </template>
 
 <script>
+
 import actData from './ActData'
+import settings from '../../config'
+import swal from 'sweetalert'
+import store from '../../store/store'
 
 export default {
   name: 'Usuarios',
@@ -86,7 +91,7 @@ export default {
   },
   data: () => {
     return {
-      items: actData.filter((user) => user.id < 42),
+      items: [],
       fields: [
         {key: 'retrato'},
         {key: 'exp'},
@@ -97,32 +102,29 @@ export default {
       ],
       currentPage: 1,
       perPage: 15,
-      totalRows: 0
+      totalRows: 0,
+      urlImage: settings.API_IMAGE
     }
   },
   computed: {
   },
+  mounted() {
+    axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
+    this.getActs()
+  },
   methods: {
-    getBadge (status) {
-      return status === 'Active' ? 'success'
-        : status === 'Inactive' ? 'secondary'
-          : status === 'Pending' ? 'warning'
-            : status === 'Banned' ? 'danger' : 'primary'
-    },
     getRowCount (items) {
       return items.length
     },
-    userLink (id) {
-      return `users/${id.toString()}`
-    },
-    rowClicked (item) {
-      const userLink = this.userLink(item.id)
-      this.$router.push({path: userLink})
-    },
-    getUsername(name){
-      return name.split(' ')[0]
+    getActs() {
+      axios.get(`${settings.API_URL}/portraits?limit=1`)
+      .then(resp => {
+        axios.get(`${settings.API_URL}/portraits?limit=${resp.data.total}`)
+        .then(resp => {
+          this.items = resp.data.data.filter(data => data.Evidencium.estado == 'COMPLETADO')
+        })  
+      })
     }
-
   }
 }
 </script>

@@ -10,14 +10,20 @@ const operations = {
       try {
         Model.Retrato.findAndCountAll({
             include: [{
-                model: Model.Evidencia
+                    model: Model.Usuario,
+                },
+                {
+                model: Model.Evidencia,
+                include: [{
+                    model: Model.Imagen
+                }]
             }],
             where: {
                 f_eliminacion: null
             },
             order: [[ 'f_creacion', 'DESC' ]],
-            offset: req.query.offset || 0,
-            limit: req.query.limit || 15
+            offset: Number(req.query.offset) || 0,
+            limit: Number(req.query.limit) || 15
         })
         .then(result => {
             return res.status(200).json({
@@ -28,6 +34,7 @@ const operations = {
             })
         })
         .catch(error => {
+            console.log(error)
             return res.status(400).json(error)
         })
       } catch( e ) {
