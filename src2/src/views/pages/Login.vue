@@ -66,10 +66,12 @@
         axios.post(settings.API_URL + '/signin', this.loginData)
         .then(resp => {
           if(resp.status == 200) {
+            
             localStorage.setItem('token', resp.data.token)
+
             this.$store.commit('setDataUser', resp.data.user)
 
-            axios.post(settings.API_URL + '/history', {}, { headers: { authorization: resp.data.token } })
+            axios.post(settings.API_URL + '/history', {}, )
             .then(other => {
               swal("¡Listo!", `Bienvenido al sistema ${resp.data.user.nombre}`, "success")
               this.$router.push({ name: 'Dashboard' })

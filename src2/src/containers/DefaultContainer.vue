@@ -85,11 +85,19 @@ export default {
   data () {
     return {
       nav: nav.items,
-      usuario: {}
+      usuario: {
+        nombre: 'joserozsil',
+        apellido: 'Rodríguez'
+      }
     }
   },
   mounted() {
-    this.usuario = this.$store.getters.getUser
+    this.$store.dispatch('getUser')
+    this.usuario = this.$store.getters.user
+  },
+  beforeUpdate() {
+    this.$store.dispatch('getUser')
+    this.usuario = this.$store.getters.user
   },
   computed: {
     name () {

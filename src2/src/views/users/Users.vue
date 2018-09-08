@@ -114,9 +114,9 @@ export default {
     getUsers() {
       axios.get(`${settings.API_URL}/users?limit=1`)
       .then(resp => {
-        axios.get(`${settings.API_URL}/users?limit=${resp.total}`)
-        .then(resp => {
-          this.items = resp.data.data
+        axios.get(`${settings.API_URL}/users?limit=${ Number(resp.data.total) + 1}`)
+        .then(response => {
+          this.items = response.data.data
         })
       })
     },

@@ -4,12 +4,26 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import chalk from 'chalk'
 import routes from './routes'
+import path from 'path'
+
 import volleyball from 'volleyball'
+import rateLimit from 'express-rate-limit'
+import apicache from 'apicache'
+import helmet from 'helmet'
+
+
+const apiLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 120,
+  message: "Número máximo de peticiones realizadas"
+})
+
+const cache = apicache.middleware
 
 const app = express()
 
-import path from 'path'
 
+app.use(helmet())
 app.use(volleyball)
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -38,7 +52,8 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/api/v1', routes)
+//app.use('/api/v1', apiLimiter, cache('5 minutes'), routes)
+app.use('/api/v1', apiLimiter, routes)
 
 app.use((err, req, res, next) => {
 	console.log(chalk.red(err))

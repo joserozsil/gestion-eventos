@@ -3,6 +3,7 @@
 import { createToken } from '../services/jwt'
 import { compare } from '../services/password'
 import Model from '../models'
+import _ from 'underscore'
 
 const operations = {
     signIn: (req, res) => {
@@ -23,7 +24,7 @@ const operations = {
                         if( value ) {
                             return res.status(200).json({
                                 token: createToken(user),
-                                user,
+                                user: _.pick(user, ['nombre', 'apellido', 'cedula', 'rol']),
                                 message: "Usuario logeado correctamente"
                             })
                         } else {
