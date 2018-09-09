@@ -84,16 +84,32 @@ export default {
   store,
   data () {
     return {
-      nav: nav.items,
+      nav: [],
       usuario: {
         nombre: 'joserozsil',
         apellido: 'Rodríguez'
-      }
+      },
+      routes: nav.items
     }
   },
   mounted() {
     this.$store.dispatch('getUser')
     this.usuario = this.$store.getters.user
+
+    let newNav = []
+
+    this.routes.forEach(element => {
+      element.role.forEach(e => {
+        if(e == 'ALL') {
+          newNav.push(element)
+        }
+        if(e == this.usuario.rol) {
+          newNav.push(element)
+        }
+      })
+    })
+
+    this.nav = newNav
   },
   beforeUpdate() {
     this.$store.dispatch('getUser')

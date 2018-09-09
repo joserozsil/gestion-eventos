@@ -7,7 +7,8 @@ export default {
       wrapper: {
         element: '',
         attributes: {}
-      }
+      },
+      role: ['ALL']
     },
     {
       name: 'Inicio',
@@ -16,17 +17,20 @@ export default {
       badge: {
         variant: 'danger',
         text: 'Nuevo'
-      }
+      },
+      role: ['ALL']
     },
     {
       name: 'Cronologías',
       url: '/cronologias/consultar',
-      icon: 'icon-speedometer'
+      icon: 'icon-speedometer',
+      role: ['ALL']
     },
     {
       name: 'Recepción',
       url: '/base',
       icon: 'icon-puzzle',
+      role: ['ADMINISTRADOR', 'RECEPCION'],
       children: [
         {
           name: 'Consultar',
@@ -44,6 +48,7 @@ export default {
       name: 'Balística',
       url: '/base',
       icon: 'icon-puzzle',
+      role: ['ADMINISTRADOR', 'OPERADOR_BALISTICA'],
       children: [
         {
           name: 'Consultar',
@@ -61,6 +66,7 @@ export default {
       name: 'Laboratorio',
       url: '/base',
       icon: 'icon-puzzle',
+      role: ['ADMINISTRADOR', 'OPERADOR_LABORATORIO'],
       children: [
         {
           name: 'Consultar',
@@ -78,6 +84,7 @@ export default {
       name: 'Reconstrucción',
       url: '/base',
       icon: 'icon-puzzle',
+      role: ['ADMINISTRADOR', 'OPERADOR_HECHOS'],
       children: [
         {
           name: 'Consultar',
@@ -95,6 +102,7 @@ export default {
       name: 'Usuarios',
       url: '/base',
       icon: 'icon-puzzle',
+      role: ['ADMINISTRADOR'],
       children: [
         {
           name: 'Consultar',
@@ -117,6 +125,7 @@ export default {
       name: 'Seguridad',
       url: '/base',
       icon: 'icon-puzzle',
+      role: ['ADMINISTRADOR'],
       children: [
         {
           name: 'Alertas',

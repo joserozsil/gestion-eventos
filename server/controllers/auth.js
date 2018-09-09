@@ -22,11 +22,17 @@ const operations = {
                     const compared = compare(req.body.contraseña, user.contraseña)
                     .then((value) => {
                         if( value ) {
-                            return res.status(200).json({
-                                token: createToken(user),
-                                user: _.pick(user, ['nombre', 'apellido', 'cedula', 'rol']),
-                                message: "Usuario logeado correctamente"
+
+                            Model.Historial.create({
+                                usuario_id: user.id
+                            }).then(created => {
+                                return res.status(200).json({
+                                    token: createToken(user),
+                                    user: _.pick(user, ['nombre', 'apellido', 'cedula', 'rol']),
+                                    message: "Usuario logeado correctamente"
+                                }) 
                             })
+                            
                         } else {
                             return res.status(403).json({
                                 message: "Las credenciales no coinciden con nuestros registros"

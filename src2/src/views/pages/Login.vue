@@ -71,11 +71,8 @@
 
             this.$store.commit('setDataUser', resp.data.user)
 
-            axios.post(settings.API_URL + '/history', {}, )
-            .then(other => {
-              swal("¡Listo!", `Bienvenido al sistema ${resp.data.user.nombre}`, "success")
-              this.$router.push({ name: 'Dashboard' })
-            })
+            swal("¡Listo!", `Bienvenido al sistema ${resp.data.user.nombre}`, "success")
+            this.$router.push({ name: 'Dashboard' })  
 
           }
         })
