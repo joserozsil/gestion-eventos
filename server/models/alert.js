@@ -25,16 +25,5 @@ module.exports = (sequelize, DataTypes) => {
         }
     )
 
-    /*
-    Alert.associate = function (models) {
-        Alert.belongsTo(models.Usuario,{
-            onDelete: "CASCADE",
-            foreignKey: {
-              allowNull: false
-            }
-        })
-    }
-    */
-
     return Alert
 }

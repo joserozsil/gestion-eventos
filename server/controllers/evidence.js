@@ -74,9 +74,20 @@ const operations = {
         try {
             Object.assign(req.body, { usuario_id: req.user.id })
 
+
             Model.Evidencia.create(_.pick(req.body, ['departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'usuario_id']))
             .then(result => {
-                return res.status(200).json(result)
+
+                Model.Historial.create({
+                    usuario_id: req.user.id,
+                    descripcion: `Ha registrado la evidencia ${ result.id }`
+                })
+                .then(str => {
+                    return res.status(200).json(result)
+                })
+                .catch(e => {
+                    console.log(e)
+                })
 
             })
             .catch(error => {
@@ -102,9 +113,19 @@ const operations = {
                 Object.assign(update, { f_actualizacion: Date.now() })
                 usuario.update(update)
                 .then(result => {
-                    return res.status(200).json({
-                        data: result
+                    Model.Historial.create({
+                        usuario_id: req.user.id,
+                        descripcion: `Ha actualizado la evidencia ${ result.id }`
                     })
+                    .then(str => {
+                        return res.status(200).json({
+                            data: result
+                        })
+                    })
+                    .catch(e => {
+                        console.log(e)
+                    })
+                    
                 })
                 .catch(error => {
             
@@ -131,9 +152,19 @@ const operations = {
                     f_eliminacion: Date.now()
                 })
                 .then(result => {
-                    return res.status(200).json({
-                        data: result
+                    Model.Historial.create({
+                        usuario_id: req.user.id,
+                        descripcion: `Ha eliminado la evidencia ${ result.id }`
                     })
+                    .then(str => {
+                        return res.status(200).json({
+                            data: result
+                        })
+                    })
+                    .catch(e => {
+                        console.log(e)
+                    })
+
                 })
                 .catch(error => {
                     return res.status(400).json(error)

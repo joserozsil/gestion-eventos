@@ -103,9 +103,9 @@ export default {
       return name.split(' ')[0]
     },
     getHistory() {
-      axios.get(`${settings.API_URL}/history?limit=1`)
+      axios.get(`${settings.API_URL}/access?limit=1`)
       .then(resp => {
-        axios.get(`${settings.API_URL}/history?limit=${resp.total}`)
+        axios.get(`${settings.API_URL}/access?limit=${resp.total}`)
         .then(resp => {
           this.items = resp.data.data
         })

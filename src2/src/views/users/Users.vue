@@ -88,7 +88,6 @@ export default {
   },
   mounted() {
     axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
-    
     this.getUsers()
   },
   methods: {

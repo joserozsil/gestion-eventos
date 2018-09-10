@@ -7,7 +7,7 @@ const operations = {
     index: (req, res, next) => {
       try {
           Model.Historial.findAndCountAll({
-              attributes: ['id', 'usuario_id', 'f_creacion' ],
+              attributes: ['id', 'usuario_id', 'descripcion', 'f_creacion' ],
               include: [{
                 attributes: ['usuario', 'nombre', 'apellido', 'rol'],
                 model: Model.Usuario
@@ -27,21 +27,6 @@ const operations = {
           .catch(error => {
               console.log(error)
             return res.status(400).json(error)
-          })
-      } catch( e ) {
-        return next(e)
-      }
-    },
-    store: (req, res, next) => {
-      try {
-          Object.assign(req.body, { usuario_id: req.user.id })
-
-          Model.Historial.create(_.pick(req.body, ['usuario_id']))
-          .then(result => {
-              return res.status(200).json(result)
-          })
-          .catch(error => {
-              return res.status(400).json(error)
           })
       } catch( e ) {
         return next(e)

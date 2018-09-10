@@ -520,8 +520,7 @@ export default {
     }
   },
   mounted() {
-    this.user = this.$store.getters.getUser
-
+    this.user = this.$store.getters.user
     axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
 
     this.portraitExist().then(resp => {

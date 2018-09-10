@@ -23,7 +23,7 @@ const operations = {
                     .then((value) => {
                         if( value ) {
 
-                            Model.Historial.create({
+                            Model.Acceso.create({
                                 usuario_id: user.id
                             }).then(created => {
                                 return res.status(200).json({

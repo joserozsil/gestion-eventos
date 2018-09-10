@@ -12,6 +12,8 @@ import apicache from 'apicache'
 import helmet from 'helmet'
 
 
+import Model from './models'
+
 const apiLimiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 120,
@@ -22,9 +24,10 @@ const cache = apicache.middleware
 
 const app = express()
 
-
 app.use(helmet())
+
 app.use(volleyball)
+
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -34,6 +37,7 @@ app.use('/', express.static(path.join(__dirname, '../src2/dist')))
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 
 app.use((req, res, next) => {
+  
 	console.log(`Request endpoint: ${ chalk.yellow(req.originalUrl) } method ${ req.method }`)
   res.header("Access-Control-Allow-Origin", "*")
   res.header(
@@ -49,6 +53,7 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET")
     return res.status(200).json({})
   }
+
   next()
 })
 

@@ -174,7 +174,7 @@ module.exports = (sequelize, Sequelize) => {
     })
     
     User.associate = function (models) {
-        models.Usuario.hasMany(models.Historial, { as: 'historia' } )
+        models.Usuario.hasMany(models.Historial, { as: 'historial' } )
         models.Usuario.hasMany(models.Evidencia, { as: 'usuarios' })
 
         models.Usuario.hasOne(models.Retrato,{

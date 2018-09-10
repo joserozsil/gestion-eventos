@@ -3,24 +3,21 @@
     <b-col cols="12" xl="12">
       <transition name="slide">
       <b-card :header="caption">
-        <b-table :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" @row-clicked="rowClicked">
+        <b-table :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" >
           <template slot="id" slot-scope="data">
             <strong>{{data.item.id}}</strong>
           </template>
           <template slot="usuario" slot-scope="data">
-            <strong>{{data.item.username}}{{getUsername(data.item.name)}}</strong>
+            <strong>{{data.item.Usuario.usuario}}</strong>
           </template>
           <template slot="nombre" slot-scope="data">
-            <strong>{{data.item.name}}</strong>
+            <strong>{{data.item.Usuario.nombre}} {{data.item.Usuario.apellido}}</strong>
           </template>
           <template slot="descripción" slot-scope="data">
-            <strong>Ha modificado la evidencia número: {{data.item.id + 1}}</strong>
+            <strong>{{data.item.descripcion}}</strong>
           </template>
           <template slot="fecha" slot-scope="data">
-            <strong>{{data.item.registered}}</strong>
-          </template>
-          <template slot="acción" slot-scope="data">
-            <b-button variant="primary" class="btn-pill">Detalles</b-button>
+            <strong>{{data.item.f_creacion}}</strong>
           </template>
         </b-table>
         <nav>
@@ -34,6 +31,7 @@
 
 <script>
 import usersData from './UsersData'
+import settings from '../../config'
 
 export default {
   name: 'Alert',
@@ -65,14 +63,13 @@ export default {
   },
   data: () => {
     return {
-      items: usersData.filter((user) => user.id < 42),
+      items: [],
       fields: [
         {key: 'id'},
         {key: 'usuario'},
         {key: 'nombre'},
         {key: 'descripción'},
-        {key: 'fecha'},
-        {key: 'acción'}
+        {key: 'fecha'}
       ],
       currentPage: 1,
       perPage: 15,
@@ -81,25 +78,22 @@ export default {
   },
   computed: {
   },
+  mounted() {
+    axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
+    this.getHistory()
+  },
   methods: {
-    getBadge (status) {
-      return status === 'Active' ? 'success'
-        : status === 'Inactive' ? 'secondary'
-          : status === 'Pending' ? 'warning'
-            : status === 'Banned' ? 'danger' : 'primary'
-    },
     getRowCount (items) {
       return items.length
     },
-    userLink (id) {
-      return `users/${id.toString()}`
-    },
-    rowClicked (item) {
-      const userLink = this.userLink(item.id)
-      this.$router.push({path: userLink})
-    },
-    getUsername(name){
-      return name.split(' ')[0]
+    getHistory() {
+      axios.get(`${settings.API_URL}/history?limit=${Number(1)}`)
+      .then(resp => {
+        axios.get(`${settings.API_URL}/history?limit=${ Number(resp.data.total + 1)}`)
+        .then(response => {
+          this.items = response.data.data
+        })
+      })
     }
 
   }

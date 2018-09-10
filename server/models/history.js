@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
                 autoIncrement: true,
                 primaryKey: true
             },
+            descripcion: {
+                type: DataTypes.TEXT,
+                allowNull: false
+            },
             f_creacion: {
                 type: DataTypes.DATE,
                 allowNull: false,
@@ -20,11 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     )
 
     History.associate = function (models) {
-        History.belongsTo(models.Usuario,{
-            onDelete: "CASCADE",
-            foreignKey: {
-              allowNull: false
-            }
+        models.Historial.belongsTo(models.Usuario,{
+            foreignKey: "usuario_id"
         })
     }
 

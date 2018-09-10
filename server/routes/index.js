@@ -20,10 +20,11 @@ import authController from '../controllers/auth'
 import isAuth from '../middlewares/authenticated'
 import { rol } from '../middlewares/authorize'
 import file from '../middlewares/file'
+import history from '../middlewares/history'
 
 const api = express.Router()
 
-api.get('/users', isAuth, userController.index)
+api.get('/users', isAuth, history('a'), userController.index)
 api.get('/users/:id', isAuth, rol(['ADMINISTRADOR']), userController.show)
 api.post('/users', isAuth, rol(['ADMINISTRADOR']), userController.store)
 api.put('/users/:id', isAuth, rol(['ADMINISTRADOR']), userController.update)
@@ -31,14 +32,12 @@ api.delete('/users/:id', isAuth, rol(['ADMINISTRADOR']), userController.delete)
 
 api.post('/token', isAuth, tokenController.index)
 
-api.get('/access', isAuth, accessController.index)
-api.post('/access', isAuth, accessController.store)
+api.get('/access', isAuth, rol(['ADMINISTRADOR']), accessController.index)
 
 api.get('/alerts', isAuth, rol(['ADMINISTRADOR']), alertController.index)
 api.post('/alerts', alertController.store)
 
 api.get('/history', isAuth, rol(['ADMINISTRADOR']), historyController.index)
-api.post('/history', isAuth, historyController.store)
 
 api.get('/evidences', isAuth, evidenceController.index)
 api.get('/evidences/:id', isAuth, evidenceController.show)

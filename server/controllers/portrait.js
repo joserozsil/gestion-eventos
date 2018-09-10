@@ -73,7 +73,16 @@ const operations = {
         try {
             Model.Retrato.create(req.body)
             .then(result => {
-                return res.status(200).json(result)
+                Model.Historial.create({
+                    usuario_id: req.user.id,
+                    descripcion: `Ha registrado el retrato ${ result.id }`
+                })
+                .then(str => {
+                    return res.status(200).json(result)
+                })
+                .catch(e => {
+                    console.log(e)
+                })
             })
             .catch(error => {
                 return res.status(400).json(error)
@@ -97,8 +106,17 @@ const operations = {
                 Object.assign(update, { f_actualizacion: Date.now() })
                 usuario.update(update)
                 .then(result => {
-                    return res.status(200).json({
-                        data: result
+                    Model.Historial.create({
+                        usuario_id: req.user.id,
+                        descripcion: `Ha actualizado el retrato ${ result.id }`
+                    })
+                    .then(str => {
+                        return res.status(200).json({
+                            data: result
+                        })
+                    })
+                    .catch(e => {
+                        console.log(e)
                     })
                 })
                 .catch(error => {
