@@ -41,6 +41,7 @@
             <strong>{{data.item.solicitado_por}}</strong>
           </template>
           <template slot="acción" slot-scope="data">
+            <b-button @click="generateReport(data.item.id)" variant="primary" class="btn-pill">Reporte</b-button>
             <b-button variant="primary" class="btn-pill">Detalles</b-button>
             <b-button variant="success" class="btn-pill">Actualizar</b-button>
           </template>
@@ -123,6 +124,19 @@ export default {
         .then(resp => {
           this.items = resp.data.data.filter(data => data.Evidencium.estado == 'COMPLETADO')
         })  
+      })
+    },
+    generateReport(id) {
+      let data = this.items.filter(data => data.id == id )[0]
+
+      let image = settings.API_IMAGE + '/' + data.Evidencium.Imagens[0].nombre_archivo 
+
+      Object.assign(data, { image })
+
+      axios.post(`${settings.API_REPORT}/portraits`, { data })
+      .then(resp => {
+        console.dir(resp)
+        window.open(settings.RENDER_REPORT + '/' + resp.data, "_blank")
       })
     }
   }

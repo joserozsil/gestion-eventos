@@ -9,7 +9,9 @@ class ReportController extends Controller
     public function portrait(Request $request)
     {
 
-    	$view = \View::make('portrait')->render();
+    	$data = $request->all()['data'];
+
+    	$view = \View::make('portrait', compact('data'))->render();
 
         $pdf = \App::make('dompdf.wrapper');
 

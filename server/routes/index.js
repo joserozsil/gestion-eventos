@@ -20,11 +20,10 @@ import authController from '../controllers/auth'
 import isAuth from '../middlewares/authenticated'
 import { rol } from '../middlewares/authorize'
 import file from '../middlewares/file'
-import history from '../middlewares/history'
 
 const api = express.Router()
 
-api.get('/users', isAuth, history('a'), userController.index)
+api.get('/users', isAuth, userController.index)
 api.get('/users/:id', isAuth, rol(['ADMINISTRADOR']), userController.show)
 api.post('/users', isAuth, rol(['ADMINISTRADOR']), userController.store)
 api.put('/users/:id', isAuth, rol(['ADMINISTRADOR']), userController.update)

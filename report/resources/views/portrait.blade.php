@@ -31,8 +31,8 @@
     <body>
         <table style="width:100%">
           <tr>
-            <td><p class=" uppercase label">Clise: Prueba de expediente</p></td>
-            <td><p class=" uppercase label align-r">Exp: Prueba de expediente</p></td>
+            <td><p class=" uppercase label">Clise: {{ $data['clise'] }}</p></td>
+            <td><p class=" uppercase label align-r">Exp: {{ $data['exp'] }}</p></td>
           </tr>
         </table>
         <table style="width:100%; margin: 5mm 0">
@@ -49,7 +49,7 @@
         <table style="width:100%; margin: 5mm 0">
           <tr>
             <td width="100%" style="text-align: center;">
-                <img src="retrato.jpg" height="450px">
+                <img src="{{ $data['image'] }}" height="400px">
             </td>
           </tr>
         </table>
@@ -59,58 +59,92 @@
                 <p class="uppercase"><strong>dependencia:</strong></p>
             </td>
             <td>
-                <p class="uppercase"> Prueba de dependencia y uego otra prueba</p>
+                <p class="uppercase">{{ $data['dependencia'] }}</p>
             </td>
             <td>
-                <p class="uppercase"><strong>dependencia:</strong></p>
+                <p class="uppercase"><strong>memo:</strong></p>
             </td>
             <td>
-                <p class="uppercase"> Prueba de dependencia y uego otra prueba</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-                <p class="uppercase"><strong>solicitado por:</strong></p>
-            </td>
-            <td>
-                <p class="uppercase"> Prueba de dependencia y uego otra prueba</p>
-            </td>
-            <td>
-                <p class="uppercase"><strong>agraviado:</strong></p>
-            </td>
-            <td>
-                <p class="uppercase">jose rodriguez</p>
+                <p class="uppercase">{{ $data['memo'] }}</p>
             </td>
           </tr>
           <tr>
             <td>
-                <p class="uppercase"><strong>dependencia:</strong></p>
+                <p class="uppercase"><strong>Fecha de Memo:</strong></p>
             </td>
             <td>
-                <p class="uppercase"> Prueba de dependencia y uego otra prueba</p>
+                <p class="uppercase">{{ $data['f_memo'] }}</p>
             </td>
             <td>
-                <p class="uppercase"><strong>dirección s.s:</strong></p>
+                <p class="uppercase"><strong>Solicitado por:</strong></p>
             </td>
             <td>
-                <p class="uppercase"> Prueba de dependencia y uego otra prueba</p>
+                <p class="uppercase">{{ $data['solicitado_por'] }}</p>
             </td>
           </tr>
           <tr>
             <td>
-                <p class="uppercase"><strong>fecha del caso:</strong></p>
+                <p class="uppercase"><strong>Fecha del caso:</strong></p>
             </td>
             <td>
-                <p class="uppercase"> 16/07/2015</p>
+                <p class="uppercase">{{ $data['f_caso'] }}</p>
             </td>
             <td>
-                <p class="uppercase"><strong>datos por:</strong></p>
+                <p class="uppercase"><strong>Agraviado:</strong></p>
             </td>
             <td>
-                <p class="uppercase"> 16/07/2015</p>
+                <p class="uppercase">{{ $data['agraviado'] }}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+                <p class="uppercase"><strong>fecha de R.H:</strong></p>
+            </td>
+            <td>
+                <p class="uppercase">{{ $data['f_rh'] }}</p>
+            </td>
+          </tr>
+
+          <!-- segundo encabezado -->
+          <tr>
+            <td>
+                <p class="uppercase"><strong>Dependencia</strong></p>
+            </td>
+            <td>
+                <p class="uppercase">{{ $data['dependencia2'] }}</p>
+            </td>
+            <td>
+                <p class="uppercase"><strong>Solicitado por:</strong></p>
+            </td>
+            <td>
+                <p class="uppercase">{{ $data['solicitado_por2'] }}</p>
+            </td>
+          </tr>
+           <tr>
+            <td>
+                <p class="uppercase"><strong>Agraviado</strong></p>
+            </td>
+            <td>
+                <p class="uppercase">{{ $data['agraviado2'] }}</p>
+            </td>
+            <td>
+                <p class="uppercase"><strong>Dirección S.S:</strong></p>
+            </td>
+            <td>
+                <p class="uppercase">{{ $data['direccion'] }}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+                <p class="uppercase"><strong>Origen de datos</strong></p>
+            </td>
+            <td>
+                <p class="uppercase">{{ $data['origen_datos'] }}</p>
             </td>
           </tr>
         </table>
+
+
         <table style="width:100%; margin: 10mm 0;">
           <tr>
             <td>
@@ -122,8 +156,8 @@
     <body>
         <table style="width:100%">
           <tr>
-            <td><p class=" uppercase label">Clise: Prueba de expediente</p></td>
-            <td><p class=" uppercase label align-r">Exp: Prueba de expediente</p></td>
+            <td><p class=" uppercase label">Clise: {{ $data['clise'] }}</p></td>
+            <td><p class=" uppercase label align-r">Exp: {{ $data['exp'] }}</p></td>
           </tr>
         </table>
         <table style="width:100%; margin: 10mm 0; border: 1px solid gray">
@@ -132,13 +166,13 @@
                 <p class="uppercase"><strong>Edad:</strong></p>
             </td>
             <td>
-                <p class="uppercase">18</p>
+                <p class="uppercase">{{ $data['edad'] }}</p>
             </td>
             <td>
                 <p class="uppercase"><strong>color de piel:</strong></p>
             </td>
             <td>
-                <p class="uppercase">trigueña</p>
+                <p class="uppercase">{{ $data['color_piel'] }}</p>
             </td>
           </tr>
           <tr>
@@ -146,13 +180,13 @@
                 <p class="uppercase"><strong>boca:</strong></p>
             </td>
             <td>
-                <p class="uppercase"> aaaa</p>
+                <p class="uppercase"> {{ $data['boca'] }}</p>
             </td>
             <td>
                 <p class="uppercase"><strong>labio:</strong></p>
             </td>
             <td>
-                <p class="uppercase">bbbb</p>
+                <p class="uppercase">{{ $data['labios'] }}</p>
             </td>
           </tr>
           <tr>
@@ -160,13 +194,13 @@
                 <p class="uppercase"><strong>estatura:</strong></p>
             </td>
             <td>
-                <p class="uppercase">ccccc</p>
+                <p class="uppercase">ccc{{ $data['estatura'] }}cc</p>
             </td>
             <td>
                 <p class="uppercase"><strong>color de cabello:</strong></p>
             </td>
             <td>
-                <p class="uppercase">ddddd</p>
+                <p class="uppercase">{{ $data['color_cabello'] }}</p>
             </td>
           </tr>
           <tr>
@@ -174,13 +208,13 @@
                 <p class="uppercase"><strong>peso:</strong></p>
             </td>
             <td>
-                <p class="uppercase">adwdw</p>
+                <p class="uppercase">{{ $data['peso'] }}</p>
             </td>
             <td>
                 <p class="uppercase"><strong>barba-bigote:</strong></p>
             </td>
             <td>
-                <p class="uppercase"> 16/07/2015</p>
+                <p class="uppercase">{{ $data['barba_bigote'] }}</p>
             </td>
           </tr>
           <tr>
@@ -188,13 +222,13 @@
                 <p class="uppercase"><strong>nariz:</strong></p>
             </td>
             <td>
-                <p class="uppercase">adwdw</p>
+                <p class="uppercase">{{ $data['nariz'] }}</p>
             </td>
             <td>
                 <p class="uppercase"><strong>ojos:</strong></p>
             </td>
             <td>
-                <p class="uppercase"> 16/07/2015</p>
+                <p class="uppercase">{{ $data['ojos'] }}</p>
             </td>
           </tr>
           <tr>
@@ -202,13 +236,13 @@
                 <p class="uppercase"><strong>cara:</strong></p>
             </td>
             <td>
-                <p class="uppercase">adwdw</p>
+                <p class="uppercase">{{ $data['cara'] }}</p>
             </td>
             <td>
                 <p class="uppercase"><strong>color de piel:</strong></p>
             </td>
             <td>
-                <p class="uppercase"> 16/07/2015</p>
+                <p class="uppercase">{{ $data['color_piel'] }}</p>
             </td>
           </tr>
           <tr>
@@ -216,13 +250,13 @@
                 <p class="uppercase"><strong>contextura:</strong></p>
             </td>
             <td>
-                <p class="uppercase">adwdw</p>
+                <p class="uppercase">{{ $data['contextura'] }}</p>
             </td>
             <td>
                 <p class="uppercase"><strong>tipo de cabello:</strong></p>
             </td>
             <td>
-                <p class="uppercase"> 16/07/2015</p>
+                <p class="uppercase">{{ $data['tipo_cabello'] }}</p>
             </td>
           </tr>
         </table>
@@ -232,7 +266,10 @@
                 <p class="uppercase"><strong>comentario:</strong></p>
             </td>
             <td>
-                <p class="uppercase" style="padding: 10px">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex porro autem, ratione reprehenderit velit beatae odio laudantium quae, esse quibusdam molestias. Culpa nam eveniet, praesentium numquam est harum eligendi voluptates.</p>
+
+                <p class="uppercase" style="padding: 10px">
+                    {{ $data['comentarios']}}
+                </p>
             </td>
           </tr>
         </table>
@@ -240,8 +277,8 @@
           <tr>
             <td>
                 <p class="uppercase"><strong>Página: (2/2)</strong></p>
-            </td>lass="uppercase">(2 de 2)</p>
             </td>
+            </td class="uppercase">(2 de 2)</p></td>
           </tr>
         </table>
     </body>

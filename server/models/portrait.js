@@ -34,7 +34,7 @@ module.exports = (sequelize, Sequelize) => {
             f_caso: {
                 type: Sequelize.DATE
             },
-            agraviado: { // FOREIGN KEY
+            agraviado: {
                 type: Sequelize.STRING,
             },
             f_rh: {

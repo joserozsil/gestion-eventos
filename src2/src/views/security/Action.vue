@@ -38,7 +38,7 @@ export default {
   props: {
     caption: {
       type: String,
-      default: 'Historial de Alertas'
+      default: 'Historial de Acciones'
     },
     hover: {
       type: Boolean,
