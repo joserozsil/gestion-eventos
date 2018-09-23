@@ -67,7 +67,7 @@ const Action = () => import('@/views/security/Action')
 // Act
 const Act = () => import('@/views/act/Act')
 const ActEdit = () => import('@/views/act/editAct')
-
+const ActDetail = () => import('@/views/act/detailAct')
 
 // Reception
 const Reception = () => import('@/views/reception/Reception')
@@ -188,6 +188,11 @@ export default new Router({
               path: 'modificar/:id',
               component: ActEdit,
               name: 'editAct'
+            },
+            {
+              path: 'detalles/:id',
+              component: ActDetail,
+              name: 'detailAct'
             }
           ]
         },

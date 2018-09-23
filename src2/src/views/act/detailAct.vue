@@ -5,7 +5,7 @@
         <!-- datos generales -->
         <b-card>
           <div slot="header">
-            <strong>Modificar Cronología</strong>
+            <strong>Detalles de Cronología</strong>
           </div>
           <!-- primer encabezado -->
           <b-row>
@@ -118,6 +118,7 @@
                 label="Dependencia"
                 laber-for="dependencia2"
                 :horizontal="false">
+                
                 <b-form-input v-model="port.dependencia2" type="text" id="f_caso"></b-form-input>
               </b-form-group>
             </b-col>
@@ -398,13 +399,6 @@
                   :style="{ backgroundImage: 'url(' + image + ')', width: '100%', height: '300px' }"
                 ></div>
               </div>
-              <vue-dropzone
-                v-on:vdropzone-success="reloadImages"
-                v-on:vdropzone-sending="sendingEvent"
-                ref="myVueDropzone" 
-                id="dropzone" 
-                :options="dropzoneOptions">
-              </vue-dropzone>
             </b-col>
           </b-row>
         </b-card>
@@ -452,27 +446,11 @@
         <!-- acciones -->
         <div class="form-actions padding">
           <b-form-group>
-            <b-form-radio-group @change="onChangeStatus()" v-model="receptionData.estado" name="radioSubComponent">
+            <b-form-radio-group v-model="receptionData.estado" name="radioSubComponent">
               <b-form-radio value="COMPLETADO">Completado</b-form-radio>
               <b-form-radio value="EN_PROCESO">En Proceso</b-form-radio>
             </b-form-radio-group>
           </b-form-group>
-          <b-button 
-            v-if="isNew" 
-            @click="storePortrait()" 
-            class="mr" 
-            type="submit" 
-            variant="primary">
-            Crear
-          </b-button>
-          <b-button 
-            v-if="!isNew" 
-            @click="updatePortrait()" 
-            class="mr" 
-            type="submit" 
-            variant="primary">
-            Actualizar
-          </b-button>
           <b-button  @click="$router.go(-1)" class="mr" type="button" variant="secondary">
             Cancelar
           </b-button>
@@ -527,7 +505,6 @@ export default {
       } else {
         this.isNew = false
         this.port = resp.data.data
-
         this.port.Evidencium.Imagens.forEach(element => {
           var url = `${ settings.API_IMAGE}/${element.nombre_archivo}`
           this.images.push(url)

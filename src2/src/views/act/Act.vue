@@ -42,8 +42,8 @@
           </template>
           <template slot="acción" slot-scope="data">
             <b-button @click="generateReport(data.item.id)" variant="primary" class="btn-pill">Reporte</b-button>
-            <b-button variant="primary" class="btn-pill">Detalles</b-button>
-            <b-button variant="success" class="btn-pill">Actualizar</b-button>
+            <b-button @click="goToDetail(data.item.id)" variant="primary" class="btn-pill">Detalles</b-button>
+            <b-button @click="goToEdit(data.item.id)" variant="success" class="btn-pill">Actualizar</b-button>
           </template>
         </b-table>
         <nav>
@@ -67,7 +67,7 @@ export default {
   props: {
     caption: {
       type: String,
-      default: 'Users'
+      default: 'Lista de Retratos Realizados'
     },
     hover: {
       type: Boolean,
@@ -135,9 +135,14 @@ export default {
 
       axios.post(`${settings.API_REPORT}/portraits`, { data })
       .then(resp => {
-        console.dir(resp)
         window.open(settings.RENDER_REPORT + '/' + resp.data, "_blank")
       })
+    },
+    goToEdit(id) {
+      this.$router.push({ name: 'editAct', params: { id } })
+    },
+    goToDetail(id) {
+      this.$router.push({ name: 'detailAct', params: { id } })
     }
   }
 }

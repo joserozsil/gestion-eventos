@@ -89,7 +89,6 @@ export default {
 
           })
 
-
           this.renderChart({
             labels: ['Ene', 'Feb', 'Marz', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
             datasets: [
