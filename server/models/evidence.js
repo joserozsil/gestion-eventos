@@ -66,6 +66,14 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: "evidencia_id"
         })
 
+        models.Evidencia.hasOne(models.Arma,{
+            foreignKey: "evidencia_id"
+        })
+
+        models.Evidencia.hasOne(models.Ropa,{
+            foreignKey: "evidencia_id"
+        })
+
         models.Evidencia.belongsTo(models.Usuario,{
             onDelete: "CASCADE",
             allowNull: false

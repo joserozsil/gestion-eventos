@@ -10,7 +10,9 @@ import evidenceController from '../controllers/evidence'
 import chronologyController from '../controllers/chronology'
 import historyController from '../controllers/history'
 import portraitController from '../controllers/portrait'
+import armController from '../controllers/arm'
 import evidencePortraitController from '../controllers/evidencePortrait'
+import evidenceArmController from '../controllers/evidenceArm'
 import pictureController from '../controllers/picture'
 import tokenController from '../controllers/token'
 
@@ -49,7 +51,13 @@ api.get('/portraits/:id', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_HECHOS']), por
 api.post('/portraits', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_HECHOS']), portraitController.store)
 api.put('/portraits/:id', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_HECHOS']), portraitController.update)
 
+api.get('/arms', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_BALISTICA']), armController.index)
+api.get('/arms/:id', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_BALISTICA']), armController.show)
+api.post('/arms', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_BALISTICA']), armController.store)
+api.put('/arms/:id', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_BALISTICA']), armController.update)
+
 api.get('/evidences/:id/portraits', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_HECHOS']), evidencePortraitController.index)
+api.get('/evidences/:id/arms', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_BALISTICA']), evidenceArmController.index)
 
 api.post('/pictures', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_HECHOS', 'OPERADOR_BALISTICA', 'OPERADOR_LABORATORIO']), file.single('file'), pictureController.store)
 

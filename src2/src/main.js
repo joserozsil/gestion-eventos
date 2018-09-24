@@ -19,9 +19,6 @@ global.axios = axios
 
 Vue.use(Vuex)
 
-// todo
-// cssVars()
-
 Vue.use(BootstrapVue)
 
 /* eslint-disable no-new */

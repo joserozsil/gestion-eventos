@@ -29,7 +29,9 @@
             <strong>{{data.item.exp}}</strong>
           </template>
           <template slot="dibujante" slot-scope="data">
-            <strong>{{data.item.Usuario.nombre}} {{data.item.Usuario.apellido}}</strong>
+            <strong v-if="data.item.Usuario && data.item.nombre">
+              {{data.item.Usuario.nombre}} {{data.item.Usuario.apellido}}
+            </strong>
           </template>
           <template slot="usuario" slot-scope="data">
             <strong>{{data.item.username}}{{ getUsername(data.item.name) }}</strong>

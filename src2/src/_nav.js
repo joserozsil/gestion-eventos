@@ -54,11 +54,6 @@ export default {
           name: 'Consultar',
           url: '/balistica/armas-de-fuego',
           icon: 'icon-puzzle'
-        },
-        {
-          name: 'Armas de Fuego',
-          url: '/balistica/armas-de-fuego',
-          icon: 'icon-puzzle'
         }
       ]
     },
@@ -72,11 +67,6 @@ export default {
           name: 'Consultar',
           url: '/laboratorio/prendas-de-vestir',
           icon: 'icon-puzzle'
-        },
-        {
-          name: 'Prendas de Vestir',
-          url: '/laboratorio/prendas-de-vestir',
-          icon: 'icon-puzzle'
         }
       ]
     },
@@ -88,11 +78,6 @@ export default {
       children: [
         {
           name: 'Consultar',
-          url: '/reconstruccion-de-hechos/consultar',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Retratado Hablado',
           url: '/reconstruccion-de-hechos/consultar',
           icon: 'icon-puzzle'
         }

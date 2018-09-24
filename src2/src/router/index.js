@@ -78,6 +78,8 @@ const Chronology = () => import('@/views/chronology/Chronology')
 
 // ballistic
 const Arm = () => import('@/views/ballistic/Arm')
+const ArmEdit = () => import('@/views/ballistic/editArm')
+const detailArm = () => import('@/views/ballistic/detailArm')
 
 // laboratory
 const Clothes = () => import('@/views/laboratory/Clothes')
@@ -240,7 +242,17 @@ export default new Router({
             {
               path: 'armas-de-fuego',
               component: Arm,
-            }
+            },
+            {
+              path: 'armas-de-fuego/modificar/:id',
+              component: ArmEdit,
+              name: 'editArm'
+            },
+            {
+              path: 'armas-de-fuego/detalles/:id',
+              component: detailArm,
+              name: 'detailArm'
+            } 
           ]
         },
         {

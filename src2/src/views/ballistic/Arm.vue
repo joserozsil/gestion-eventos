@@ -3,29 +3,29 @@
     <b-col cols="12" xl="12">
       <transition name="slide">
       <b-card :header="caption">
-        <b-table :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" @row-clicked="rowClicked">
+        <b-table :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage">
           <template slot="imagen" slot-scope="data">
             <b-navbar variant="faded" type="light">
               <b-navbar-brand tag="h1" href="#">
-                <img :src="data.item.photo" width="40px" class="img-avatar d-inline-block align-top" alt="BV">
+                <img :src="urlImage + '/' + data.item.Evidencium.Imagens[0].nombre_archivo" width="60px" class="img-avatar d-inline-block align-top" alt="BV">
               </b-navbar-brand>
             </b-navbar>
           </template>
           <template slot="tipo" slot-scope="data">
-            <strong>{{data.item.type}}</strong>
+            {{data.item.tipo}}
           </template>
-          <template slot="usuario" slot-scope="data">
-            <strong>{{data.item.username}}{{getUsername(data.item.name)}}</strong>
-          </template>
-          <template slot="descripción" slot-scope="data">
-            <strong>{{data.item.description}}</strong>
+          <template slot="color" slot-scope="data">
+            {{data.item.color}}
           </template>
           <template slot="fecha" slot-scope="data">
-            <b-badge >{{data.item.registered}}</b-badge>
+            <b-badge>{{data.item.created_at}}</b-badge>
           </template>
           <template slot="acción" slot-scope="data">
-            <b-button variant="success" class="btn-pill">Actualizar</b-button>
+            <b-button @click="generateReport(data.item.id)" variant="primary" class="btn-pill">Reporte</b-button>
+            <b-button @click="goToDetail(data.item.id)" variant="info" class="btn-pill">Detalles</b-button>
+            <b-button @click="goToUpdate(data.item.id)" variant="success" class="btn-pill">Actualizar</b-button>
           </template>
+          
         </b-table>
         <nav>
           <b-pagination size="sm" :total-rows="getRowCount(items)" :per-page="perPage" v-model="currentPage" prev-text="Prev" next-text="Next" hide-goto-end-buttons/>
@@ -38,6 +38,9 @@
 
 <script>
 import ballisticData from './BallisticData'
+import settings from '../../config'
+import swal from 'sweetalert'
+import store from '../../store/store'
 
 export default {
   name: 'Usuarios',
@@ -69,40 +72,56 @@ export default {
   },
   data: () => {
     return {
-      items: ballisticData.filter((user) => user.id < 42),
+      items: [],
       fields: [
         {key: 'imagen'},
         {key: 'tipo'},
-        {key: 'descripción'},
+        {key: 'color'},
         {key: 'fecha'},
         {key: 'acción'}
       ],
       currentPage: 1,
       perPage: 15,
-      totalRows: 0
+      totalRows: 0,
+      urlImage: settings.API_IMAGE
     }
   },
   computed: {
   },
+  mounted() {
+    axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
+    this.getArms()
+  },
   methods: {
-    getBadge (status) {
-      return status === 'Active' ? 'success'
-        : status === 'Inactive' ? 'secondary'
-          : status === 'Pending' ? 'warning'
-            : status === 'Banned' ? 'danger' : 'primary'
-    },
     getRowCount (items) {
       return items.length
     },
-    userLink (id) {
-      return `users/${id.toString()}`
+    getArms() {
+      axios.get(`${settings.API_URL}/arms?limit=1`)
+      .then(resp => {
+        axios.get(`${settings.API_URL}/arms?limit=${resp.data.total}`)
+        .then(resp => {
+          this.items = resp.data.data.filter(data => data.Evidencium.estado == 'COMPLETADO')
+        })  
+      })
     },
-    rowClicked (item) {
-      const userLink = this.userLink(item.id)
-      this.$router.push({path: userLink})
+    goToUpdate(id) {
+      this.$router.push({ name: 'editArm', params: { id }})
     },
-    getUsername(name){
-      return name.split(' ')[0]
+    goToDetail(id) {
+      this.$router.push({ name: 'detailArm', params: { id }})
+    },
+    generateReport(id) {
+      let data = this.items.filter(data => data.id == id )[0]
+
+      let image = settings.API_IMAGE + '/' + data.Evidencium.Imagens[0].nombre_archivo 
+
+      Object.assign(data, { image })
+
+      axios.post(`${settings.API_REPORT}/arms`, { data })
+      .then(resp => {
+        window.open(settings.RENDER_REPORT + '/' + resp.data, "_blank")
+      })
     }
 
   }

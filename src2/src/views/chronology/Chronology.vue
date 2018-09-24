@@ -158,7 +158,7 @@ export default {
     goToEdit(departament, id) {
 
       if(departament == 'BALISTICA') {
-        this.$router.push({ name: 'editAct'})
+        this.$router.push({ name: 'editArm', params: { id }})
       }
 
       if(departament == 'LABORATORIO') {
