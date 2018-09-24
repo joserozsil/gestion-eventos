@@ -1,6 +1,6 @@
 <template>
   <b-row>
-    <b-col md="4" sm="12">
+    <b-col md="4" sm="12" class="ml-auto">
       <b-form-group 
         description="Ej: 29/04/2018"
         label="Buscar por Fecha"
@@ -37,6 +37,11 @@
       </b-card>
       </transition>
     </b-col>
+    <b-col sm="12">
+       <b-button @click="generateReport()" variant="success" class="btn-pill">
+          Generar Reporte
+        </b-button>
+    </b-col>
   </b-row>
 </template>
 
@@ -44,7 +49,7 @@
 import receptionData from './ReceptionData'
 import settings from '../../config'
 import moment from 'moment'
-
+moment.locale('es')
 export default {
   name: 'Usuarios',
   props: {
@@ -133,6 +138,26 @@ export default {
         .then(resp => {
           this.items = resp.data.data
         })
+      })
+    },
+    generateReport() {
+      const date = `Ciudad Guayana, ${moment(this.date, 'YYYY-MM-DD').format('dddd Do MMMM  YYYY')}`
+
+      let copy = this.items
+
+      copy.forEach(element => {
+        element.f_creacion = moment(element.f_creacion).format('h:mm:ss a')
+      })
+
+      const data = {
+        data: copy,
+        date
+      }
+
+      axios.post(`${settings.API_REPORT}/reception`, { data })
+      .then(resp => {
+        this.getChronologies()
+        window.open(settings.RENDER_REPORT + '/' + resp.data, "_blank")
       })
     }
 

@@ -139,6 +139,7 @@ export default {
       .then(resp => {
         window.open(settings.RENDER_REPORT + '/' + resp.data, "_blank")
       })
+      
     },
     goToEdit(id) {
       this.$router.push({ name: 'editAct', params: { id } })

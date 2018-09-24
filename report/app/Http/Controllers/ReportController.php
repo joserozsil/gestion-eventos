@@ -66,6 +66,26 @@ class ReportController extends Controller
 		//return $pdf->stream();
     }
 
+    public function reception(Request $request)
+    {
+        $data = $request->all()['data']['data'];
+        $date = $request->all()['data']['date'];
+        
+    	$view = \View::make('reception', compact('data', 'date'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+
+        $pdf->loadHTML($view);
+
+        $ROUTE_FILE = 'reception/' . $this->generateRandomString() . '.pdf';
+
+        $pdf->save($ROUTE_FILE);
+
+        return $ROUTE_FILE;
+
+		//return $pdf->stream();
+    }
+
     private function generateRandomString($length = 50) { 
 	    return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length); 
 	}

@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('portraits', 'ReportController@portrait');
 Route::post('arms', 'ReportController@arm');
 Route::post('clothes', 'ReportController@clothes');
+Route::post('reception', 'ReportController@reception');

@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Retrato Hablado</title>
+        <title>Reporte de Laboratorio</title>
     </head>
     <style>
         body, table, tr, p {
@@ -42,7 +42,7 @@
             </td>
             <td width="75%" >
                 <h3 style="margin: 0" class="uppercase title">Delegación Estadal Bolívar</h3>
-                <p style="margin: 0" class="uppercase">Area de análisis y reconstrucción de hechos</p>
+                <p style="margin: 0" class="uppercase">Area de laboratorio</p>
             </td>
           </tr>
         </table>
