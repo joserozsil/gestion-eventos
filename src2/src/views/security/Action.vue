@@ -17,7 +17,7 @@
             <strong>{{data.item.descripcion}}</strong>
           </template>
           <template slot="fecha" slot-scope="data">
-            <strong>{{data.item.f_creacion}}</strong>
+            <strong>{{data.item.f_creacion | listDate }}</strong>
           </template>
         </b-table>
         <nav>

@@ -12,20 +12,35 @@ module.exports = (sequelize, Sequelize) => {
             },
             usuario: {
                 type: Sequelize.STRING,
-                allowNull: false,
-                unique: true
+                allowNull: {
+                    args: false,
+                    msg: 'El campo usuario es requerido'
+                },
+                len: [4, 24],
+                unique: {
+                    args: true,
+                    msg: 'El campo usuario debe ser único'
+                }
             },
             cedula: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
-                unique: true,
+                allowNull: {
+                    args: 'El campo cédula es requerido'
+                },
+                unique: {
+                    args: true,
+                    msg: 'El campo cédula debe ser único'
+                },
                 validate: {
                     not: {
                         args: ["[a-z]", 'i'],
                         msg: "La cédula de identidad solo puede contener valores numéricos"
                     },
                     notEmpty: true,
-                    len: [7, 8],
+                    len: {
+                        args: [7, 8],
+                        msg: "La longitud de la cédula es invalida"
+                    },
                     isNumeric: true,
                     min: {
                         args: 4000000,
@@ -39,7 +54,10 @@ module.exports = (sequelize, Sequelize) => {
             },
             nombre: {
                 type: Sequelize.STRING,
-                allowNull: false,
+                allowNull: {
+                    args: false,
+                    msg: 'El campo nombre es requerido'
+                },
                 validate: {
                     is: {
                         args: /^[a-zA-Z\s]*$/,
@@ -57,7 +75,10 @@ module.exports = (sequelize, Sequelize) => {
             },
             apellido: {
                 type: Sequelize.STRING,
-                allowNull: false,
+                allowNull: {
+                    args: false,
+                    msg: 'El campo apellido es requerido'
+                },
                 validate: {
                     is: {
                         args: /^[a-zA-Z\s]*$/,
@@ -105,7 +126,10 @@ module.exports = (sequelize, Sequelize) => {
             },
             contraseña: {
                 type: Sequelize.STRING,
-                allowNull: false,
+                allowNull: {
+                    args: false,
+                    msg: 'El campo contraseña es requerido'
+                },
                 validate: {
                     notEmpty: true,
                     len: {

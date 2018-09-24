@@ -73,6 +73,11 @@ const operations = {
                 message: "El rol es requerido"
             })
         }
+        if(!req.body.cedula) {
+            return res.status(400).json({
+                message: "La cedula es requerido"
+            })
+        }
         try {
             Model.Usuario.create(req.body)
             .then(result => {

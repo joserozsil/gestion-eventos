@@ -2,7 +2,6 @@
   <b-row>
     <b-col md="4" sm="12" class="ml-auto">
       <b-form-group 
-        description="Ej: 29/04/2018"
         label="Buscar por Fecha"
         laber-for="date"
         :horizontal="false">
@@ -12,7 +11,10 @@
     <b-col cols="12" xl="12">
       <transition name="slide">
       <b-card :header="caption">
-        <b-table :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" @row-clicked="rowClicked">
+        <b-table :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage">
+          <template slot="id" slot-scope="data">
+            <strong>{{data.item.id}}</strong>
+          </template>
           <template slot="tipo" slot-scope="data">
             <strong>{{data.item.tipo_recepcion}}</strong>
           </template>
@@ -22,13 +24,14 @@
             </strong>
           </template>
           <template slot="descripción" slot-scope="data">
-            <strong>{{data.item.descripcion}}</strong>
+            <strong>{{data.item.descripcion | textShort }}</strong>
           </template>
           <template slot="fecha" slot-scope="data">
-            <b-badge >{{data.item.f_creacion}}</b-badge>
+           {{data.item.f_creacion | listDate }}
           </template>
           <template slot="acción" slot-scope="data">
-            <b-button variant="success" class="btn-pill">Actualizar</b-button>
+            <b-button @click="goToEdit(data.item.id)" variant="success" class="btn-pill">Actualizar</b-button>
+            <b-button @click="goToDetail(data.item.id)" variant="primary" class="btn-pill sp-t">Detalles</b-button>
           </template>
         </b-table>
         <nav>
@@ -50,12 +53,13 @@ import receptionData from './ReceptionData'
 import settings from '../../config'
 import moment from 'moment'
 moment.locale('es')
+
 export default {
   name: 'Usuarios',
   props: {
     caption: {
       type: String,
-      default: 'Recepción'
+      default: 'Listado de Recepción'
     },
     hover: {
       type: Boolean,
@@ -82,6 +86,7 @@ export default {
     return {
       items: [],
       fields: [
+        {key: 'id'},
         {key: 'tipo'},
         {key: 'usuario'},
         {key: 'descripción'},
@@ -159,6 +164,13 @@ export default {
         this.getChronologies()
         window.open(settings.RENDER_REPORT + '/' + resp.data, "_blank")
       })
+    },
+    goToEdit(id) {
+      // receptionEdit
+      this.$router.push({ name: 'receptionEdit', params: { id }})
+    },
+    goToDetail(id) {
+      this.$router.push({ name: 'receptionDetail', params: { id }})
     }
 
   }
@@ -168,5 +180,9 @@ export default {
 <style scoped>
 .card-body >>> table > tbody > tr > td {
   cursor: pointer;
+}
+
+.sp-t {
+  margin-top: 0.5em;
 }
 </style>

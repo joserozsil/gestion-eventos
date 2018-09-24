@@ -2,11 +2,10 @@
   <AppHeaderDropdown right no-caret>
     <template slot="header">
       <img
-      src="img/profile.jpg"
+      src="@/assets/profile.jpg"
       class="img-avatar"
       /> 
     </template>
-    
     <template slot="dropdown">
       <b-dropdown-header
         tag="div"
@@ -31,7 +30,7 @@ export default {
     AppHeaderDropdown
   },
   data: () => {
-    return { itemsCount: 42 }
+    return {  }
   },
   methods: {
     logout() {

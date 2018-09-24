@@ -4,37 +4,17 @@
       <b-col sm="6" lg="3">
         <b-card no-body class="bg-primary">
           <b-card-body class="pb-0">
-            <!--
-            <b-dropdown class="float-right" variant="transparent p-0" right>
-              <template slot="button-content">
-                <i class="icon-settings"></i>
-              </template>
-              <b-dropdown-item>Action</b-dropdown-item>
-              <b-dropdown-item>Another action</b-dropdown-item>
-              <b-dropdown-item>Something else here...</b-dropdown-item>
-              <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-            </b-dropdown>
-            -->
             <h4 class="mb-0">{{ userTotal }}</h4>
             <p>Usuarios Registrados</p>
           </b-card-body>
-          <card-line1-chart-example chartId="card-chart-01" class="chart-wrapper px-3" style="height:70px;" :height="70"/>
+          <card-line1-chart-example chartId="card-chart-01" class="chart-wrapper px-3" style="height:70px;" :height="70" :total="userTotal"/>
         </b-card>
       </b-col>
       <b-col sm="6" lg="3">
         <b-card no-body class="bg-info">
           <b-card-body class="pb-0">
-            <b-dropdown class="float-right" variant="transparent p-0" right no-caret>
-              <template slot="button-content">
-                <i class="icon-location-pin"></i>
-              </template>
-              <b-dropdown-item>Action</b-dropdown-item>
-              <b-dropdown-item>Another action</b-dropdown-item>
-              <b-dropdown-item>Something else here...</b-dropdown-item>
-              <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-            </b-dropdown>
             <h4 class="mb-0">{{ chronologyTotal }}</h4>
-            <p>Cronologías Registradas</p>
+            <p>Novedades Registradas</p>
           </b-card-body>
           <card-line2-chart-example chartId="card-chart-02" class="chart-wrapper px-3" style="height:70px;" :height="70"/>
         </b-card>
@@ -42,17 +22,6 @@
       <b-col sm="6" lg="3">
         <b-card no-body class="bg-warning">
           <b-card-body class="pb-0">
-            <!--
-            <b-dropdown class="float-right" variant="transparent p-0" right>
-              <template slot="button-content">
-                <i class="icon-settings"></i>
-              </template>
-              <b-dropdown-item>Action</b-dropdown-item>
-              <b-dropdown-item>Another action</b-dropdown-item>
-              <b-dropdown-item>Something else here...</b-dropdown-item>
-              <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-            </b-dropdown>
-            -->
             <h4 class="mb-0">{{ alertTotal }}</h4>
             <p>Alertas Reportadas</p>
           </b-card-body>
@@ -62,17 +31,6 @@
       <b-col sm="6" lg="3">
         <b-card no-body class="bg-danger">
           <b-card-body class="pb-0">
-            <!--
-            <b-dropdown class="float-right" variant="transparent p-0" right>
-              <template slot="button-content">
-                <i class="icon-settings"></i>
-              </template>
-              <b-dropdown-item>Action</b-dropdown-item>
-              <b-dropdown-item>Another action</b-dropdown-item>
-              <b-dropdown-item>Something else here...</b-dropdown-item>
-              <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-            </b-dropdown>
-            -->
             <h4 class="mb-0">{{ evidenceTotal }}</h4>
             <p>Evidencias registradas</p>
           </b-card-body>
@@ -85,10 +43,10 @@
       <b-row>
         <b-col sm="5">
           <h4 id="traffic" class="card-title mb-0">Evidencias</h4>
-          <div class="small text-muted">Agosto 2018</div>
+          <div class="small text-muted">Última actualización: {{ date }}</div>
         </b-col>
         <b-col sm="7" class="d-none d-md-block">
-          <b-button type="button" variant="primary" class="float-right"><i class="icon-cloud-download"></i></b-button>
+          <!--<b-button type="button" variant="primary" class="float-right"><i class="icon-cloud-download"></i></b-button>-->
         </b-col>
       </b-row>
       <main-chart-example chartId="main-chart-01" class="chart-wrapper" style="height:300px;margin-top:40px;" height="300"></main-chart-example>
@@ -127,6 +85,7 @@ import MainChartExample from './dashboard/MainChartExample'
 import SocialBoxChartExample from './dashboard/SocialBoxChartExample'
 import CalloutChartExample from './dashboard/CalloutChartExample'
 import { Callout } from '@coreui/vue'
+import moment from 'moment'
 
 export default {
   name: 'dashboard',
@@ -151,7 +110,8 @@ export default {
         balistica: 0,
         hechos: 0,
         laboratorio: 0
-      }
+      },
+      date: moment().format('MMMM Do YYYY, h:mm:ss a')
     }
   },
   mounted() {

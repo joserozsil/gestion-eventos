@@ -12,11 +12,11 @@
                   <b-input-group class="mb-3">
                     <b-input-group-prepend>
                       <b-input-group-text><i class="icon-user"></i></b-input-group-text></b-input-group-prepend>
-                      <b-form-input v-model="loginData.usuario" type="text" class="form-control" placeholder="Usuario" autocomplete="username email" />
+                      <b-form-input @keyup.enter="signIn" v-model="loginData.usuario" type="text" class="form-control" placeholder="Usuario" autocomplete="username email" />
                   </b-input-group>
                   <b-input-group class="mb-4">
                     <b-input-group-prepend><b-input-group-text><i class="icon-lock"></i></b-input-group-text></b-input-group-prepend>
-                    <b-form-input @keyup.enter="signIn()" v-model="loginData.contraseña" type="password" class="form-control" placeholder="Contraseña" autocomplete="current-password" />
+                    <b-form-input @keyup.enter="signIn" v-model="loginData.contraseña" type="password" class="form-control" placeholder="Contraseña" autocomplete="current-password" />
                   </b-input-group>
                   <b-row>
                     <b-col cols="6">
@@ -77,17 +77,25 @@
           }
         })
         .catch(error => {
-          swal("¡Atención!", error.response.data.message, "error")
-          this.alertCount++
-          if(this.alertCount >= 2) {
-            this.storeAlert()
+          if(error.response) {
+            swal("¡Atención!", error.response.data.message, "error")
+            this.alertCount++
+            if(this.alertCount >= 2) {
+              this.storeAlert()
+            }
+          } else {
+            swal("¡Atención!", 'No se ha podido establecer conexión con el servidor', "error")
           }
+          
         })
       },
       storeAlert() {
         axios.post(settings.API_URL + '/alerts', { ip: this.ip,usuario: this.loginData.usuario })
         .then(resp => {
           this.alertCount = 0
+        })
+        .catch(error => {
+          console.error(error)
         })
       },
       getUserIP(onNewIP) {

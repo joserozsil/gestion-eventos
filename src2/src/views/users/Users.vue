@@ -130,6 +130,11 @@ export default {
       .then((willDelete) => {
         if (willDelete) {
           axios.delete(`${settings.API_URL}/users/${idUser}`).then(resp => {
+            swal({
+              title: "Listo",
+              text: "Usuario suspendido correctamente",
+              icon: "success"
+            })
             this.getUsers()
           })
         } 

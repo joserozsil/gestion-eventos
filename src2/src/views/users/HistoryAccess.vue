@@ -14,7 +14,7 @@
             <strong>{{data.item.Usuario.nombre}} {{data.item.Usuario.apellido}}</strong>
           </template>
           <template slot="fecha" slot-scope="data">
-            <b-badge >{{data.item.f_creacion }}</b-badge>
+            {{data.item.f_creacion | listDate }}
           </template>
           <template slot="rol" slot-scope="data">
             <b-badge >{{data.item.Usuario.rol }}</b-badge>

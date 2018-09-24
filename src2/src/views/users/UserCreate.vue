@@ -148,14 +148,24 @@ export default {
             icon: "error",
           })
         }
-        
-        error.response.data.errors.forEach(element => {
+
+        if( error.response.data.errors) {
           swal({
             title: `Atención`,
-            text: `${ element.message }`,
+            text: `${  error.response.data.errors[0].message }`,
             icon: "error",
           })
-        })
+        }
+
+        if(error.response.data.original.sqlMessage) {
+          swal({
+            title: `Atención`,
+            text: `${  error.response.data.original.sqlMessage }`,
+            icon: "error",
+          })
+        }
+        
+
       })
     }
   }

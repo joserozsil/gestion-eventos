@@ -72,6 +72,8 @@ const ActDetail = () => import('@/views/act/detailAct')
 // Reception
 const Reception = () => import('@/views/reception/Reception')
 const ReceptionCreate = () => import('@/views/reception/ReceptionCreate')
+const ReceptionEdit = () => import('@/views/reception/ReceptionEdit')
+const ReceptionDetail = () => import('@/views/reception/ReceptionDetail')
 
 // cronologias
 const Chronology = () => import('@/views/chronology/Chronology')
@@ -221,10 +223,21 @@ export default new Router({
             {
               path: 'consultar',
               component: Reception,
+              name: 'listReception'
             },
             {
               path: 'crear',
               component: ReceptionCreate,
+            },
+            {
+              path: 'editar/:id',
+              component: ReceptionEdit,
+              name: 'receptionEdit'
+            },
+            {
+              path: 'detalles/:id',
+              component: ReceptionDetail,
+              name: 'receptionDetail'
             }
           ]
         },

@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import ballisticData from './BallisticData'
 import settings from '../../config'
 import swal from 'sweetalert'
 import store from '../../store/store'

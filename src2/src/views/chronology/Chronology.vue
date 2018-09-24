@@ -14,6 +14,9 @@
           :fields="fields" 
           :current-page="currentPage" 
           :per-page="perPage">
+          <template slot="id" slot-scope="data">
+            <strong>{{data.item.id}}</strong>
+          </template>
           <template slot="tipo" slot-scope="data">
             <strong>{{data.item.tipo_recepcion}}</strong>
           </template>
@@ -24,10 +27,10 @@
             <strong>{{data.item.departamento}}</strong>
           </template>
           <template slot="descripción" slot-scope="data">
-            <strong>{{data.item.descripcion}}</strong>
+            <strong>{{ data.item.descripcion | textShort }}</strong>
           </template>
           <template slot="fecha" slot-scope="data">
-            <b-badge >{{data.item.f_creacion}}</b-badge>
+            {{data.item.f_creacion | listDate}}
           </template>
           <template slot="estado" slot-scope="data">
             <b-badge
@@ -42,6 +45,13 @@
               class="btn-pill">
               Actualizar
             </b-button>
+            <b-button
+              @click="goToEditReception(data.item.id)"
+              v-if="user.rol == 'ADMINISTRADOR' || user.rol == 'RECEPCION'"
+              variant="success" 
+              class="btn-pill">
+              Editar
+            </b-button>
           </template>
         </b-table>
         <nav>
@@ -54,7 +64,6 @@
 </template>
 
 <script>
-import receptionData from './ReceptionData'
 import settings from '../../config'
 
 export default {
@@ -62,7 +71,7 @@ export default {
   props: {
     caption: {
       type: String,
-      default: 'Cronologías'
+      default: 'Listado de Cronologías'
     },
     hover: {
       type: Boolean,
@@ -89,6 +98,7 @@ export default {
     return {
       items: [],
       fields: [
+        {key: 'id'},
         {key: 'tipo'},
         {key: 'usuario'},
         {key: 'descripción'},
@@ -170,6 +180,9 @@ export default {
       }
 
       return false
+    },
+    goToEditReception(id) {
+      this.$router.push({ name: 'receptionEdit', params: { id } })
     }
   }
 }

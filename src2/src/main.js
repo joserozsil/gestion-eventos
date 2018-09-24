@@ -9,6 +9,9 @@ import BootstrapVue from 'bootstrap-vue'
 import App from './App'
 import router from './router'
 
+import date from './pipes/date'
+import text from './pipes/text'
+
 import Vuex from 'vuex'
 
 import axios from 'axios'
@@ -20,6 +23,10 @@ global.axios = axios
 Vue.use(Vuex)
 
 Vue.use(BootstrapVue)
+
+Vue.filter('listDate', date.listDate)
+Vue.filter('textShort', text.short)
+
 
 /* eslint-disable no-new */
 new Vue({
