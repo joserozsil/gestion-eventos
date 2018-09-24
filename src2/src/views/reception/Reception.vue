@@ -1,5 +1,14 @@
 <template>
   <b-row>
+    <b-col md="4" sm="12">
+      <b-form-group 
+        description="Ej: 29/04/2018"
+        label="Buscar por Fecha"
+        laber-for="date"
+        :horizontal="false">
+        <b-form-input v-model="date" type="date" placeholder="Buscar por fecha"></b-form-input>
+      </b-form-group>
+    </b-col>
     <b-col cols="12" xl="12">
       <transition name="slide">
       <b-card :header="caption">
@@ -34,6 +43,8 @@
 <script>
 import receptionData from './ReceptionData'
 import settings from '../../config'
+import moment from 'moment'
+
 export default {
   name: 'Usuarios',
   props: {
@@ -74,10 +85,22 @@ export default {
       ],
       currentPage: 1,
       perPage: 15,
-      totalRows: 0
+      totalRows: 0,
+      date: moment().format('YYYY-MM-DD')
     }
   },
   computed: {
+  },
+  watch: {
+    date() {
+     axios.get(`${settings.API_URL}/chronologies?limit=1`)
+      .then(resp => {
+        axios.get(`${settings.API_URL}/chronologies?limit=${resp.total}&DATE=${this.date}`)
+        .then(resp => {
+          this.items = resp.data.data
+        })
+      })
+    }
   },
   mounted() {
     axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
@@ -106,7 +129,7 @@ export default {
     getChronologies() {
       axios.get(`${settings.API_URL}/chronologies?limit=1`)
       .then(resp => {
-        axios.get(`${settings.API_URL}/chronologies?limit=${resp.total}`)
+        axios.get(`${settings.API_URL}/chronologies?limit=${resp.total}&DATE=${this.date}`)
         .then(resp => {
           this.items = resp.data.data
         })

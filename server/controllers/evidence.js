@@ -3,22 +3,34 @@
 import Sequelize from 'sequelize'
 import Model from '../models'
 import _ from 'underscore'
+import moment  from 'moment';
 const Op = Sequelize.Op
 
 const operations = {
     index: (req, res, next) => {
         try {
+            const finding = {
+                f_eliminacion: null,
+                departamento: {
+                    [Op.ne]: 'RECEPCION'
+                }
+            }
+
+            if (req.query.DATE != undefined && req.query.DATE) {
+                Object.assign(finding, {
+                    f_creacion: {
+                        [Op.lt]: moment(req.query.DATE, 'DD/MM/YYYY').add(1, 'day').toDate(),
+                        [Op.gt]:moment(req.query.DATE, 'DD/MM/YYYY').subtract(1, 'day').toDate(),
+                    }
+                })
+            }
+
             Model.Evidencia.findAndCountAll({
                 attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion', 'usuario_id', 'estado'],
                 include: [{
                     model: Model.Usuario
                 }],
-                where: {
-                    f_eliminacion: null,
-                    departamento: {
-                        [Op.ne]: 'RECEPCION'
-                    }
-                },
+                where: finding,
                 order: [[ 'f_creacion', 'DESC' ]],
                 offset: Number(req.query.offset) || 0,
                 limit: Number(req.query.limit) || 15
