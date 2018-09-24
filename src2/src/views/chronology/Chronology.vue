@@ -162,7 +162,7 @@ export default {
       }
 
       if(departament == 'LABORATORIO') {
-        this.$router.push({ name: 'editAct'})
+        this.$router.push({ name: 'editClothes', params: { id }})
       }
 
       if(departament == 'HECHOS') {

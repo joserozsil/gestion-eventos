@@ -46,6 +46,26 @@ class ReportController extends Controller
 		//return $pdf->stream();
     }
 
+    public function clothes(Request $request)
+    {
+
+    	$data = $request->all()['data'];
+
+    	$view = \View::make('clothes', compact('data'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+
+        $pdf->loadHTML($view);
+
+        $ROUTE_FILE = 'clothes/' . $this->generateRandomString() . '.pdf';
+
+        $pdf->save($ROUTE_FILE);
+
+        return $ROUTE_FILE;
+
+		//return $pdf->stream();
+    }
+
     private function generateRandomString($length = 50) { 
 	    return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length); 
 	}

@@ -44,8 +44,8 @@
           </template>
           <template slot="acción" slot-scope="data">
             <b-button @click="generateReport(data.item.id)" variant="primary" class="btn-pill">Reporte</b-button>
-            <b-button @click="goToDetail(data.item.id)" variant="primary" class="btn-pill">Detalles</b-button>
-            <b-button @click="goToEdit(data.item.id)" variant="success" class="btn-pill">Actualizar</b-button>
+            <b-button @click="goToDetail(data.item.evidencia_id)" variant="primary" class="btn-pill">Detalles</b-button>
+            <b-button @click="goToEdit(data.item.evidencia_id)" variant="success" class="btn-pill">Actualizar</b-button>
           </template>
         </b-table>
         <nav>

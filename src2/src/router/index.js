@@ -83,6 +83,8 @@ const detailArm = () => import('@/views/ballistic/detailArm')
 
 // laboratory
 const Clothes = () => import('@/views/laboratory/Clothes')
+const editClothes = () => import('@/views/laboratory/editClothes')
+const detailClothes = () => import('@/views/laboratory/detailClothes')
 
 Vue.use(Router)
 
@@ -171,6 +173,16 @@ export default new Router({
             {
               path: 'prendas-de-vestir',
               component: Clothes,
+            },
+            {
+              path: 'prendas-de-vestir/modificar/:id',
+              component: editClothes,
+              name: 'editClothes'
+            },
+            {
+              path: 'prendas-de-vestir/detalles/:id',
+              component: detailClothes,
+              name: 'detailClothes'
             }
           ]
         },
