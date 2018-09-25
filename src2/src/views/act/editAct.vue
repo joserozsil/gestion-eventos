@@ -92,9 +92,9 @@
                 laber-for="dibujante"
                 :horizontal="false">
                 <select v-if="users.length" v-model="port.dibujante" class="form-control">
-                  <option v-for="(user, index) in users" :value="user.id">
+                  <option v-for="(user, index) in users" :value="user.id" v-if="user.rol === 'OPERADOR_HECHOS'">
                     <template v-if="user.nombre && user.apellido && user.rol">
-                      {{ user.nombre }} {{ user.apellido }} - {{ user.rol }}
+                      {{ user.nombre }} {{ user.apellido }} - {{ user.rol }} 
                     </template>
                   </option>
                 </select>

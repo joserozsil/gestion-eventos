@@ -33,7 +33,7 @@
           <b-row>
             <b-col sm="6">
               <b-form-group
-                description="Ej: Delegación Estadal Bolívar"
+                description="Ej: Armas Largas"
                 label="Tipo"
                 laber-for="tipo"
                 :horizontal="false">
@@ -42,7 +42,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="Ej: 10"
+                description="Ej: Negro"
                 label="Color"
                 laber-for="color"
                 :horizontal="false">
@@ -51,7 +51,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="Ej: 19/07/2018"
+                description="Ej: 9mm"
                 label="Calibre"
                 laber-for="calibre"
                 :horizontal="false">
@@ -60,7 +60,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="Ej: Sub Delegación"
+                description="Ej: 20cm"
                 label="Longitud de Cañon:"
                 laber-for="longitud_cañon"
                 :horizontal="false">
@@ -69,7 +69,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="Ej: 19/07/2018"
+                description="Ej: 367mm"
                 label="Dimensiones"
                 laber-for="dimensiones"
                 :horizontal="false">
@@ -78,7 +78,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="Ej: José Rodríguez"
+                description="Ej: 1kg"
                 label="Peso"
                 laber-for="peso"
                 :horizontal="false">
@@ -87,7 +87,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="Ej: José Rodríguez"
+                description="Ej: 1kg"
                 label="Peso Cargador"
                 laber-for="peso_cargador"
                 :horizontal="false">
@@ -96,7 +96,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="Ej: José Rodríguez"
+                description="Ej: Abierta"
                 label="Miras"
                 laber-for="miras"
                 :horizontal="false">
@@ -108,17 +108,16 @@
           <b-row>
             <b-col sm="6">
               <b-form-group
-                description="Ej: Sub Delegación"
+                description="Ej: 6 balas"
                 label="Capacidad Cargador"
                 laber-for="capacidad_cargador"
                 :horizontal="false">
-                
-                <b-form-input v-model="port.capacidad_cargador" type="text" id="capacidad_cargador"></b-form-input>
+                <b-form-input v-model="port.capacidad_cargador" type="number" id="capacidad_cargador"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="Ej: Brigada contra Robo y Hurto"
+                description="Ej: Automático"
                 label="Disparador"
                 laber-for="disparador"
                 :horizontal="false">
@@ -158,13 +157,6 @@
                   :style="{ backgroundImage: 'url(' + image + ')', width: '100%', height: '300px' }"
                 ></div>
               </div>
-              <vue-dropzone
-                v-on:vdropzone-success="reloadImages"
-                v-on:vdropzone-sending="sendingEvent"
-                ref="myVueDropzone" 
-                id="dropzone" 
-                :options="dropzoneOptions">
-              </vue-dropzone>
             </b-col>
           </b-row>
         </b-card>
@@ -211,14 +203,6 @@
 
         <!-- acciones -->
         <div class="form-actions padding">
-          <b-button 
-            v-if="isNew" 
-            @click="storeArm()" 
-            class="mr" 
-            type="submit" 
-            variant="primary">
-            Crear
-          </b-button>
           <b-button  @click="$router.go(-1)" class="mr" type="button" variant="secondary">
             Cancelar
           </b-button>
@@ -273,7 +257,15 @@ export default {
         this.isNew = true
       } else {
         this.isNew = false
+
+        const clise = resp.data.data.clise.split('-')[1]
+        const exp = resp.data.data.exp.split('-')[3]
+
         this.port = resp.data.data
+
+        this.port.clise = clise
+        this.port.exp = exp
+
         this.port.Evidencium.Imagens.forEach(element => {
           var url = `${ settings.API_IMAGE}/${element.nombre_archivo}`
           this.images.push(url)
@@ -296,6 +288,9 @@ export default {
     },
     storeArm() {
       Object.assign(this.port, { evidencia_id: this.$route.params.id})
+       Object.assign(this.port, { clise: `CC-${this.port.clise}`})
+      Object.assign(this.port, { exp: `K-18-0071-${this.port.exp}`})
+
       axios.post(`${settings.API_URL}/arms`, this.port)
       .then(resp => {
         swal({
@@ -332,6 +327,9 @@ export default {
       })
     },
     updateArm() {
+      Object.assign(this.port, { clise: `CC-${this.port.clise}`})
+      Object.assign(this.port, { exp: `K-18-0071-${this.port.exp}`})
+
       axios.put(`${settings.API_URL}/arms/${this.port.id}`, this.port)
       .then(resp => {
         swal({

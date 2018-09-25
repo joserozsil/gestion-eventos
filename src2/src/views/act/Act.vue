@@ -132,7 +132,7 @@ export default {
       let image = settings.API_IMAGE + '/' + data.Evidencium.Imagens[0].nombre_archivo 
 
       Object.assign(data, { image })
-
+      
       axios.post(`${settings.API_REPORT}/portraits`, { data })
       .then(resp => {
         window.open(settings.RENDER_REPORT + '/' + resp.data, "_blank")

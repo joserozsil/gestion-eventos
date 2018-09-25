@@ -11,20 +11,20 @@
           <b-row>
             <b-col sm="6">
               <b-form-group
-                description="CC - 72433295"
+                :description="`CC-`+port.clise"
                 label="Clise"
                 laber-for="clise"
                 :horizontal="false">
-                <b-form-input v-model="port.clise" type="text" id="clise"></b-form-input>
+                <b-form-input :disabled="receptionData.estado === 'COMPLETADO'" v-model="port.clise" type="number" id="clise"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="K-18-0071-008000"
+                :description="`K-18-0071-`+port.exp"
                 label="Exp"
                 laber-for="exp"
                 :horizontal="false">
-                <b-form-input v-model="port.exp" type="text" id="exp"></b-form-input>
+                <b-form-input :disabled="receptionData.estado === 'COMPLETADO'" v-model="port.exp" type="number" id="exp"></b-form-input>
               </b-form-group>
             </b-col>
           </b-row>
@@ -180,13 +180,6 @@
 
         <!-- acciones -->
         <div class="form-actions padding">
-          <b-form-group>
-            <b-form-radio-group @change="onChangeStatus()" v-model="receptionData.estado" name="radioSubComponent">
-              <b-form-radio value="COMPLETADO">Completado</b-form-radio>
-              <b-form-radio value="EN_PROCESO">En Proceso</b-form-radio>
-            </b-form-radio-group>
-            <b-form-select sm="4" v-model="selected" :options="options" class="mb-3" />
-          </b-form-group>
           <b-button 
             v-if="isNew" 
             @click="storeClothes()" 
@@ -206,6 +199,10 @@
           <b-button  @click="$router.go(-1)" class="mr" type="button" variant="secondary">
             Cancelar
           </b-button>
+          <b-button v-if="receptionData.estado === 'EN_PROCESO'" :disabled="receptionData === 'COMPLETADO'"  @click="onChangeStatus()" class="mr" type="button" variant="primary">
+            Marcar Como Procesada
+          </b-button>
+          Estado: {{ receptionData.estado }}
         </div>
         <!--/ acciones -->
       </b-col>
@@ -256,7 +253,13 @@ export default {
         this.isNew = true
       } else {
         this.isNew = false
+        const clise = resp.data.data.clise.split('-')[1]
+        const exp = resp.data.data.exp.split('-')[3]
+
         this.port = resp.data.data
+        this.port.clise = clise
+        this.port.exp = exp
+
         this.port.Evidencium.Imagens.forEach(element => {
           var url = `${ settings.API_IMAGE}/${element.nombre_archivo}`
           this.images.push(url)
@@ -279,6 +282,9 @@ export default {
     },
     storeClothes() {
       Object.assign(this.port, { evidencia_id: this.$route.params.id})
+      Object.assign(this.port, { clise: `CC-${this.port.clise}`})
+      Object.assign(this.port, { exp: `K-18-0071-${this.port.exp}`})
+
       axios.post(`${settings.API_URL}/clothes`, this.port)
       .then(resp => {
         swal({
@@ -286,6 +292,7 @@ export default {
           text: ``,
           icon: "success",
         })
+        this.$router.push({ name: 'chronologyList' })
       })
       .catch(error => {
         if(error.response.data.name == 'SequelizeDatabaseError') {
@@ -314,6 +321,9 @@ export default {
       })
     },
     updateClothes() {
+      Object.assign(this.port, { clise: `CC-${this.port.clise}`})
+      Object.assign(this.port, { exp: `K-18-0071-${this.port.exp}`})
+
       axios.put(`${settings.API_URL}/clothes/${this.port.id}`, this.port)
       .then(resp => {
         swal({
@@ -321,6 +331,7 @@ export default {
           text: ``,
           icon: "success"
         })
+        this.$router.push({ name: 'chronologyList' })
       })
       .catch(error => {
         if(error.response.data.name == 'SequelizeDatabaseError') {
@@ -384,6 +395,61 @@ export default {
 
       const estado = this.receptionData.estado == 'COMPLETADO' ? 'EN_PROCESO' : 'COMPLETADO'
 
+      // campo clise
+      if(!this.port.clise && estado == 'COMPLETADO') {
+        this.receptionData.estado = 'EN_PROCESO'
+        this.showError('clise')
+        return ''
+      }
+
+      if ( this.port.clise.length < 5 &&  estado == 'COMPLETADO') {
+        swal({
+          title: `Atención`,
+          text: `El campo clise debe contener 5 digitos`,
+          icon: "error",
+        })
+        this.receptionData.estado = 'EN_PROCESO'
+        return ''
+      }
+
+      if ( this.port.clise.length > 5 && estado == 'COMPLETADO') {
+        swal({
+          title: `Atención`,
+          text: `El campo clise debe contener 5 digitos`,
+          icon: "error",
+        })
+        this.receptionData.estado = 'EN_PROCESO'
+        return ''
+      }
+      //-- campo clise
+      // campo exp
+      if(!this.port.exp && estado == 'COMPLETADO') {
+        this.showError('exp')
+        this.receptionData.estado = 'EN_PROCESO'
+        return ''
+      }
+
+      if ( this.port.exp.length < 6 &&  estado == 'COMPLETADO') {
+        swal({
+          title: `Atención`,
+          text: `El campo exp debe contener 6 digitos`,
+          icon: "error",
+        })
+        this.receptionData.estado = 'EN_PROCESO'
+        return ''
+      }
+
+      if ( this.port.exp.length > 6 && estado == 'COMPLETADO') {
+        swal({
+          title: `Atención`,
+          text: `El campo exp debe contener 6 digitos`,
+          icon: "error",
+        })
+        this.receptionData.estado = 'EN_PROCESO'
+        return ''
+      }
+      //-- campo exp
+
       if(!this.port.tipo && estado == 'COMPLETADO') {
         this.showError('Tipo')
         this.receptionData.estado = 'EN_PROCESO'
@@ -413,6 +479,8 @@ export default {
         this.receptionData.estado = 'EN_PROCESO'
         return ''
       }
+
+      this.receptionData.estado = 'COMPLETADO'
 
       axios.put(`${settings.API_URL}/evidences/${this.receptionData.id}`, {
         estado

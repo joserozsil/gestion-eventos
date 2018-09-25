@@ -141,6 +141,12 @@
             <td>
                 <p class="uppercase">{{ $data['origen_datos'] }}</p>
             </td>
+            <td>
+                <p class="uppercase"><strong>Dibujante</strong></p>
+            </td>
+            <td>
+                <p class="uppercase">{{ $data['Usuario']['nombre'] }} {{ $data['Usuario']['apellido'] }}</p>
+            </td>
           </tr>
         </table>
 
