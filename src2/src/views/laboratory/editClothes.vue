@@ -489,6 +489,16 @@ export default {
       }).catch(error => {
       })
 
+      if(this.isNew === true) {
+        // registrar
+        this.storeClothes()
+      } else {
+        // actualizar
+        this.updateClothes()
+      }
+
+      
+
     },
     showError(field) {
       swal({

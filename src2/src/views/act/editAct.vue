@@ -768,6 +768,16 @@ export default {
       }).catch(error => {
       })
 
+      if(this.isNew === true) {
+        // registrar
+        this.storePortrait()
+      } else {
+        // actualizar
+        this.updatePortrait()
+      }
+
+      
+
     },
     showError(field) {
       swal({

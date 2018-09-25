@@ -515,6 +515,16 @@ export default {
       }).catch(error => {
       })
 
+      if(this.isNew === true) {
+        // registrar
+        this.storeArm()
+      } else {
+        // actualizar
+        this.updateArm()
+      }
+
+      
+
     },
     showError(field) {
       swal({
