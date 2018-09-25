@@ -169,10 +169,10 @@
                 <p class="uppercase">{{ $data['edad'] }}</p>
             </td>
             <td>
-                <p class="uppercase"><strong>color de piel:</strong></p>
+                <p class="uppercase"><strong>Ojos (iris):</strong></p>
             </td>
             <td>
-                <p class="uppercase">{{ $data['color_piel'] }}</p>
+                <p class="uppercase">{{ $data['ojos_iris'] }}</p>
             </td>
           </tr>
           <tr>
@@ -183,7 +183,7 @@
                 <p class="uppercase"> {{ $data['boca'] }}</p>
             </td>
             <td>
-                <p class="uppercase"><strong>labio:</strong></p>
+                <p class="uppercase"><strong>labios:</strong></p>
             </td>
             <td>
                 <p class="uppercase">{{ $data['labios'] }}</p>
@@ -194,7 +194,7 @@
                 <p class="uppercase"><strong>estatura:</strong></p>
             </td>
             <td>
-                <p class="uppercase">ccc{{ $data['estatura'] }}cc</p>
+                <p class="uppercase">{{ $data['estatura'] }}</p>
             </td>
             <td>
                 <p class="uppercase"><strong>color de cabello:</strong></p>
@@ -233,24 +233,10 @@
           </tr>
           <tr>
             <td>
-                <p class="uppercase"><strong>cara:</strong></p>
-            </td>
-            <td>
-                <p class="uppercase">{{ $data['cara'] }}</p>
-            </td>
-            <td>
                 <p class="uppercase"><strong>color de piel:</strong></p>
             </td>
             <td>
                 <p class="uppercase">{{ $data['color_piel'] }}</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-                <p class="uppercase"><strong>contextura:</strong></p>
-            </td>
-            <td>
-                <p class="uppercase">{{ $data['contextura'] }}</p>
             </td>
             <td>
                 <p class="uppercase"><strong>tipo de cabello:</strong></p>
@@ -259,14 +245,20 @@
                 <p class="uppercase">{{ $data['tipo_cabello'] }}</p>
             </td>
           </tr>
+          <tr>
+            <td>
+                <p class="uppercase"><strong>Cabeza:</strong></p>
+            </td>
+            <td>
+                <p class="uppercase">{{ $data['cabeza'] }}</p>
+            </td>
+           
+          </tr>
         </table>
         <table style="width:100%; margin: 10mm 0; border: 1px solid gray">
           <tr>
             <td>
-                <p class="uppercase"><strong>comentario:</strong></p>
-            </td>
-            <td>
-
+                <p class="uppercase" style="margin-left: 10px; margin-top: 5px;"><strong>comentario:</strong></p>
                 <p class="uppercase" style="padding: 10px">
                     {{ $data['comentarios']}}
                 </p>

@@ -30,7 +30,7 @@
            {{data.item.f_creacion | listDate }}
           </template>
           <template slot="acción" slot-scope="data">
-            <b-button @click="goToEdit(data.item.id)" variant="success" class="btn-pill">Actualizar</b-button>
+            <b-button v-if="isEnabled(data.item.f_creacion)" @click="goToEdit(data.item.id)" variant="success" class="btn-pill">Actualizar</b-button>
             <b-button @click="goToDetail(data.item.id)" variant="primary" class="btn-pill sp-t">Detalles</b-button>
           </template>
         </b-table>
@@ -171,6 +171,10 @@ export default {
     },
     goToDetail(id) {
       this.$router.push({ name: 'receptionDetail', params: { id }})
+    },
+    isEnabled(date) {
+      const isEn = moment(date).add(1, 'day').unix() < moment().unix()
+      return  isEn  === true ? false : true 
     }
 
   }

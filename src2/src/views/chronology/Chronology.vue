@@ -40,14 +40,14 @@
           <template slot="acción" slot-scope="data">
             <b-button
               @click="goToEdit(data.item.departamento, data.item.id)"
-              v-if="isDepartament(data.item.departamento) || user.rol == 'ADMINISTRADOR'"
+              v-if=" (isDepartament(data.item.departamento) || user.rol == 'ADMINISTRADOR') && isEnabled(data.item.f_creacion)"
               variant="primary" 
               class="btn-pill">
               Actualizar
             </b-button>
             <b-button
               @click="goToEditReception(data.item.id)"
-              v-if="user.rol == 'ADMINISTRADOR' || user.rol == 'RECEPCION'"
+              v-if=" (user.rol == 'ADMINISTRADOR' || user.rol == 'RECEPCION') && isEnabled(data.item.f_creacion)"
               variant="success" 
               class="btn-pill">
               Editar
@@ -65,6 +65,7 @@
 
 <script>
 import settings from '../../config'
+import moment from 'moment'
 
 export default {
   name: 'Usuarios',
@@ -183,6 +184,10 @@ export default {
     },
     goToEditReception(id) {
       this.$router.push({ name: 'receptionEdit', params: { id } })
+    },
+    isEnabled(date) {
+      const isEn = moment(date).add(1, 'day').unix() < moment().unix()
+      return  isEn  === true ? false : true 
     }
   }
 }

@@ -18,12 +18,12 @@
             {{data.item.color}}
           </template>
           <template slot="fecha" slot-scope="data">
-            <b-badge>{{data.item.created_at}}</b-badge>
+            <b-badge>{{data.item.created_at | listDate }}</b-badge>
           </template>
           <template slot="acción" slot-scope="data">
             <b-button @click="generateReport(data.item.id)" variant="primary" class="btn-pill">Reporte</b-button>
             <b-button @click="goToDetail(data.item.evidencia_id)" variant="info" class="btn-pill">Detalles</b-button>
-            <b-button @click="goToUpdate(data.item.evidencia_id)" variant="success" class="btn-pill">Actualizar</b-button>
+            <b-button v-if="isEnabled(data.item.f_creacion)" @click="goToUpdate(data.item.evidencia_id)" variant="success" class="btn-pill">Actualizar</b-button>
           </template>
           
         </b-table>
@@ -40,6 +40,7 @@
 import settings from '../../config'
 import swal from 'sweetalert'
 import store from '../../store/store'
+import moment from 'moment'
 
 export default {
   name: 'Usuarios',
@@ -121,6 +122,10 @@ export default {
       .then(resp => {
         window.open(settings.RENDER_REPORT + '/' + resp.data, "_blank")
       })
+    },
+    isEnabled(date) {
+      const isEn = moment(date).add(1, 'day').unix() < moment().unix()
+      return  isEn  === true ? false : true 
     }
 
   }

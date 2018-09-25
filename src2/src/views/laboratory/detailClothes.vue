@@ -33,9 +33,8 @@
           <b-row>
             <b-col sm="6">
               <b-form-group
-                description="Ej: Delegación Estadal Bolívar"
+                description="Ej: Camisa"
                 label="Tipo"
-
                 laber-for="tipo"
                 :horizontal="false">
                 <b-form-input v-model="port.tipo" type="text" id="tipo"></b-form-input>
@@ -43,7 +42,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="Ej: 10"
+                description="Ej: Algodón"
                 label="Textura"
                 laber-for="textura"
                 :horizontal="false">
@@ -52,7 +51,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="Ej: 19/07/2018"
+                description="Ej: Negro"
                 label="Color"
                 laber-for="color"
                 :horizontal="false">
@@ -61,7 +60,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="Ej: Sub Delegación"
+                description="Ej: SS"
                 label="Talla:"
                 laber-for="talla"
                 :horizontal="false">
@@ -70,7 +69,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="Ej: 19/07/2018"
+                description="Ej: Adidas"
                 label="Marca"
                 laber-for="marca"
                 :horizontal="false">
@@ -79,7 +78,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="Ej: José Rodríguez"
+                description="Ej: Empresa X C,A."
                 label="Fabricante"
                 laber-for="fabricante"
                 :horizontal="false">
@@ -88,7 +87,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="Ej: José Rodríguez"
+                description="Ej: 1 kg"
                 label="Peso"
                 laber-for="peso"
                 :horizontal="false">
@@ -145,7 +144,7 @@
                 laber-for="tipo_recepcion"
                 :disabled="true"
                 :horizontal="false">
-                <b-form-input :value="receptionData.tipo_recepcion" type="text" id="clise" class="form-control"></b-form-input>
+                <b-form-input disabled :value="receptionData.tipo_recepcion" type="text" id="clise" class="form-control"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
@@ -153,7 +152,7 @@
                 label="Funcionario"
                 :disabled="true"
                 :horizontal="false">
-                <b-form-input 
+                <b-form-input disabled
                   :value="receptionData.Usuario.nombre + ' ' + receptionData.Usuario.apellido" type="text"class="form-control">
                 </b-form-input>
               </b-form-group>
@@ -164,7 +163,7 @@
                 laber-for="Descripción"
                 :disabled="true"
                 :horizontal="false">
-                <b-form-textarea :value="receptionData.descripcion" rows="5" class="form-control">
+                <b-form-textarea disabled :value="receptionData.descripcion" rows="5" class="form-control">
                 </b-form-textarea>
               </b-form-group>
             </b-col>

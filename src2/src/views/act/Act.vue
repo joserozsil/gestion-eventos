@@ -29,15 +29,12 @@
             <strong>{{data.item.exp}}</strong>
           </template>
           <template slot="dibujante" slot-scope="data">
-            <strong v-if="data.item.Usuario && data.item.nombre">
+            <strong v-if="data.item.Usuario">
               {{data.item.Usuario.nombre}} {{data.item.Usuario.apellido}}
             </strong>
           </template>
-          <template slot="usuario" slot-scope="data">
-            <strong>{{data.item.username}}{{ getUsername(data.item.name) }}</strong>
-          </template>
           <template slot="fecha" slot-scope="data">
-            <b-badge >{{data.item.f_creacion}}</b-badge>
+            <b-badge >{{data.item.f_creacion | listDate }}</b-badge>
           </template>
           <template slot="solicitud" slot-scope="data">
             <strong>{{data.item.solicitado_por}}</strong>
@@ -45,7 +42,7 @@
           <template slot="acción" slot-scope="data">
             <b-button @click="generateReport(data.item.id)" variant="primary" class="btn-pill">Reporte</b-button>
             <b-button @click="goToDetail(data.item.evidencia_id)" variant="primary" class="btn-pill">Detalles</b-button>
-            <b-button @click="goToEdit(data.item.evidencia_id)" variant="success" class="btn-pill">Actualizar</b-button>
+            <b-button v-if="isEnabled(data.item.f_creacion)" @click="goToEdit(data.item.evidencia_id)" variant="success" class="btn-pill">Actualizar</b-button>
           </template>
         </b-table>
         <nav>
@@ -63,6 +60,7 @@ import actData from './ActData'
 import settings from '../../config'
 import swal from 'sweetalert'
 import store from '../../store/store'
+import moment from 'moment'
 
 export default {
   name: 'Usuarios',
@@ -146,6 +144,10 @@ export default {
     },
     goToDetail(id) {
       this.$router.push({ name: 'detailAct', params: { id } })
+    },
+    isEnabled(date) {
+      const isEn = moment(date).add(1, 'day').unix() < moment().unix()
+      return  isEn  === true ? false : true 
     }
   }
 }

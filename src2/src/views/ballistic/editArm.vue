@@ -182,7 +182,7 @@
                 laber-for="tipo_recepcion"
                 :disabled="true"
                 :horizontal="false">
-                <b-form-input :value="receptionData.tipo_recepcion" type="text" id="clise" class="form-control"></b-form-input>
+                <b-form-input disabled :value="receptionData.tipo_recepcion" type="text" id="clise" class="form-control"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
@@ -190,7 +190,7 @@
                 label="Funcionario"
                 :disabled="true"
                 :horizontal="false">
-                <b-form-input 
+                <b-form-input disabled 
                   :value="receptionData.Usuario.nombre + ' ' + receptionData.Usuario.apellido" type="text"class="form-control">
                 </b-form-input>
               </b-form-group>
@@ -201,7 +201,7 @@
                 laber-for="Descripción"
                 :disabled="true"
                 :horizontal="false">
-                <b-form-textarea :value="receptionData.descripcion" rows="5" class="form-control">
+                <b-form-textarea disabled :value="receptionData.descripcion" rows="5" class="form-control">
                 </b-form-textarea>
               </b-form-group>
             </b-col>
