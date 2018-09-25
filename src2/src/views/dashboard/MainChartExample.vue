@@ -146,7 +146,8 @@ export default {
                   beginAtZero: true,
                   maxTicksLimit: 5,
                   stepSize: Math.ceil(this.statdistic.mayor / 5),
-                  max: this.statdistic.mayor + 1
+                  max: this.statdistic.mayor + 1,
+                  min: -1
                 },
                 gridLines: {
                   display: true

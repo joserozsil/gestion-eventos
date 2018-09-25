@@ -139,10 +139,10 @@
           <!-- datos genericos -->
           <tr>
             <td>
-                <p class="uppercase"><strong>Comentarios</strong></p>
-            </td>
-            <td>
-                <p class="uppercase">{{ $data['comentarios'] }}</p>
+                <p class="uppercase" style="margin-left: 10px; margin-top: 5px;"><strong>comentario:</strong></p>
+                <p class="uppercase" style="padding: 10px">
+                    {{ $data['comentarios']}}
+                </p>
             </td>
           </tr>
           <!-- datos genericos -->

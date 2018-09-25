@@ -11,20 +11,20 @@
           <b-row>
             <b-col sm="6">
               <b-form-group
-                description="CC - 72433295"
+                :description="`CC-`+port.clise"
                 label="Clise"
                 laber-for="clise"
                 :horizontal="false">
-                <b-form-input v-model="port.clise" type="text" id="clise"></b-form-input>
+                <b-form-input :disabled="port.clise != '' && port.clise != undefined" v-model="port.clise" type="number" id="clise"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
               <b-form-group
-                description="K-18-0071-008000"
+                :description="`K-18-0071-`+port.exp"
                 label="Exp"
                 laber-for="exp"
                 :horizontal="false">
-                <b-form-input v-model="port.exp" type="text" id="exp"></b-form-input>
+                <b-form-input :disabled="port.exp != '' && port.exp != undefined" v-model="port.exp" type="number" id="exp"></b-form-input>
               </b-form-group>
             </b-col>
           </b-row>
@@ -526,7 +526,12 @@ export default {
         this.isNew = true
       } else {
         this.isNew = false
+        const clise = resp.data.data.clise.split('-')[1]
+        const exp = resp.data.data.exp.split('-')[3]
+
         this.port = resp.data.data
+        this.port.clise = clise
+        this.port.exp = exp
 
         this.port.Evidencium.Imagens.forEach(element => {
           var url = `${ settings.API_IMAGE}/${element.nombre_archivo}`
@@ -550,6 +555,9 @@ export default {
     },
     storePortrait() {
       Object.assign(this.port, { evidencia_id: this.$route.params.id})
+      Object.assign(this.port, { clise: `CC-${this.port.clise}`})
+      Object.assign(this.port, { exp: `K-18-0071-${this.port.exp}`})
+
       axios.post(`${settings.API_URL}/portraits`, this.port)
       .then(resp => {
         swal({
@@ -585,6 +593,9 @@ export default {
       })
     },
     updatePortrait() {
+      Object.assign(this.port, { clise: `CC-${this.port.clise}`})
+      Object.assign(this.port, { exp: `K-18-0071-${this.port.exp}`})
+
       axios.put(`${settings.API_URL}/portraits/${this.port.id}`, this.port)
       .then(resp => {
         swal({
@@ -620,7 +631,7 @@ export default {
       })
     },
     getUsers() {
-      axios.get(`${settings.API_URL}/users?limit=1`)
+      axios.get(`${settings.API_URL}/users?limit=1}`)
       .then(resp => {
         axios.get(`${settings.API_URL}/users?limit=${resp.total}`)
         .then(resp => {
@@ -654,6 +665,61 @@ export default {
     onChangeStatus() {
 
       const estado = this.receptionData.estado == 'COMPLETADO' ? 'EN_PROCESO' : 'COMPLETADO'
+
+      // campo clise
+      if(!this.port.clise && estado == 'COMPLETADO') {
+        this.showError('clise')
+        this.receptionData.estado = 'EN_PROCESO'
+        return ''
+      }
+
+      if ( this.port.clise.length < 5 &&  estado == 'COMPLETADO') {
+        swal({
+          title: `Atención`,
+          text: `El campo clise debe contener 5 digitos`,
+          icon: "error",
+        })
+        this.receptionData.estado = 'EN_PROCESO'
+        return ''
+      }
+
+      if ( this.port.clise.length > 5 && estado == 'COMPLETADO') {
+        swal({
+          title: `Atención`,
+          text: `El campo clise debe contener 5 digitos`,
+          icon: "error",
+        })
+        this.receptionData.estado = 'EN_PROCESO'
+        return ''
+      }
+      //-- campo clise
+      // campo exp
+      if(!this.port.exp && estado == 'COMPLETADO') {
+        this.showError('exp')
+        this.receptionData.estado = 'EN_PROCESO'
+        return ''
+      }
+
+      if ( this.port.exp.length < 6 &&  estado == 'COMPLETADO') {
+        swal({
+          title: `Atención`,
+          text: `El campo exp debe contener 6 digitos`,
+          icon: "error",
+        })
+        this.receptionData.estado = 'EN_PROCESO'
+        return ''
+      }
+
+      if ( this.port.exp.length > 6 && estado == 'COMPLETADO') {
+        swal({
+          title: `Atención`,
+          text: `El campo clise debe contener 6 digitos`,
+          icon: "error",
+        })
+        this.receptionData.estado = 'EN_PROCESO'
+        return ''
+      }
+      //-- campo exp
 
       if(!this.port.dibujante && estado == 'COMPLETADO') {
         this.showError('Dibujante')

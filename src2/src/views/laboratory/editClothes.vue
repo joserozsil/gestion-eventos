@@ -185,6 +185,7 @@
               <b-form-radio value="COMPLETADO">Completado</b-form-radio>
               <b-form-radio value="EN_PROCESO">En Proceso</b-form-radio>
             </b-form-radio-group>
+            <b-form-select sm="4" v-model="selected" :options="options" class="mb-3" />
           </b-form-group>
           <b-button 
             v-if="isNew" 

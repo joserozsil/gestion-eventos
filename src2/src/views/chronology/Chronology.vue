@@ -40,14 +40,14 @@
           <template slot="acción" slot-scope="data">
             <b-button
               @click="goToEdit(data.item.departamento, data.item.id)"
-              v-if=" (isDepartament(data.item.departamento) || user.rol == 'ADMINISTRADOR') && isEnabled(data.item.f_creacion)"
+              v-if=" (isDepartament(data.item.departamento) || user.rol == 'ADMINISTRADOR') && isEnabled(data.item.f_creacion) && data.item.estado != 'COMPLETADO'"
               variant="primary" 
               class="btn-pill">
               Actualizar
             </b-button>
             <b-button
               @click="goToEditReception(data.item.id)"
-              v-if=" (user.rol == 'ADMINISTRADOR' || user.rol == 'RECEPCION') && isEnabled(data.item.f_creacion)"
+              v-if=" (user.rol == 'ADMINISTRADOR' || user.rol == 'RECEPCION') && isEnabled(data.item.f_creacion) && data.item.estado != 'COMPLETADO'"
               variant="success" 
               class="btn-pill">
               Editar
