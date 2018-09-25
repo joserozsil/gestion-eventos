@@ -1,5 +1,13 @@
 <template>
   <b-row>
+    <b-col md="4" sm="12" class="ml-auto">
+      <b-form-group 
+        label="Buscar por exp y clise"
+        laber-for="date"
+        :horizontal="false">
+        <b-form-input @change="search()" v-model="query" type="text" placeholder="Buscar exp y clise"></b-form-input>
+      </b-form-group>
+    </b-col>
     <b-col cols="12" xl="12">
       <transition name="slide">
       <b-card :header="caption">
@@ -10,6 +18,9 @@
                 <img :src="urlImage + '/' + data.item.Evidencium.Imagens[0].nombre_archivo" width="60px" class="img-avatar d-inline-block align-top" alt="BV">
               </b-navbar-brand>
             </b-navbar>
+          </template>
+          <template slot="exp" slot-scope="data">
+            {{data.item.exp}}
           </template>
           <template slot="tipo" slot-scope="data">
             {{data.item.tipo}}
@@ -74,6 +85,7 @@ export default {
       items: [],
       fields: [
         {key: 'imagen'},
+        {key: 'exp'},
         {key: 'tipo'},
         {key: 'color'},
         {key: 'fecha'},
@@ -82,7 +94,8 @@ export default {
       currentPage: 1,
       perPage: 15,
       totalRows: 0,
-      urlImage: settings.API_IMAGE
+      urlImage: settings.API_IMAGE,
+      query: ''
     }
   },
   computed: {
@@ -125,6 +138,19 @@ export default {
     isEnabled(date) {
       const isEn = moment(date).add(1, 'day').unix() < moment().unix()
       return  isEn  === true ? false : true 
+    },
+    search() {
+      if(this.query.length > 2) {
+          axios.post(`${settings.API_URL}/search/arms`, { quering: this.query })
+          .then(resp => {
+            this.items = resp.data.data
+          })
+          .catch(error => {
+            console.dir(error)
+          })
+      } else {
+        this.getArms()
+      }
     }
 
   }
