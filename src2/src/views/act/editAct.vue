@@ -15,7 +15,7 @@
                 label="Clise"
                 laber-for="clise"
                 :horizontal="false">
-                <b-form-input :disabled="port.clise != '' && port.clise != undefined" v-model="port.clise" type="number" id="clise"></b-form-input>
+                <b-form-input :disabled="receptionData.estado === 'COMPLETADO'" v-model="port.clise" type="number" id="clise"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
@@ -24,7 +24,7 @@
                 label="Exp"
                 laber-for="exp"
                 :horizontal="false">
-                <b-form-input :disabled="port.exp != '' && port.exp != undefined" v-model="port.exp" type="number" id="exp"></b-form-input>
+                <b-form-input :disabled="receptionData.estado === 'COMPLETADO'" v-model="port.exp" type="number" id="exp"></b-form-input>
               </b-form-group>
             </b-col>
           </b-row>
@@ -172,7 +172,12 @@
                 laber-for="edad"
                 :horizontal="false">
                 <select v-model="port.edad" class="form-control">
+                  <option value="18-24">18-24</option>
+                  <option value="24-28">24-28</option>
                   <option value="28-32">28-32</option>
+                  <option value="32-45">32-45</option>
+                  <option value="45-60">45-60</option>
+                  <option value="60+">60+</option>
                 </select>
               </b-form-group>
   					</b-col>
@@ -451,12 +456,6 @@
 
         <!-- acciones -->
         <div class="form-actions padding">
-          <b-form-group>
-            <b-form-radio-group @change="onChangeStatus()" v-model="receptionData.estado" name="radioSubComponent">
-              <b-form-radio value="COMPLETADO">Completado</b-form-radio>
-              <b-form-radio value="EN_PROCESO">En Proceso</b-form-radio>
-            </b-form-radio-group>
-          </b-form-group>
           <b-button 
             v-if="isNew" 
             @click="storePortrait()" 
@@ -476,6 +475,10 @@
           <b-button  @click="$router.go(-1)" class="mr" type="button" variant="secondary">
             Cancelar
           </b-button>
+          <b-button v-if="receptionData.estado === 'EN_PROCESO'" :disabled="receptionData === 'COMPLETADO'"  @click="onChangeStatus()" class="mr" type="button" variant="primary">
+            Marcar Como Procesada
+          </b-button>
+          Estado: {{ receptionData.estado }}
         </div>
         <!--/ acciones -->
       </b-col>
@@ -492,6 +495,7 @@ import VueGallery from 'vue-gallery'
 import settings from '../../config'
 import swal from 'sweetalert'
 import store from '../../store/store'
+import moment from 'moment'
 
 export default {
   components: {
@@ -514,7 +518,11 @@ export default {
         headers: { 
           "authorization" : localStorage.getItem('token')
          }
-      }
+      },
+      options: [
+        { text: 'Completado', value: 'COMPLETADO' },
+        { text: 'En Proceso', value: 'EN_PROCESO' },
+      ]
     }
   },
   mounted() {
@@ -532,6 +540,9 @@ export default {
         this.port = resp.data.data
         this.port.clise = clise
         this.port.exp = exp
+        this.port.f_memo = moment(this.port.f_memo).format('YYYY-MM-DD')
+        this.port.f_caso = moment(this.port.f_caso).format('YYYY-MM-DD')
+        this.port.f_rh = moment(this.port.f_rh).format('YYYY-MM-DD')
 
         this.port.Evidencium.Imagens.forEach(element => {
           var url = `${ settings.API_IMAGE}/${element.nombre_archivo}`
@@ -565,6 +576,8 @@ export default {
           text: ``,
           icon: "success",
         })
+        this.$router.push({ name: 'chronologyList' })
+
       })
       .catch(error => {
         if(error.response.data.name == 'SequelizeDatabaseError') {
@@ -603,6 +616,7 @@ export default {
           text: ``,
           icon: "success"
         })
+        this.$router.push({ name: 'chronologyList' })
       })
       .catch(error => {
         if(error.response.data.name == 'SequelizeDatabaseError') {
@@ -668,8 +682,8 @@ export default {
 
       // campo clise
       if(!this.port.clise && estado == 'COMPLETADO') {
-        this.showError('clise')
         this.receptionData.estado = 'EN_PROCESO'
+        this.showError('clise')
         return ''
       }
 
@@ -713,7 +727,7 @@ export default {
       if ( this.port.exp.length > 6 && estado == 'COMPLETADO') {
         swal({
           title: `Atención`,
-          text: `El campo clise debe contener 6 digitos`,
+          text: `El campo exp debe contener 6 digitos`,
           icon: "error",
         })
         this.receptionData.estado = 'EN_PROCESO'
@@ -744,6 +758,8 @@ export default {
         this.receptionData.estado = 'EN_PROCESO'
         return ''
       }
+
+      this.receptionData.estado = 'COMPLETADO'
 
       axios.put(`${settings.API_URL}/evidences/${this.receptionData.id}`, {
         estado

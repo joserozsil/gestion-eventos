@@ -173,7 +173,12 @@
                 laber-for="edad"
                 :horizontal="false">
                 <select v-model="port.edad" class="form-control">
+                  <option value="18-24">18-24</option>
+                  <option value="24-28">24-28</option>
                   <option value="28-32">28-32</option>
+                  <option value="32-45">32-45</option>
+                  <option value="45-60">45-60</option>
+                  <option value="60+">60+</option>
                 </select>
               </b-form-group>
   					</b-col>
