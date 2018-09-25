@@ -22,6 +22,9 @@
           :fields="fields" 
           :current-page="currentPage" 
           :per-page="perPage">
+          <template slot="id" slot-scope="data">
+            <strong>{{data.item.id}}</strong>
+          </template>
           <template slot="retrato" slot-scope="data">
             <b-navbar variant="faded" type="light">
               <b-navbar-brand tag="h1" href="#">
@@ -33,6 +36,7 @@
               </b-navbar-brand>
             </b-navbar>
           </template>
+
           <template slot="exp" slot-scope="data">
             <strong>{{data.item.exp}}</strong>
           </template>
@@ -102,6 +106,7 @@ export default {
     return {
       items: [],
       fields: [
+        {key: 'id'},
         {key: 'retrato'},
         {key: 'exp'},
         {key: 'dibujante'},

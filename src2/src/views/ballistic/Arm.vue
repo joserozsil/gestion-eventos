@@ -12,6 +12,9 @@
       <transition name="slide">
       <b-card :header="caption">
         <b-table :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage">
+          <template slot="id" slot-scope="data">
+            <strong>{{data.item.id}}</strong>
+          </template>
           <template slot="imagen" slot-scope="data">
             <b-navbar variant="faded" type="light">
               <b-navbar-brand tag="h1" href="#">
@@ -20,13 +23,17 @@
             </b-navbar>
           </template>
           <template slot="exp" slot-scope="data">
+            <strong>
             {{data.item.exp}}
+            </strong>
           </template>
           <template slot="tipo" slot-scope="data">
+            <strong>
             {{data.item.tipo}}
+            </strong>
           </template>
           <template slot="color" slot-scope="data">
-            {{data.item.color}}
+            <strong>{{data.item.color}}</strong>
           </template>
           <template slot="fecha" slot-scope="data">
             <b-badge>{{data.item.created_at | listDate }}</b-badge>
@@ -84,6 +91,7 @@ export default {
     return {
       items: [],
       fields: [
+        {key: 'id'},
         {key: 'imagen'},
         {key: 'exp'},
         {key: 'tipo'},
