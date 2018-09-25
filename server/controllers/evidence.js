@@ -20,7 +20,7 @@ const operations = {
                 Object.assign(finding, {
                     f_creacion: {
                         [Op.lt]: moment(req.query.DATE, 'DD/MM/YYYY').add(1, 'day').toDate(),
-                        [Op.gt]:moment(req.query.DATE, 'DD/MM/YYYY').subtract(1, 'day').toDate(),
+                        [Op.gt]: moment(req.query.DATE, 'DD/MM/YYYY').subtract(1, 'day').toDate(),
                     }
                 })
             }

@@ -18,6 +18,9 @@ import evidenceClothesController from '../controllers/evidenceClothes'
 import pictureController from '../controllers/picture'
 import tokenController from '../controllers/token'
 
+// search controller
+import portraitSearch from '../query/portrait'
+
 import authController from '../controllers/auth'
 
 // middlewares
@@ -70,6 +73,8 @@ api.get('/evidences/:id/clothes', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_LABORA
 api.post('/pictures', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_HECHOS', 'OPERADOR_BALISTICA', 'OPERADOR_LABORATORIO']), file.single('file'), pictureController.store)
 
 api.get('/chronologies', isAuth, chronologyController.index)
+
+api.post('/search/portraits', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_HECHOS']), portraitSearch.index)
 
 api.post('/signin', authController.signIn)
 

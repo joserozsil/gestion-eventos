@@ -1,5 +1,13 @@
 <template>
   <b-row>
+    <b-col md="4" sm="12" class="ml-auto">
+      <b-form-group 
+        label="Buscar por exp y clise"
+        laber-for="date"
+        :horizontal="false">
+        <b-form-input @change="search()" v-model="query" type="text" placeholder="Buscar exp y clise"></b-form-input>
+      </b-form-group>
+    </b-col>
     <b-col cols="12" xl="12">
       <transition name="slide">
       <b-card :header="caption">
@@ -104,7 +112,8 @@ export default {
       currentPage: 1,
       perPage: 15,
       totalRows: 0,
-      urlImage: settings.API_IMAGE
+      urlImage: settings.API_IMAGE,
+      query: ''
     }
   },
   computed: {
@@ -148,6 +157,16 @@ export default {
     isEnabled(date) {
       const isEn = moment(date).add(1, 'day').unix() < moment().unix()
       return  isEn  === true ? false : true 
+    },
+    search() {
+      if(this.query.length > 2) {
+          axios.post(`${settings.API_URL}/search/portraits`, { quering: this.query })
+          .then(resp => {
+            this.items = resp.data.data
+          })
+      } else {
+        this.getActs()
+      }
     }
   }
 }
