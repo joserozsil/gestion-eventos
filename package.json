@@ -4,9 +4,8 @@
     "description": "Proyecto de gestión de novedades para el departamento de criminalística del centro de investigaciones científicas, penales y criminalísticas (CICPC)",
     "main": "index.js",
     "scripts": {
-        "prestart": "rm -rf build && babel server --out-dir build",
+        "prestart": "rm -rf build && babel server --out-dir build && npm run build --prefix client/",
         "start": "node build/index.js",
-        "starting": "concurrently -r \"npm run start:server\" \"npm run start:client src2/\" ",
         "start:server": "cross-env NODE_ENV=production nodemon server/index.js --exec babel-node",
         "test": "mocha server/test/* --timeout 15000",
         "start:client": "npm run serve"
