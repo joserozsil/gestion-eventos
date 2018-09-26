@@ -43,7 +43,8 @@
         "sequelize": "^4.38.0",
         "underscore": "^1.9.1",
         "volleyball": "^1.5.1",
-        "zone.js": "^0.8.26"
+        "zone.js": "^0.8.26",
+        "nodemon": "^1.12.1"
     },
     "devDependencies": {
         "babel-core": "^6.26.3",
@@ -59,7 +60,6 @@
         "karma-coverage-istanbul-reporter": "^1.2.1",
         "karma-jasmine": "~1.1.0",
         "karma-jasmine-html-reporter": "^0.2.2",
-        "nodemon": "^1.12.1",
         "protractor": "~5.1.2",
         "ts-node": "~4.1.0",
         "tslint": "~5.9.1"
