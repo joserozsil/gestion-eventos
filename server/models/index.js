@@ -4,11 +4,10 @@ var fs        = require("fs")
 var path      = require("path")
 var Sequelize = require("sequelize")
 var env       = process.env.NODE_ENV || "development"
-var config    = require('../config/config.json')[env]
+var config    = require('../config/db')[env]
+
 var sequelize = new Sequelize(config.database, config.username, config.password, config)
 var db        = {}
-
-console.log(process.env.NODE_ENV)
 
 fs
   .readdirSync(__dirname)
