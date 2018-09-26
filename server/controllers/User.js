@@ -2,7 +2,6 @@
 
 import Model from '../models'
 import _ from 'underscore'
-import { encrypt } from '../services/password'
 
 const operations = {
     index: (req, res, next) => {

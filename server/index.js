@@ -10,7 +10,7 @@ import { settings } from './config'
 // sync database
 Models.sequelize.sync().then((message) =>{
     app.listen(process.env.PORT || 3000, () => {
-        console.log(chalk.cyan(`Servidor Node y Express corriendo en el puerto ${ settings.APP_PORT || 3000 } `))
+        console.log(chalk.cyan(`Servidor Node y Express corriendo en el puerto ${ settings.PORT || 3000 } `))
     })
 }).catch((err) =>{
     console.log(err,"Something went wrong with the Database Update!")
