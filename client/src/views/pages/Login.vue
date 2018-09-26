@@ -60,6 +60,7 @@
       this.getUserIP((ip) => {
         this.ip = ip
       })
+      console.log(process.env)
     },
     methods: {
       signIn() {
