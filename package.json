@@ -7,7 +7,7 @@
         "prestart": "rm -rf build && babel server --out-dir build",
         "start": "node build/index.js",
         "starting": "concurrently -r \"npm run start:server\" \"npm run start:client src2/\" ",
-        "start:server": "cross-env NODE_ENV=development nodemon server/index.js --exec babel-node",
+        "start:server": "cross-env NODE_ENV=production nodemon server/index.js --exec babel-node",
         "test": "mocha server/test/* --timeout 15000",
         "start:client": "npm run serve"
     },
