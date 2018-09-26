@@ -1,10 +1,10 @@
 'use strict'
 
 const settings = {
-  API_URL: "http://localhost:3000/api/v1",
-  API_IMAGE: "http://localhost:3000/uploads",
-  API_REPORT: "http://localhost:8000/api",
-  RENDER_REPORT: "http://localhost:8000",
+  API_URL: process.env.API_URL,
+  API_IMAGE: process.env.API_IMAGE,
+  API_REPORT: process.env.API_REPORT,
+  RENDER_REPORT: process.env.RENDER_REPORT
 }
 
 export default settings
