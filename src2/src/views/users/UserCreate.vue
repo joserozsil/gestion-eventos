@@ -89,7 +89,7 @@
               label="Repetir Contraseña"
               laber-for="repeatPassword"
               :horizontal="false">
-              <b-form-input v-model="user.repetirContraseña" type="text" id="repeatPassword"></b-form-input>
+              <b-form-input v-model="user.repetirContraseña" type="password" id="repeatPassword"></b-form-input>
             </b-form-group>
           </b-col>
         </b-row>
@@ -122,6 +122,15 @@ export default {
   },
   methods: {
     storeUser() {
+      if (this.user.contraseña != this.user.repetirContraseña) {
+        swal({
+          title: `Atención`,
+          text: `Las contraseñas no coinciden`,
+          icon: "error",
+        })
+
+        return ''
+      }
       axios.post(`${settings.API_URL}/users`, {
         usuario: this.user.usuario,
         nombre: this.user.nombre,
