@@ -7,6 +7,11 @@ import Models from './models'
 import chalk from 'chalk'
 import { settings } from './config'
 
+
+app.listen(process.env.PORT || 3000, () => {
+    console.log(chalk.cyan(`Servidor Node y Express corriendo en el puerto ${ settings.APP_PORT || 3000 } `))
+})
+/*
 // sync database
 Models.sequelize.sync().then((message) =>{
     app.listen(process.env.PORT || 3000, () => {
@@ -14,7 +19,7 @@ Models.sequelize.sync().then((message) =>{
     })
 }).catch((err) =>{
     console.log(err,"Something went wrong with the Database Update!")
-})
+})*/
 
 
 
