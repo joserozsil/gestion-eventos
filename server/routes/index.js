@@ -23,7 +23,6 @@ import portraitSearch from '../query/portrait'
 import armSearch from '../query/arm'
 import clothesSearch from '../query/clothes'
 
-
 import authController from '../controllers/auth'
 
 // middlewares
@@ -81,7 +80,6 @@ api.get('/chronologies', isAuth, chronologyController.index)
 api.post('/search/portraits', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_HECHOS']), portraitSearch.index)
 api.post('/search/arms', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_BALISTICA']), armSearch.index)
 api.post('/search/clothes', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_LABORATORIO']), clothesSearch.index)
-
 
 api.post('/signin', authController.signIn)
 
