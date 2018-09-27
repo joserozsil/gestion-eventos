@@ -90,7 +90,6 @@ export default {
     return {
       items: [],
       fields: [
-        {key: 'id'},
         {key: 'imagen'},
         {key: 'exp'},
         {key: 'tipo'},

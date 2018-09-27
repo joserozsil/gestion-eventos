@@ -86,7 +86,6 @@ export default {
     return {
       items: [],
       fields: [
-        {key: 'id'},
         {key: 'tipo'},
         {key: 'usuario'},
         {key: 'descripción'},
@@ -103,7 +102,7 @@ export default {
   },
   watch: {
     date() {
-    Event.$emit('loading')
+      Event.$emit('loading')
      axios.get(`${settings.API_URL}/chronologies?limit=1`)
       .then(resp => {
         axios.get(`${settings.API_URL}/chronologies?limit=${resp.total}&DATE=${this.date}`)

@@ -99,7 +99,6 @@ export default {
     return {
       items: [],
       fields: [
-        {key: 'id'},
         {key: 'tipo'},
         {key: 'usuario'},
         {key: 'descripción'},

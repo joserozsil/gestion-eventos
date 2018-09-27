@@ -62,7 +62,6 @@ export default {
     return {
       items: [],
       fields: [
-        {key: 'id'},
         {key: 'usuario'},
         {key: 'descripción'},
         {key: 'fecha'}

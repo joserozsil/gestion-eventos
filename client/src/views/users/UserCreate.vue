@@ -31,7 +31,7 @@
           label="Cédula"
           laber-for="cedula"
           :horizontal="false">
-          <b-form-input v-model="user.cedula" type="text" id="cedula"></b-form-input>
+          <b-form-input :formatter="validateCedula" v-model="user.cedula" type="number" id="cedula"></b-form-input>
         </b-form-group>
         <b-form-group
           description="Ej: Ud 104 San Félix, Edo Bolívar"
@@ -177,9 +177,15 @@ export default {
         }
 
         Event.$emit('stopLoading')
-        
 
       })
+    },
+    validateCedula(value, event) {
+      if (value.length > 8) {
+        return value.substr(0, 8)
+      } else {
+        return value
+      }
     }
   }
 }
