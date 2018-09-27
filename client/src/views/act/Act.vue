@@ -132,15 +132,22 @@ export default {
       return items.length
     },
     getActs() {
+      Event.$emit('loading')
       axios.get(`${settings.API_URL}/portraits?limit=1`)
       .then(resp => {
         axios.get(`${settings.API_URL}/portraits?limit=${resp.data.total}`)
         .then(resp => {
           this.items = resp.data.data.filter(data => data.Evidencium.estado == 'COMPLETADO')
-        })  
+          Event.$emit('stopLoading')
+        })
+        .catch(error => {
+          console.dir(error)
+          Event.$emit('stopLoading')
+        })
       })
     },
     generateReport(id) {
+      Event.$emit('loading')
       let data = this.items.filter(data => data.id == id )[0]
 
       let image = settings.API_IMAGE + '/' + data.Evidencium.Imagens[0].nombre_archivo 
@@ -150,6 +157,11 @@ export default {
       axios.post(`${settings.API_REPORT}/portraits`, { data })
       .then(resp => {
         window.open(settings.RENDER_REPORT + '/' + resp.data, "_blank")
+        Event.$emit('stopLoading')
+      })
+      .catch(error => {
+        console.dir(error)
+        Event.$emit('stopLoading')
       })
       
     },
@@ -165,10 +177,16 @@ export default {
     },
     search() {
       if(this.query.length > 2) {
-          axios.post(`${settings.API_URL}/search/portraits`, { quering: this.query })
-          .then(resp => {
-            this.items = resp.data.data
-          })
+        Event.$emit('loading')
+        axios.post(`${settings.API_URL}/search/portraits`, { quering: this.query })
+        .then(resp => {
+          this.items = resp.data.data
+          Event.$emit('stopLoading')
+        })
+        .catch(error => {
+          console.dir(error)
+          Event.$emit('stopLoading')
+        })
       } else {
         this.getActs()
       }

@@ -117,12 +117,18 @@ export default {
       return items.length
     },
     getArms() {
+      Event.$emit('loading')
       axios.get(`${settings.API_URL}/arms?limit=1`)
       .then(resp => {
         axios.get(`${settings.API_URL}/arms?limit=${resp.data.total}`)
         .then(resp => {
           this.items = resp.data.data.filter(data => data.Evidencium.estado == 'COMPLETADO')
-        })  
+          Event.$emit('stopLoading')
+        })
+        .catch(error => {
+          console.dir(error)
+          Event.$emit('stopLoading')
+        })
       })
     },
     goToUpdate(id) {
@@ -132,6 +138,7 @@ export default {
       this.$router.push({ name: 'detailArm', params: { id }})
     },
     generateReport(id) {
+      Event.$emit('loading')
       let data = this.items.filter(data => data.id == id )[0]
 
       let image = settings.API_IMAGE + '/' + data.Evidencium.Imagens[0].nombre_archivo 
@@ -141,6 +148,11 @@ export default {
       axios.post(`${settings.API_REPORT}/arms`, { data })
       .then(resp => {
         window.open(settings.RENDER_REPORT + '/' + resp.data, "_blank")
+        Event.$emit('stopLoading')
+      })
+      .catch(error => {
+        console.dir(error)
+        Event.$emit('stopLoading')
       })
     },
     isEnabled(date) {
@@ -149,12 +161,15 @@ export default {
     },
     search() {
       if(this.query.length > 2) {
+          Event.$emit('loading')
           axios.post(`${settings.API_URL}/search/arms`, { quering: this.query })
           .then(resp => {
             this.items = resp.data.data
+             Event.$emit('stopLoading')
           })
           .catch(error => {
             console.dir(error)
+             Event.$emit('stopLoading')
           })
       } else {
         this.getArms()

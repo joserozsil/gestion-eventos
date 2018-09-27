@@ -131,6 +131,8 @@ export default {
 
         return ''
       }
+      Event.$emit('loading')
+      
       axios.post(`${settings.API_URL}/users`, {
         usuario: this.user.usuario,
         nombre: this.user.nombre,
@@ -173,6 +175,8 @@ export default {
             icon: "error",
           })
         }
+
+        Event.$emit('stopLoading')
         
 
       })

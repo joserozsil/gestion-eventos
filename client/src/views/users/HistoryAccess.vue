@@ -103,11 +103,17 @@ export default {
       return name.split(' ')[0]
     },
     getHistory() {
+      Event.$emit('loading')
       axios.get(`${settings.API_URL}/access?limit=1`)
       .then(resp => {
         axios.get(`${settings.API_URL}/access?limit=${resp.total}`)
         .then(resp => {
           this.items = resp.data.data
+          Event.$emit('stopLoading')
+        })
+        .catch(error => {
+          console.dir(error)
+          Event.$emit('stopLoading')
         })
       })
     }

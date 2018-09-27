@@ -111,11 +111,17 @@ export default {
       this.$router.push({ name: 'userUpdate', params: { id } })
     },
     getUsers() {
+      Event.$emit('loading')
       axios.get(`${settings.API_URL}/users?limit=1`)
       .then(resp => {
         axios.get(`${settings.API_URL}/users?limit=${ Number(resp.data.total) + 1}`)
         .then(response => {
           this.items = response.data.data
+          Event.$emit('stopLoading')
+        })
+        .catch(error => {
+          console.dir(error)
+          Event.$emit('stopLoading')
         })
       })
     },

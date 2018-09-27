@@ -1,10 +1,33 @@
 <template>
+  <div>
   <router-view></router-view>
+  <Loading :active.sync="loading" :can-cancel="true"></Loading>
+  </div>
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.min.css'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    Loading
+  },
+  data: () => {
+    return {
+      loading : false
+    }
+  },
+  mounted() {
+    Event.$on('loading', () => {
+        this.loading = true
+    })
+
+    Event.$on('stopLoading', () => {
+        this.loading = false
+    })
+  }
 }
 </script>
 

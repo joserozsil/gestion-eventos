@@ -568,9 +568,10 @@ export default {
       Object.assign(this.port, { evidencia_id: this.$route.params.id})
       Object.assign(this.port, { clise: `CC-${this.port.clise}`})
       Object.assign(this.port, { exp: `K-18-0071-${this.port.exp}`})
-
+      Event.$emit('loading')
       axios.post(`${settings.API_URL}/portraits`, this.port)
       .then(resp => {
+        Event.$emit('stopLoading')
         swal({
           title: "Retrato modificado exitosamente",
           text: ``,
@@ -580,6 +581,7 @@ export default {
 
       })
       .catch(error => {
+        Event.$emit('stopLoading')
         if(error.response.data.name == 'SequelizeDatabaseError') {
           swal({
             title: `Atención`,
@@ -609,8 +611,10 @@ export default {
       Object.assign(this.port, { clise: `CC-${this.port.clise}`})
       Object.assign(this.port, { exp: `K-18-0071-${this.port.exp}`})
 
+      Event.$emit('loading')
       axios.put(`${settings.API_URL}/portraits/${this.port.id}`, this.port)
       .then(resp => {
+        Event.$emit('stopLoading')
         swal({
           title: "Retrato modificado exitosamente",
           text: ``,
@@ -619,6 +623,7 @@ export default {
         this.$router.push({ name: 'chronologyList' })
       })
       .catch(error => {
+        Event.$emit('stopLoading')
         if(error.response.data.name == 'SequelizeDatabaseError') {
           swal({
             title: `Atención`,
@@ -655,10 +660,16 @@ export default {
     },
     getEvidence() {
       this.loading = true
+      Event.$emit('loading')
       axios.get(`${settings.API_URL}/evidences/${this.$route.params.id}`)
       .then(resp => {
         this.receptionData = resp.data.data
         this.loading = false
+        Event.$emit('stopLoading')
+      })
+      .catch(error => {
+        console.dir(error)
+        Event.$emit('stopLoading')
       })
     },
     isEmpty(obj) {
@@ -697,7 +708,7 @@ export default {
         return ''
       }
 
-      if ( this.port.clise.length > 5 && estado == 'COMPLETADO') {
+      if (this.port.clise.length > 5 && estado == 'COMPLETADO') {
         swal({
           title: `Atención`,
           text: `El campo clise debe contener 5 digitos`,
@@ -761,11 +772,15 @@ export default {
 
       this.receptionData.estado = 'COMPLETADO'
 
+      Event.$emit('loading')
       axios.put(`${settings.API_URL}/evidences/${this.receptionData.id}`, {
         estado
       }).then(resp => {
         console.log(`Estado actualizado a ${estado}`)
+        Event.$emit('stopLoading')
       }).catch(error => {
+        console.dir(error)
+        Event.$emit('stopLoading')
       })
 
       if(this.isNew === true) {
@@ -775,8 +790,6 @@ export default {
         // actualizar
         this.updatePortrait()
       }
-
-      
 
     },
     showError(field) {

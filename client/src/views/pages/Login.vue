@@ -60,13 +60,14 @@
       this.getUserIP((ip) => {
         this.ip = ip
       })
-      console.log(process.env)
     },
     methods: {
       signIn() {
+        Event.$emit('loading')
         axios.post(settings.API_URL + '/signin', this.loginData)
         .then(resp => {
           if(resp.status == 200) {
+            Event.$emit('stopLoading')
             
             localStorage.setItem('token', resp.data.token)
 
@@ -78,6 +79,7 @@
           }
         })
         .catch(error => {
+          Event.$emit('stopLoading')
           if(error.response) {
             swal("¡Atención!", error.response.data.message, "error")
             this.alertCount++

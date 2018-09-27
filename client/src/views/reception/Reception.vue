@@ -103,12 +103,18 @@ export default {
   },
   watch: {
     date() {
+    Event.$emit('loading')
      axios.get(`${settings.API_URL}/chronologies?limit=1`)
       .then(resp => {
         axios.get(`${settings.API_URL}/chronologies?limit=${resp.total}&DATE=${this.date}`)
         .then(resp => {
           this.items = resp.data.data
+          Event.$emit('stopLoading')
         })
+      })
+      .catch(error => {
+        Event.$emit('stopLoading')
+        console.dir(error)
       })
     }
   },
@@ -137,15 +143,22 @@ export default {
       return name.split(' ')[0]
     },
     getChronologies() {
+      Event.$emit('loading')
       axios.get(`${settings.API_URL}/chronologies?limit=1`)
       .then(resp => {
         axios.get(`${settings.API_URL}/chronologies?limit=${resp.total}&DATE=${this.date}`)
         .then(resp => {
           this.items = resp.data.data
+          Event.$emit('stopLoading')
+        })
+        .catch(error => {
+          console.dir(error)
+          Event.$emit('stopLoading')
         })
       })
     },
     generateReport() {
+      Event.$emit('loading')
       const date = `Ciudad Guayana, ${moment(this.date, 'YYYY-MM-DD').format('dddd Do MMMM  YYYY')}`
 
       let copy = this.items
@@ -163,6 +176,11 @@ export default {
       .then(resp => {
         this.getChronologies()
         window.open(settings.RENDER_REPORT + '/' + resp.data, "_blank")
+        Event.$emit('stopLoading')
+      })
+      .catch(error => {
+        console.dir(error)
+        Event.$emit('stopLoading')
       })
     },
     goToEdit(id) {

@@ -143,11 +143,17 @@ export default {
       return name.split(' ')[0]
     },
     getChronologies() {
+      Event.$emit('loading')
       axios.get(`${settings.API_URL}/evidences?limit=1`)
       .then(resp => {
         axios.get(`${settings.API_URL}/evidences?limit=${resp.total}`)
         .then(resp => {
           this.items = resp.data.data
+          Event.$emit('stopLoading')
+        })
+        .catch(error => {
+          console.dir(error)
+          Event.$emit('stopLoading')
         })
       })
     },

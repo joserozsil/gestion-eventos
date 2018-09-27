@@ -284,9 +284,11 @@ export default {
       Object.assign(this.port, { evidencia_id: this.$route.params.id})
       Object.assign(this.port, { clise: `CC-${this.port.clise}`})
       Object.assign(this.port, { exp: `K-18-0071-${this.port.exp}`})
+      Event.$emit('loading')
 
       axios.post(`${settings.API_URL}/clothes`, this.port)
       .then(resp => {
+        Event.$emit('stopLoading')
         swal({
           title: "Item modificado exitosamente",
           text: ``,
@@ -295,6 +297,7 @@ export default {
         this.$router.push({ name: 'chronologyList' })
       })
       .catch(error => {
+        Event.$emit('stopLoading')
         if(error.response.data.name == 'SequelizeDatabaseError') {
           swal({
             title: `Atención`,
@@ -324,8 +327,11 @@ export default {
       Object.assign(this.port, { clise: `CC-${this.port.clise}`})
       Object.assign(this.port, { exp: `K-18-0071-${this.port.exp}`})
 
+      Event.$emit('loading')
+
       axios.put(`${settings.API_URL}/clothes/${this.port.id}`, this.port)
       .then(resp => {
+        Event.$emit('stopLoading')
         swal({
           title: "Retrato modificado exitosamente",
           text: ``,
@@ -334,6 +340,7 @@ export default {
         this.$router.push({ name: 'chronologyList' })
       })
       .catch(error => {
+        Event.$emit('stopLoading')
         if(error.response.data.name == 'SequelizeDatabaseError') {
           swal({
             title: `Atención`,
@@ -482,11 +489,15 @@ export default {
 
       this.receptionData.estado = 'COMPLETADO'
 
+      Event.$emit('loading')
       axios.put(`${settings.API_URL}/evidences/${this.receptionData.id}`, {
         estado
       }).then(resp => {
         console.log(`Estado actualizado a ${estado}`)
+        Event.$emit('stopLoading')
       }).catch(error => {
+        console.dir(error)
+        Event.$emit('stopLoading')
       })
 
       if(this.isNew === true) {
@@ -496,8 +507,6 @@ export default {
         // actualizar
         this.updateClothes()
       }
-
-      
 
     },
     showError(field) {

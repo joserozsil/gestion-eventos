@@ -16,6 +16,8 @@ import Vuex from 'vuex'
 
 import axios from 'axios'
 
+window.Event = new Vue()
+
 axios.defaults.headers.common['authorization'] = localStorage.getItem('token')
 
 global.axios = axios

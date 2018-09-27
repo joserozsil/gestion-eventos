@@ -87,11 +87,17 @@ export default {
       return items.length
     },
     getHistory() {
+      Event.$emit('loading')
       axios.get(`${settings.API_URL}/history?limit=${Number(1)}`)
       .then(resp => {
         axios.get(`${settings.API_URL}/history?limit=${ Number(resp.data.total + 1)}`)
         .then(response => {
           this.items = response.data.data
+          Event.$emit('stopLoading')
+        })
+        .catch(error => {
+          console.dir(error)
+          Event.$emit('stopLoading')
         })
       })
     }
