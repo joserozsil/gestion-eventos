@@ -62,6 +62,7 @@ import settings from '../../config'
 import moment from 'moment'
 moment.locale('es')
 
+
 export default {
   name: 'Usuarios',
   props: {

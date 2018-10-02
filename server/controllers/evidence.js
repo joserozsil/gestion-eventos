@@ -16,14 +16,24 @@ const operations = {
                 }
             }
 
-            if (req.query.DATE != undefined && req.query.DATE) {
-                Object.assign(finding, {
-                    f_creacion: {
-                        [Op.lt]: moment(req.query.DATE, 'DD/MM/YYYY').add(1, 'day').toDate(),
-                        [Op.gt]: moment(req.query.DATE, 'DD/MM/YYYY').subtract(1, 'day').toDate(),
-                    }
+            let fechaCreacion = {}
+
+            if (req.query.DATE_MIN != undefined && req.query.DATE_MIN) {
+                Object.assign(fechaCreacion, {
+                    [Op.gt]: moment(req.query.DATE_MIN, 'YYYY-MM-DD').toDate(),
                 })
             }
+
+            if (req.query.DATE_MAX != undefined && req.query.DATE_MAX) {
+                Object.assign(fechaCreacion, {
+                    [Op.lt]: moment(req.query.DATE_MAX, 'YYYY-MM-DD').add(1, 'day').toDate(),
+                })
+            }
+
+            if (req.query.DATE_MIN && req.query.DATE_MAX) {
+                Object.assign(finding, { f_creacion: fechaCreacion })
+            }
+
 
             Model.Evidencia.findAndCountAll({
                 attributes: ['id', 'departamento', 'nombre', 'descripcion', 'tipo_recepcion', 'observacion', 'tipo_experticia', 'f_creacion', 'usuario_id', 'estado'],

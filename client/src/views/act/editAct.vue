@@ -15,7 +15,7 @@
                 label="Clise"
                 laber-for="clise"
                 :horizontal="false">
-                <b-form-input :disabled="receptionData.estado === 'COMPLETADO'" v-model="port.clise" type="number" id="clise"></b-form-input>
+                <b-form-input :formatter="validateClise" :disabled="receptionData.estado === 'COMPLETADO'" v-model="port.clise" type="number" id="clise"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
@@ -24,7 +24,7 @@
                 label="Exp"
                 laber-for="exp"
                 :horizontal="false">
-                <b-form-input :disabled="receptionData.estado === 'COMPLETADO'" v-model="port.exp" type="number" id="exp"></b-form-input>
+                <b-form-input :formatter="validateExp" :disabled="receptionData.estado === 'COMPLETADO'" v-model="port.exp" type="number" id="exp"></b-form-input>
               </b-form-group>
             </b-col>
           </b-row>
@@ -37,7 +37,7 @@
                 label="Dependencia"
                 laber-for="dependencia"
                 :horizontal="false">
-                <b-form-input v-model="port.dependencia" type="text" id="dependencia"></b-form-input>
+                <b-form-input :formatter="onlyKey" v-model="port.dependencia" type="text" id="dependencia"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
@@ -64,7 +64,7 @@
                 label="Solicitado por:"
                 laber-for="solicitado_por"
                 :horizontal="false">
-                <b-form-input v-model="port.solicitado_por" type="text" id="solicitado_por"></b-form-input>
+                <b-form-input :formatter="onlyKey" v-model="port.solicitado_por" type="text" id="solicitado_por"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
@@ -82,7 +82,7 @@
                 label="Agraviado"
                 laber-for="agraviado"
                 :horizontal="false">
-                <b-form-input v-model="port.agraviado" type="text" id="f_caso"></b-form-input>
+                <b-form-input :formatter="onlyKey" v-model="port.agraviado" type="text" id="f_caso"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
@@ -118,7 +118,7 @@
                 label="Dependencia"
                 laber-for="dependencia2"
                 :horizontal="false">
-                <b-form-input v-model="port.dependencia2" type="text" id="f_caso"></b-form-input>
+                <b-form-input :formatter="onlyKey" v-model="port.dependencia2" type="text" id="f_caso"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
@@ -127,7 +127,7 @@
                 label="Solicitado por:"
                 laber-for="solicitado_por2"
                 :horizontal="false">
-                <b-form-input v-model="port.solicitado_por2" type="text" id="solicitado_por"></b-form-input>
+                <b-form-input :formatter="onlyKey" v-model="port.solicitado_por2" type="text" id="solicitado_por"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
@@ -136,7 +136,7 @@
                 label="Agraviado"
                 laber-for="agraviado2"
                 :horizontal="false">
-                <b-form-input v-model="port.agraviado2" type="text" id="f_caso"></b-form-input>
+                <b-form-input :formatter="onlyKey" v-model="port.agraviado2" type="text" id="f_caso"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
@@ -155,7 +155,7 @@
                 label="Datos Aportados por:"
                 laber-for="origen_datos"
                 :horizontal="false">
-                <b-form-input v-model="port.origen_datos" type="text">
+                <b-form-input :formatter="onlyKey" v-model="port.origen_datos" type="text">
                 </b-form-input>
               </b-form-group>
             </b-col>
@@ -798,6 +798,29 @@ export default {
         text: `El campo ${field} es requerido`,
         icon: "error",
       })
+    },
+    onlyKey(value, event) {
+      if (value.match(/^[a-zA-Z\s]*$/) != null) {
+        return value
+      } else {
+        return value.substr(0, value.length - 1)
+      }
+    },
+    validateClise(value, event) {
+      if (value.length <= 5 ) {
+        return value
+      } else {
+        return value.substr(0, value.length - 1)
+        ret
+      }
+    },
+    validateExp(value, event) {
+      if (value.length <= 6 ) {
+        return value
+      } else {
+        return value.substr(0, value.length - 1)
+        ret
+      }
     }
   }
 }

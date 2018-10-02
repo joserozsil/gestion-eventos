@@ -15,7 +15,7 @@
                 label="Clise"
                 laber-for="clise"
                 :horizontal="false">
-                <b-form-input :disabled="receptionData.estado === 'COMPLETADO'" v-model="port.clise" type="number" id="clise"></b-form-input>
+                <b-form-input :formatter="validateClise" :disabled="receptionData.estado === 'COMPLETADO'" v-model="port.clise" type="number" id="clise"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
@@ -24,7 +24,7 @@
                 label="Exp"
                 laber-for="exp"
                 :horizontal="false">
-                <b-form-input :disabled="receptionData.estado === 'COMPLETADO'" v-model="port.exp" type="number" id="exp"></b-form-input>
+                <b-form-input :formatter="validateExp" :disabled="receptionData.estado === 'COMPLETADO'" v-model="port.exp" type="number" id="exp"></b-form-input>
               </b-form-group>
             </b-col>
           </b-row>
@@ -46,7 +46,7 @@
                 label="Color"
                 laber-for="color"
                 :horizontal="false">
-                <b-form-input v-model="port.color" type="text" id="color"></b-form-input>
+                <b-form-input :formatter="onlyKey" v-model="port.color" type="text" id="color"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col sm="6">
@@ -121,7 +121,7 @@
                 label="Disparador"
                 laber-for="disparador"
                 :horizontal="false">
-                <b-form-input v-model="port.disparador" type="text" id="disparador"></b-form-input>
+                <b-form-input :formatter="onlyKey" v-model="port.disparador" type="text" id="disparador"></b-form-input>
               </b-form-group>
             </b-col>
           </b-row>
@@ -542,6 +542,29 @@ export default {
         text: `El campo ${field} es requerido`,
         icon: "error",
       })
+    },
+    onlyKey(value, event) {
+      if (value.match(/^[a-zA-Z\s]*$/) != null) {
+        return value
+      } else {
+        return value.substr(0, value.length - 1)
+      }
+    },
+    validateClise(value, event) {
+      if (value.length <= 5 ) {
+        return value
+      } else {
+        return value.substr(0, value.length - 1)
+        ret
+      }
+    },
+    validateExp(value, event) {
+      if (value.length <= 6 ) {
+        return value
+      } else {
+        return value.substr(0, value.length - 1)
+        ret
+      }
     }
   }
 }

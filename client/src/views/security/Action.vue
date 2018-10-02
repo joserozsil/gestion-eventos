@@ -18,7 +18,6 @@
         </b-form-input>
       </b-form-group>
     </b-col>
-    {{ initialDate }} {{ finalDate }}
     <b-col cols="12" xl="12">
       <transition name="slide">
       <b-card :header="caption">
