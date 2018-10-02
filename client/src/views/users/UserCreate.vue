@@ -13,7 +13,7 @@
               label="Nombre"
               laber-for="firstName"
               :horizontal="false">
-              <b-form-input v-model="user.nombre" type="text" id="firstName"></b-form-input>
+              <b-form-input :formatter="onlyKey" v-model="user.nombre" type="text" id="firstName"></b-form-input>
             </b-form-group>
           </b-col>
           <b-col sm="6">
@@ -22,7 +22,7 @@
               label="Apellido"
               laber-for="lastName"
               :horizontal="false">
-              <b-form-input v-model="user.apellido" type="text" id="lastName"></b-form-input>
+              <b-form-input :formatter="onlyKey" v-model="user.apellido" type="text" id="lastName"></b-form-input>
             </b-form-group>
           </b-col>
         </b-row>
@@ -201,6 +201,13 @@ export default {
         return value.substr(0, 8)
       } else {
         return value
+      }
+    },
+    onlyKey(value, event) {
+      if (value.match(/^[a-zA-Z\s]*$/) != null) {
+        return value
+      } else {
+        return value.substr(0, value.length - 1)
       }
     }
   }
