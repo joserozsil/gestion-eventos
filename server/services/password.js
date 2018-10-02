@@ -7,6 +7,7 @@ exports.encrypt = (plainPassword) => {
         try {
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(plainPassword, salt, (err, hash) => {
+                    console.log(hash)
                     resolve(hash)
                 })
             })

@@ -194,30 +194,6 @@ module.exports = (sequelize, Sequelize) => {
         }
     )
 
-    User.afterValidate(user => {
-        return encrypt(user.contraseña)
-        .then(success => {
-            user.contraseña = success
-        })
-        .catch(err => {
-            if (err) {
-                return res.status(400).json(err)
-            }
-        })
-    })
-
-    User.afterValidate(user => {
-        return encrypt(user.frase)
-        .then(success => {
-            user.frase = success
-        })
-        .catch(err => {
-            if (err) {
-                return res.status(400).json(err)
-            }
-        })
-    })
-    
     User.associate = function (models) {
         models.Usuario.hasMany(models.Historial, { as: 'historial' } )
         models.Usuario.hasMany(models.Evidencia, { as: 'usuarios' })

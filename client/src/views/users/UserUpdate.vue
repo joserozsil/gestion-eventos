@@ -143,6 +143,8 @@ export default {
         this.$router.push({ name: 'userList' })
       })
       .catch(error => {
+        console.dir(error)
+
         Event.$emit('stopLoading')
 
         error.response.data.errors.forEach(element => {
@@ -152,7 +154,6 @@ export default {
             icon: "error",
           })
         })
-        console.dir(error)
       })
     }
   }

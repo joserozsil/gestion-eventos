@@ -97,13 +97,6 @@ const operations = {
     },
     update: (req, res, next) => {
         try {
-
-            if(!req.params.id) {
-                return res.status(400).json({
-                    message: "Por favor indique el id del usuario"
-                })
-            }
-
             Model.Usuario.findById(req.params.id)
             .then(usuario => {
                 let update = _.pick(req.body, ['rol', 'usuario', 'nombre', 'apellido', 'direccion', 'telefono', 'telefono_casa', 'contraseña', 'frase'])
