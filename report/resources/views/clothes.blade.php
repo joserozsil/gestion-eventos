@@ -22,6 +22,7 @@
         }
 
         .label {
+            font-size: 20px;
         }
 
         .align-r {

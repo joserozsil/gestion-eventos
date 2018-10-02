@@ -47,11 +47,15 @@
         .description {
           text-align: justify;
         }
+
+        .label {
+          font-size: 20px;
+        }
     </style>
     <body>
         <table style="width:100%">
           <tr>
-            <td><p class="label align-r">{{ $date }}</p></td>
+            <td><p class="label align-r">Período: Del: {{ $initialDate }} Al: {{ $finalDate }}</p></td>
           </tr>
         </table>
         <table style="width:100%; margin: 5mm 0">

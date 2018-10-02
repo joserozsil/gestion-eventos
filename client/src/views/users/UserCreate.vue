@@ -93,6 +93,17 @@
             </b-form-group>
           </b-col>
         </b-row>
+        <b-row>
+          <b-col sm="12">
+            <b-form-group
+              description="Ej: manzana estado"
+              label="Frase"
+              laber-for="frase"
+              :horizontal="false">
+              <b-form-input v-model="user.frase" type="text" id="frase"></b-form-input>
+            </b-form-group>
+          </b-col>
+        </b-row>
       </b-card>
       <div class="form-actions">
         <b-button @click="storeUser()" class="mr" type="submit" variant="primary">
@@ -140,7 +151,8 @@ export default {
         direccion: this.user.direccion,
         contraseña: this.user.contraseña,
         cedula: this.user.cedula,
-        rol: this.user.rol
+        rol: this.user.rol,
+        frase: this.user.frase,
       })
       .then(resp => {
         swal({
@@ -150,8 +162,13 @@ export default {
         })
 
         this.$router.push({ name: 'userList' })
+
+        Event.$emit('stopLoading')
+
       })
       .catch(error => {
+        Event.$emit('stopLoading')
+
         if(error.response.data.message) {
           swal({
             title: `Atención`,
@@ -176,7 +193,6 @@ export default {
           })
         }
 
-        Event.$emit('stopLoading')
 
       })
     },

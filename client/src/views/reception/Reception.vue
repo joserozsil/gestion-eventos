@@ -1,11 +1,19 @@
 <template>
   <b-row>
-    <b-col md="4" sm="12" class="ml-auto">
+    <b-col md="4" sm="6">
       <b-form-group 
-        label="Buscar por Fecha"
+        label="Fecha de Inicio"
         laber-for="date"
         :horizontal="false">
-        <b-form-input v-model="date" type="date" placeholder="Buscar por fecha"></b-form-input>
+        <b-form-input v-model="initialDate" type="date" placeholder="Buscar por fecha inicia"></b-form-input>
+      </b-form-group>
+    </b-col>
+    <b-col md="4" sm="6">
+      <b-form-group 
+        label="Fecha Final"
+        laber-for="date"
+        :horizontal="false">
+        <b-form-input v-model="finalDate" type="date" placeholder="Buscar por fecha final"></b-form-input>
       </b-form-group>
     </b-col>
     <b-col cols="12" xl="12">
@@ -95,17 +103,34 @@ export default {
       currentPage: 1,
       perPage: 15,
       totalRows: 0,
-      date: moment().format('YYYY-MM-DD')
+      date: moment().format('YYYY-MM-DD'),
+      initialDate: moment().format('YYYY-MM-DD'),
+      finalDate: moment().format('YYYY-MM-DD')
     }
   },
   computed: {
   },
   watch: {
-    date() {
+    initialDate() {
       Event.$emit('loading')
-     axios.get(`${settings.API_URL}/chronologies?limit=1`)
+      axios.get(`${settings.API_URL}/chronologies?limit=1`)
       .then(resp => {
-        axios.get(`${settings.API_URL}/chronologies?limit=${resp.total}&DATE=${this.date}`)
+        axios.get(`${settings.API_URL}/chronologies?limit=${resp.total}&DATE_MIN=${this.initialDate}&DATE_MAX=${this.finalDate}`)
+        .then(resp => {
+          this.items = resp.data.data
+          Event.$emit('stopLoading')
+        })
+      })
+      .catch(error => {
+        Event.$emit('stopLoading')
+        console.dir(error)
+      })
+    },
+    finalDate() {
+      Event.$emit('loading')
+      axios.get(`${settings.API_URL}/chronologies?limit=1`)
+      .then(resp => {
+        axios.get(`${settings.API_URL}/chronologies?limit=${resp.total}&DATE_MIN=${this.initialDate}&DATE_MAX=${this.finalDate}`)
         .then(resp => {
           this.items = resp.data.data
           Event.$emit('stopLoading')
@@ -145,7 +170,7 @@ export default {
       Event.$emit('loading')
       axios.get(`${settings.API_URL}/chronologies?limit=1`)
       .then(resp => {
-        axios.get(`${settings.API_URL}/chronologies?limit=${resp.total}&DATE=${this.date}`)
+        axios.get(`${settings.API_URL}/chronologies?limit=${resp.total}`)
         .then(resp => {
           this.items = resp.data.data
           Event.$emit('stopLoading')
@@ -168,7 +193,8 @@ export default {
 
       const data = {
         data: copy,
-        date
+        initialDate: this.initialDate || 'todas',
+        finalDate: this.finalDate || 'todas'
       }
 
       axios.post(`${settings.API_REPORT}/reception`, { data })

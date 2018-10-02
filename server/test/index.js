@@ -59,6 +59,7 @@ describe('Autenticación de usuarios', () => {
       apellido: faker.name.lastName(),
       rol: 'ADMINISTRADOR',
       contraseña: 'Joseangel19$',
+      frase: 'coca cola',
       cedula: moment().unix().toString().substring(0, 8)
     }
 
@@ -74,6 +75,7 @@ describe('Autenticación de usuarios', () => {
       })
   })
 
+  /*
   it('Eliminar usuario', (done) => {
     chai
       .request(URL)
@@ -83,7 +85,7 @@ describe('Autenticación de usuarios', () => {
         expect(res).to.have.status(200)
         done()
       })
-  })
+  })*/
 
 
 })

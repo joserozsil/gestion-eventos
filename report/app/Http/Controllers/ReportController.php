@@ -8,20 +8,25 @@ class ReportController extends Controller
 {
     public function portrait(Request $request)
     {
+        try {
+            $data = $request->all()['data'];
 
-    	$data = $request->all()['data'];
+            $view = \View::make('portrait', compact('data'))->render();
 
-    	$view = \View::make('portrait', compact('data'))->render();
+            $pdf = \App::make('dompdf.wrapper');
 
-        $pdf = \App::make('dompdf.wrapper');
+            $pdf->loadHTML($view);
 
-        $pdf->loadHTML($view);
+            $ROUTE_FILE = 'portraits/' . $this->generateRandomString() . '.pdf';
 
-        $ROUTE_FILE = 'portraits/' . $this->generateRandomString() . '.pdf';
+            $pdf->save($ROUTE_FILE);
 
-        $pdf->save($ROUTE_FILE);
-
-        return $ROUTE_FILE;
+            return $ROUTE_FILE;
+            
+        } catch (Exception $e) {
+            return $e->message;
+        }
+    	
 
 		//return $pdf->stream();
     }
@@ -69,9 +74,10 @@ class ReportController extends Controller
     public function reception(Request $request)
     {
         $data = $request->all()['data']['data'];
-        $date = $request->all()['data']['date'];
+        $initialDate = $request->all()['data']['initialDate'];
+        $finalDate = $request->all()['data']['finalDate'];
         
-    	$view = \View::make('reception', compact('data', 'date'))->render();
+    	$view = \View::make('reception', compact('data', 'initialDate', 'finalDate'))->render();
 
         $pdf = \App::make('dompdf.wrapper');
 

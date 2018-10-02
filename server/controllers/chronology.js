@@ -9,17 +9,27 @@ import moment from 'moment'
 const operations = {
     index: (req, res, next) => {
         try {
-            const finding = {
+            let finding = {
                 f_eliminacion: null,
                 departamento: 'RECEPCION'
             }
-            if (req.query.DATE != undefined && req.query.DATE) {
-                Object.assign(finding, {
-                    f_creacion: {
-                        [Op.lt]: moment(req.query.DATE, 'YYYY-MM-DD').add(1, 'day').toDate(),
-                        [Op.gt]:moment(req.query.DATE, 'YYYY-MM-DD').subtract(1, 'day').toDate(),
-                    }
+
+            let fechaCreacion = {}
+
+            if (req.query.DATE_MIN != undefined && req.query.DATE_MIN) {
+                Object.assign(fechaCreacion, {
+                    [Op.gt]: moment(req.query.DATE_MIN, 'YYYY-MM-DD').toDate(),
                 })
+            }
+
+            if (req.query.DATE_MAX != undefined && req.query.DATE_MAX) {
+                Object.assign(fechaCreacion, {
+                    [Op.lt]: moment(req.query.DATE_MAX, 'YYYY-MM-DD').add(1, 'day').toDate(),
+                })
+            }
+
+            if (req.query.DATE_MIN && req.query.DATE_MAX) {
+                Object.assign(finding, { f_creacion: fechaCreacion })
             }
 
             Model.Evidencia.findAndCountAll({
@@ -46,7 +56,6 @@ const operations = {
                 })
             })
             .catch(error => {
-                console.log(error)
                 return res.status(400).json(error)
             })
 		} catch( e ) {

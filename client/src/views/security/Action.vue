@@ -1,5 +1,24 @@
 <template>
   <b-row>
+    <b-col md="4" sm="6">
+      <b-form-group 
+        label="Fecha de Inicio"
+        laber-for="date"
+        :horizontal="false">
+        <b-form-input v-model="initialDate" type="date" placeholder="Buscar por fecha inicia">
+        </b-form-input>
+      </b-form-group>
+    </b-col>
+    <b-col md="4" sm="6">
+      <b-form-group 
+        label="Fecha Final"
+        laber-for="date"
+        :horizontal="false">
+        <b-form-input v-model="finalDate" type="date" placeholder="Buscar por fecha final">
+        </b-form-input>
+      </b-form-group>
+    </b-col>
+    {{ initialDate }} {{ finalDate }}
     <b-col cols="12" xl="12">
       <transition name="slide">
       <b-card :header="caption">
@@ -32,6 +51,7 @@
 <script>
 import usersData from './UsersData'
 import settings from '../../config'
+import moment from 'moment'
 
 export default {
   name: 'Alert',
@@ -72,7 +92,41 @@ export default {
       ],
       currentPage: 1,
       perPage: 15,
-      totalRows: 0
+      totalRows: 0,
+      initialDate: moment().format('YYYY-MM-DD'),
+      finalDate: moment().format('YYYY-MM-DD')
+    }
+  },
+  watch: {
+    initialDate() {
+      Event.$emit('loading')
+      axios.get(`${settings.API_URL}/history?limit=1`)
+      .then(resp => {
+        axios.get(`${settings.API_URL}/history?limit=${resp.total}&DATE_MIN=${this.initialDate}&DATE_MAX=${this.finalDate}`)
+        .then(response => {
+          this.items = response.data.data
+          Event.$emit('stopLoading')
+        })
+      })
+      .catch(error => {
+        Event.$emit('stopLoading')
+        console.dir(error)
+      })
+    },
+    finalDate() {
+      Event.$emit('loading')
+      axios.get(`${settings.API_URL}/history?limit=1`)
+      .then(resp => {
+        axios.get(`${settings.API_URL}/history?limit=${resp.total}&DATE_MIN=${this.initialDate}&DATE_MAX=${this.finalDate}`)
+        .then(response => {
+          this.items = response.data.data
+          Event.$emit('stopLoading')
+        })
+      })
+      .catch(error => {
+        Event.$emit('stopLoading')
+        console.dir(error)
+      })
     }
   },
   computed: {

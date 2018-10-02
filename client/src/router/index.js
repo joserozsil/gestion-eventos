@@ -52,6 +52,7 @@ const Modals = () => import('@/views/notifications/Modals')
 const Page404 = () => import('@/views/pages/Page404')
 const Page500 = () => import('@/views/pages/Page500')
 const Login = () => import('@/views/pages/Login')
+const Forgot = () => import('@/views/pages/Forgot')
 const Register = () => import('@/views/pages/Register')
 
 // Users
@@ -509,6 +510,11 @@ export default new Router({
           path: 'iniciar-sesion',
           name: 'Login',
           component: Login
+        },
+        {
+          path: 'ha-olvidado-la-contraseña',
+          name: 'forgot',
+          component: Forgot
         },
         {
           path: 'register',

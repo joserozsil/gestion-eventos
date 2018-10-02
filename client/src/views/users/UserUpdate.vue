@@ -71,6 +71,17 @@
             </b-form-group>
           </b-col>
         </b-row>
+        <b-row>
+          <b-col sm="12">
+            <b-form-group
+              description="Ej: manzana estado"
+              label="Frase"
+              laber-for="frase"
+              :horizontal="false">
+              <b-form-input v-model="user.frase" type="text" id="frase"></b-form-input>
+            </b-form-group>
+          </b-col>
+        </b-row>
       </b-card>
       <div class="form-actions">
         <b-button @click="updateUser()" class="mr" type="submit" variant="primary">Actualizar</b-button>
@@ -112,12 +123,14 @@ export default {
 
         return ''
       }
+      Event.$emit('loading')
       axios.put(`${settings.API_URL}/users/${this.$route.params.id}`, {
         usuario: this.user.usuario,
         nombre: this.user.nombre,
         apellido: this.user.apellido,
         direccion: this.user.direccion,
-        contraseña: this.user.contraseña
+        contraseña: this.user.contraseña,
+        frase: this.user.frase,
       })
       .then(resp => {
         swal({
@@ -125,10 +138,13 @@ export default {
           text: `El usuario ${resp.data.usuario} se ha actualizado correctamente`,
           icon: "success",
         })
+        Event.$emit('stopLoading')
 
         this.$router.push({ name: 'userList' })
       })
       .catch(error => {
+        Event.$emit('stopLoading')
+
         error.response.data.errors.forEach(element => {
           swal({
             title: `Atención`,

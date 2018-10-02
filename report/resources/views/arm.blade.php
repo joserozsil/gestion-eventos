@@ -22,6 +22,7 @@
         }
 
         .label {
+            font-size: 20px;
         }
 
         .align-r {
@@ -31,8 +32,8 @@
     <body>
         <table style="width:100%">
           <tr>
-            <td><p class=" uppercase label">Clise: {{ $data['clise'] }}</p></td>
-            <td><p class=" uppercase label align-r">Exp: {{ $data['exp'] }}</p></td>
+            <td><p class="uppercase label">Clise: {{ $data['clise'] }}</p></td>
+            <td><p class="uppercase label align-r">Exp: {{ $data['exp'] }}</p></td>
           </tr>
         </table>
         <table style="width:100%; margin: 5mm 0">

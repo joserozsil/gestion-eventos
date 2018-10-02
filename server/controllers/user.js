@@ -78,6 +78,11 @@ const operations = {
                 message: "La cedula es requerido"
             })
         }
+        if(!req.body.frase) {
+            return res.status(400).json({
+                message: "La frase es requerida"
+            })
+        }
         try {
             Model.Usuario.create(req.body)
             .then(result => {
@@ -101,7 +106,7 @@ const operations = {
 
             Model.Usuario.findById(req.params.id)
             .then(usuario => {
-                let update = _.pick(req.body, ['rol', 'usuario', 'nombre', 'apellido', 'direccion', 'telefono', 'telefono_casa', 'contraseña'])
+                let update = _.pick(req.body, ['rol', 'usuario', 'nombre', 'apellido', 'direccion', 'telefono', 'telefono_casa', 'contraseña', 'frase'])
                 Object.assign(update, { f_actualizacion: Date.now() })
                 usuario.update(update)
                 .then(result => {

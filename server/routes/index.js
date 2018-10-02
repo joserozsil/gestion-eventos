@@ -82,5 +82,8 @@ api.post('/search/arms', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_BALISTICA']), a
 api.post('/search/clothes', isAuth, rol(['ADMINISTRADOR', 'OPERADOR_LABORATORIO']), clothesSearch.index)
 
 api.post('/signin', authController.signIn)
+api.post('/signInByKey', authController.signInByKey)
+
+
 
 module.exports = api

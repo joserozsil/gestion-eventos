@@ -13,10 +13,11 @@
               label="Tipo"
               laber-for="type"
               :horizontal="false">
+
               <select v-model="novedad.tipo_recepcion" class="form-control">
                 <option value="RECIBO_MEMORADUM">Recibo de Memoradum</option>
                 <option value="RECIBO_OFICIO">Recibo de Oficio</option>
-                <option value="RECEPRESENTACION_JEFEPCION">Presentación de Jefe</option>
+                <option value="PRESENTACION_JEFE">Presentación de Jefe</option>
                 <option value="PRESENTACION_FUNCIONARIO">Presentación de Funcionario</option>
                 <option value="RECIBO_GUARDIA">Recibo de Guardia</option>
                 <option value="SUPERVISION">Supervisión</option>

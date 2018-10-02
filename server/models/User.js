@@ -120,7 +120,7 @@ module.exports = (sequelize, Sequelize) => {
                 validate: {
                     len: {
                         args: [11, 25],
-                        msg: "El número telefónico debe posee entre 7 a 25 caracteres"
+                        msg: "El número telefónico debe poseer entre 7 a 25 caracteres"
                     }
                 }
             },
@@ -157,6 +157,16 @@ module.exports = (sequelize, Sequelize) => {
                     }
                 }
             },
+            frase: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                validate: {
+                    len: {
+                        args: [4, 25],
+                        msg: "La frase debe poseer entre 4 a 25 caracteres"
+                    }
+                }
+            },
             rol: {
                 type: Sequelize.ENUM('ADMINISTRADOR', 'RECEPCION', 'OPERADOR_BALISTICA', 'OPERADOR_LABORATORIO', 'OPERADOR_HECHOS'),
                 allowNull: false
@@ -184,11 +194,22 @@ module.exports = (sequelize, Sequelize) => {
         }
     )
 
-
     User.afterValidate(user => {
         return encrypt(user.contraseña)
         .then(success => {
             user.contraseña = success
+        })
+        .catch(err => {
+            if (err) {
+                return res.status(400).json(err)
+            }
+        })
+    })
+
+    User.afterValidate(user => {
+        return encrypt(user.frase)
+        .then(success => {
+            user.frase = success
         })
         .catch(err => {
             if (err) {

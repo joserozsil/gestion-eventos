@@ -7,8 +7,8 @@
             <b-card no-body class="p-4">
               <b-card-body>
                 <b-form>
-                  <h1>Iniciar Sesión</h1>
-                  <p class="text-muted">Iniciar sesión en el sistema</p>
+                  <h1>Iniciar Sesión Mediante Frase</h1>
+                  <p class="text-muted">Iniciar sesión mediante frase secreta en el sistema</p>
                   <b-input-group class="mb-3">
                     <b-input-group-prepend>
                       <b-input-group-text><i class="icon-user"></i></b-input-group-text></b-input-group-prepend>
@@ -16,7 +16,7 @@
                   </b-input-group>
                   <b-input-group class="mb-4">
                     <b-input-group-prepend><b-input-group-text><i class="icon-lock"></i></b-input-group-text></b-input-group-prepend>
-                    <b-form-input @keyup.enter="signIn" v-model="loginData.contraseña" type="password" class="form-control" placeholder="Contraseña" autocomplete="current-password" />
+                    <b-form-input @keyup.enter="signIn" v-model="loginData.frase" type="text" class="form-control" placeholder="Contraseña" autocomplete="current-password" />
                   </b-input-group>
                   <b-row>
                     <b-col cols="6">
@@ -46,14 +46,14 @@
   import swal from 'sweetalert';
 
   export default {
-    name: 'Login',
+    name: 'Forgot',
     data: () => {
       return {
         alertCount: 0,
         ip: '',
         loginData: {
           usuario: 'jrodriguez',
-          contraseña: 'Joseangel19$'
+          frase: 'Joseangel19$'
         }
       }
     },
@@ -66,7 +66,7 @@
     methods: {
       signIn() {
         Event.$emit('loading')
-        axios.post(settings.API_URL + '/signin', this.loginData)
+        axios.post(settings.API_URL + '/signInByKey', this.loginData)
         .then(resp => {
           if(resp.status == 200) {
             Event.$emit('stopLoading')
@@ -81,6 +81,7 @@
           }
         })
         .catch(error => {
+          console.dir(error)
           Event.$emit('stopLoading')
           if(error.response) {
             swal("¡Atención!", error.response.data.message, "error")
