@@ -3,15 +3,15 @@ const config = {
         "username": "root",
         "password": null,
         "database": "novedades",
-        "host": "127.0.0.1",
+        "host": process.env.HOST || 'localhost',
         "dialect": "mysql",
         "logging": false
     },
     "test": {
-        "username": "root",
-        "password": null,
+        "username": "testuser",
+        "password": "test",
         "database": "novedades",
-        "host": "127.0.0.1",
+        "host": process.env.HOST || 'localhost',
         "dialect": "mysql"
     },
     "production": {

@@ -75,19 +75,6 @@ describe('Autenticación de usuarios', () => {
       })
   })
 
-  /*
-  it('Eliminar usuario', (done) => {
-    chai
-      .request(URL)
-      .delete(`/users/${idUser}`)
-      .set('authorization', token)
-      .end((err, res) => {
-        expect(res).to.have.status(200)
-        done()
-      })
-  })*/
-
-
 })
 
 describe('Cronologías', () => {
