@@ -39,7 +39,7 @@
         "rand-token": "^0.4.0",
         "request-ip": "^2.1.1",
         "sequelize": "^4.38.0",
-        "underscore": "^1.9.1",
+        "underscore": "^1.12.1",
         "volleyball": "^1.5.1",
         "zone.js": "^0.8.26",
         "nodemon": "^1.12.1"
