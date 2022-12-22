@@ -28,7 +28,7 @@
         "faker": "^4.1.0",
         "helmet": "^3.13.0",
         "isemail": "^3.0.0",
-        "jsonwebtoken": "^8.1.0",
+        "jsonwebtoken": "^9.0.0",
         "jwt-simple": "^0.5.1",
         "mocha": "^5.2.0",
         "moment": "^2.22.0",
